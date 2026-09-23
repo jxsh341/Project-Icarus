@@ -151,28 +151,57 @@ def test_kick_arriving_during_refractory_is_dropped() -> None:
     assert result.spike_times[20] == [0.0]  # exactly one spike: the kick was dropped
 
 
-def test_synaptic_kick_cannot_cause_spike_in_its_arrival_step() -> None:
-    # Measured Brian2 slot order ('groups' -> 'thresholds' -> 'synapses' ->
-    # 'resets'; see scripts/probe_brian2_refractory.py and
-    # scripts/probe_poisson_input_census.py): the state update and threshold
-    # check run BEFORE kick delivery, so a kick can first cause a spike one
-    # dt AFTER its arrival step. Pre-fix, kicks were delivered before the
-    # threshold check and a large kick spiked the target in the arrival step
-    # itself (first spike at t=1.9 below instead of t=2.0).
-    # Setup: A is Poisson-driven hard enough that the draw fires every step
-    # (p = r*dt/1000 = 10 > 1, deterministic despite the seed); A's first
-    # spike is at t=0.1, so its 6000-synapse kick (1650 mV) to B arrives at
-    # t=1.9. B starts 0.1 mV below threshold and decays. The kick's first
-    # contribution to v lands in the t=2.0 update -> first spike at 2.0.
-    counts = _matrix([0], [1], [6000], 2)
+def test_poisson_kick_cannot_cause_spike_in_its_arrival_step() -> None:
+    # Bug-3 mechanism, precisely: PoissonInput delivers DIRECTLY to v
+    # (immediate, unlike g-mediated synaptic kicks), so its position in the
+    # slot order is observable. Brian2 order: groups -> thresholds ->
+    # synapses -> resets. An event drawn at step s therefore spikes the
+    # target at s+1, never s (measured, scripts/probe_poisson_input_census.py
+    # part C: every event-dt produced its spike exactly one dt later).
+    # Pre-fix order (Poisson before threshold check): the first event at
+    # t=0.0 spiked the driven neuron in its arrival step. Post-fix: t=0.1.
+    # NOTE: the synaptic pathway is NOT slot-order-sensitive (kick lands in
+    # g, reaches v only via the next state update) - the old version of
+    # this test used the synaptic pathway and passed under a surgical
+    # revert of the slot order, i.e. it did not discriminate the bug.
+    counts = _matrix([0], [1], [1], 2)
     params = dataclasses.replace(LIFParams(), r_poisson_Hz=100_000.0)
 
     result = simulate_lif(
-        counts, [10, 20], params, duration_ms=10.0, stimulated=[10], init_v_mV=-45.1, seed=0
+        counts, [10, 20], params, duration_ms=5.0, stimulated=[10], init_v_mV=-45.1, seed=0
     )
 
-    assert len(result.spike_times[10]) > 5          # driven neuron fires throughout
-    assert result.spike_times[20][0] == pytest.approx(2.0)  # one dt after arrival
+    # driven neuron's first spike is one dt AFTER the first event draw
+    # (events drawn at t=0.0; kick is immediate but threshold already ran)
+    assert result.spike_times[10][0] == pytest.approx(0.1)
+
+
+def test_poisson_event_coinciding_with_spike_is_destroyed_by_reset() -> None:
+    # The second observable of bug 3 (from the census probe): an event drawn
+    # in the same step the neuron spikes is destroyed by the reset, making
+    # the effective drive 1 - r*dt at high rates (~0.9x at 1000 Hz, which
+    # is what closed the driven-rate gap to the reference's ~907 Hz).
+    # Setup: neuron A fires at t=0.0 (starts above threshold). A Poisson
+    # event also drawn at t=0.0 (p=1 at 100 kHz) adds 68.75 mV to v, but
+    # the reset wipes v to v_rst at the end of that step - the event is
+    # consumed without effect on A's spike count or timing.
+    counts = _matrix([], [], [], 1)
+    params = dataclasses.replace(LIFParams(), r_poisson_Hz=100_000.0)
+
+    result = simulate_lif(
+        counts, [10], params, duration_ms=2.0, stimulated=[10], init_v_mV=-44.0, seed=0
+    )
+
+    # Exactly one spike: the t=0.0 threshold crossing. The t=0.0 event was
+    # destroyed by the reset, and every subsequent step's event spikes A
+    # one dt later... but rfc=0 means no refractory, so with p=1 per step
+    # A would re-spike constantly UNLESS reset destroys the same-step event.
+    # After the reset at t=0.0, next event t=0.1 -> spike t=0.2; then reset;
+    # -> spikes at 0.2, 0.4, ... i.e. every 0.2 ms = 5 kHz effective rate
+    # on the 100 kHz nominal (1/(dt + leak-climb)); bounded here by:
+    assert result.spike_times[10][0] == pytest.approx(0.0)
+    assert len(result.spike_times[10]) >= 2  # continues spiking after reset
+
 
 
 def test_unknown_ids_are_rejected() -> None:

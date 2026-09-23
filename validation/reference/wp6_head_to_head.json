@@ -99,11 +99,17 @@
   "regression_tests": {
     "test_refractory_freezes_v_and_g_during_refractory": "bug 1: v/g frozen during refractory (unless refractory on both dv/dt and dg/dt)",
     "test_kick_arriving_during_refractory_is_dropped": "bug 2: kick landing on refractory target is dropped (g pinned at reset)",
-    "test_synaptic_kick_cannot_cause_spike_in_its_arrival_step": "bug 3: Brian2 slot order groups->thresholds->synapses->resets; kick effect appears one dt after arrival"
+    "test_poisson_kick_cannot_cause_spike_in_its_arrival_step": "bug 3a: PoissonInput delivers to v directly, so slot order is observable: event at step s spikes target at s+1, never s. Verified discriminating by surgical revert (delivery-before-threshold) which fails this test at 0.0 vs expected 0.1.",
+    "test_poisson_event_coinciding_with_spike_is_destroyed_by_reset": "bug 3b: an event drawn in the spiking step is destroyed by the reset (effective drive 1 - r*dt; closes the ~907 Hz vs 1000 Hz gap)."
   },
   "arm_implementation": {
     "reference": "unmodified shiu_model.py (Brian2 2.8, numpy 1.26.4) loaded via importlib from the pinned blob",
     "ours": "fly/dynamics/lif.py exact coupled-linear update, same params and slot semantics",
     "inputs": "data/processed/neuprint_snapshots/run-005/reference_inputs (completeness.csv + connectivity.parquet derived from run-005 canonical graph)"
+  },
+  "regression_test_audit": {
+    "issue": "The original bug-3 regression test asserted a SYNAPTIC kick could not spike the target in its arrival step. Surgical revert of the slot order (kick delivery moved before the threshold check) left that test PASSING, because g-mediated kicks only reach v via the next state update - insensitive to delivery order. The test was passing for a different reason than the bug it was named for.",
+    "resolution": "Replaced with two tests targeting the actual mechanism (PoissonInput writes to v directly): (a) one-dt delay of the first spike after the first event, (b) same-step event destruction by reset. Both verified discriminating: revert of Poisson-before-threshold makes (a) fail at exactly 0.0 vs 0.1; (b) additionally locks the effective-drive semantics that closed the driven-rate gap.",
+    "verified_by": "surgical revert + git checkout restore, 2026-09-23"
   }
 }
