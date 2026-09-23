@@ -1,0 +1,23 @@
+[
+  {
+    "file": "data/raw/source_pages/male_cns_home.html",
+    "sha256": "a9137b07e01b4e374fa6c993d4a9987164bffdae5512b03262e57e5704504e2b",
+    "size_bytes": 30861,
+    "downloaded_at": "2026-09-22",
+    "source_url": "https://janelia-flyem.github.io/male-cns/"
+  },
+  {
+    "file": "data/raw/source_pages/male_cns_download.html",
+    "sha256": "51144922891ccdc5cda2490d55b39ef69222134ed6944bbff2766379e403ad3c",
+    "size_bytes": 44208,
+    "downloaded_at": "2026-09-22",
+    "source_url": "https://janelia-flyem.github.io/male-cns/download/"
+  },
+  {
+    "file": "data/raw/source_pages/neuprint_python_docs.html",
+    "sha256": "48c37ce642269f23752ac137dbe28bdb4fbc941c8a1148f32df9cd4e7f82ef11",
+    "size_bytes": 14961,
+    "downloaded_at": "2026-09-22",
+    "source_url": "https://connectome-neuprint.github.io/neuprint-python/docs/"
+  }
+]

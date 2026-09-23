@@ -1,0 +1,34 @@
+baseline_id: FLY-BASE-001
+status: scaffolding
+principle: Reproduce first. Modify later.
+
+dataset:
+  name: MaleCNS
+  version: null
+  source: https://janelia-flyem.github.io/male-cns/
+  release_date: null
+  download_date: null
+  checksum_manifest: null
+  license: null
+
+model:
+  type: LIF
+  computational_reference:
+    paper_doi: 10.1038/s41586-024-07763-9
+    code: https://github.com/philshiu/Drosophila_brain_model
+  implementation_commit: null
+
+simulation:
+  timestep_ms: null
+  duration_ms: null
+
+validation:
+  structural: PENDING
+  numerical: PENDING
+  reference_experiment: PENDING
+  behavioural: PENDING
+
+environment:
+  python: 3.11
+  package_manager: uv
+  lockfile: uv.lock

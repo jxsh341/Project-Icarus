@@ -1,0 +1,58 @@
+{
+  "dataset_name": "MaleCNS",
+  "dataset_version": "v1.0",
+  "release_date": null,
+  "license_name": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source_page": "https://janelia-flyem.github.io/male-cns/",
+  "download_page": "https://janelia-flyem.github.io/male-cns/download/",
+  "neuprint_dataset": "male-cns:v1.0",
+  "accessed_at": "2026-09-22",
+  "artifacts": [
+    {
+      "file_name": "male_cns_home.html",
+      "source_url": "https://janelia-flyem.github.io/male-cns/",
+      "local_path": "data/raw/source_pages/male_cns_home.html",
+      "size_bytes": 30861,
+      "sha256": "a9137b07e01b4e374fa6c993d4a9987164bffdae5512b03262e57e5704504e2b",
+      "downloaded_at": "2026-09-22",
+      "notes": "Captured source page used to verify dataset links and neuPrint dataset reference."
+    },
+    {
+      "file_name": "male_cns_download.html",
+      "source_url": "https://janelia-flyem.github.io/male-cns/download/",
+      "local_path": "data/raw/source_pages/male_cns_download.html",
+      "size_bytes": 44208,
+      "sha256": "51144922891ccdc5cda2490d55b39ef69222134ed6944bbff2766379e403ad3c",
+      "downloaded_at": "2026-09-22",
+      "notes": "Captured download page with v1.0 bulk artifact links, streaming/programmatic access guidance, and license statement."
+    },
+    {
+      "file_name": "neuprint_python_docs.html",
+      "source_url": "https://connectome-neuprint.github.io/neuprint-python/docs/",
+      "local_path": "data/raw/source_pages/neuprint_python_docs.html",
+      "size_bytes": 14961,
+      "sha256": "48c37ce642269f23752ac137dbe28bdb4fbc941c8a1148f32df9cd4e7f82ef11",
+      "downloaded_at": "2026-09-22",
+      "notes": "Captured neuprint-python documentation landing page."
+    }
+  ],
+  "extra": {
+    "programmatic_access": {
+      "neuprint": true,
+      "navis": true,
+      "cloudvolume": true,
+      "tensorstore": true
+    },
+    "bulk_artifact_examples": [
+      "body-annotations-male-cns-v1.0-minconf-0.5.feather",
+      "connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+      "syn-points-male-cns-v1.0-minconf-0.5.feather",
+      "syn-partners-male-cns-v1.0-minconf-0.5.feather"
+    ],
+    "notes": [
+      "Release date not explicitly extracted yet from the fetched HTML.",
+      "Programmatic dataset reference on the site points to male-cns:v1.0."
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://janelia-flyem.github.io/male-cns",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 2,
+      "url": "https://janelia-flyem.github.io/male-cns/download",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 3,
+      "url": "https://connectome-neuprint.github.io/neuprint-python/docs",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 4,
+      "url": "https://neuprint.janelia.org/?dataset=male-cns%3Av0.9",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 5,
+      "url": "https://github.com/philshiu/Drosophila_brain_model",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 6,
+      "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 7,
+      "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 8,
+      "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/syn-points-male-cns-v1.0-minconf-0.5.feather",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 9,
+      "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/syn-partners-male-cns-v1.0-minconf-0.5.feather",
+      "title": "",
+      "accessed": "2026-09-22"
+    },
+    {
+      "id": 10,
+      "url": "https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/main/model.py",
+      "title": "",
+      "accessed": "2026-09-23"
+    },
+    {
+      "id": 11,
+      "url": "https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/main/utils.py",
+      "title": "",
+      "accessed": "2026-09-23"
+    },
+    {
+      "id": 12,
+      "url": "https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/main/Readme.md",
+      "title": "",
+      "accessed": "2026-09-23"
+    }
+  ]
+}

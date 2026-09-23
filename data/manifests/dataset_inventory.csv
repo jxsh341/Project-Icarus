@@ -1,0 +1,2 @@
+dataset_name,dataset_version,release_date,license_name,license_url,source_page,download_page,neuprint_dataset,accessed_at,notes
+MaleCNS,v1.0,,CC-BY-4.0,https://creativecommons.org/licenses/by/4.0/,https://janelia-flyem.github.io/male-cns/,https://janelia-flyem.github.io/male-cns/download/,male-cns:v1.0,2026-09-22,Release date still pending explicit extraction from source materials

@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: fly-cognition
+message: "If you use this repository, please cite it along with the primary biological and computational sources documented in docs/."
+type: software
+authors:
+  - family-names: User
+    given-names: Hermes
+version: 0.1.0
+license: MIT

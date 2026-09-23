@@ -1,0 +1,109 @@
+{
+  "n_neurons": 4293,
+  "trials": {
+    "reference": {
+      "n_trials": 30,
+      "total_spikes": {
+        "mean": 5992.833333333333,
+        "std": 888.5432511675513
+      },
+      "n_spiking": {
+        "mean": 446.73333333333335,
+        "std": 43.91836732513797
+      },
+      "recruitment_fraction": {
+        "mean": 0.10406087429148222,
+        "std": 0.010230227655517813
+      },
+      "seed_rate_12781_Hz": {
+        "mean": 206.53333333333333,
+        "std": 20.290533436221846
+      },
+      "seed_rate_556329_Hz": {
+        "mean": 212.4,
+        "std": 21.41961717678446
+      },
+      "majority_active_neurons": 0
+    },
+    "ours": {
+      "n_trials": 30,
+      "total_spikes": {
+        "mean": 6010.3,
+        "std": 902.6342349307196
+      },
+      "n_spiking": {
+        "mean": 457.6,
+        "std": 47.063127085165966
+      },
+      "recruitment_fraction": {
+        "mean": 0.10659212671791288,
+        "std": 0.010962759628503606
+      },
+      "seed_rate_12781_Hz": {
+        "mean": 201.33333333333334,
+        "std": 20.698714491706856
+      },
+      "seed_rate_556329_Hz": {
+        "mean": 216.63333333333333,
+        "std": 25.6144939214222
+      },
+      "majority_active_neurons": 0
+    }
+  },
+  "comparison": {
+    "spearman_rho_per_neuron_mean_counts": 0.9762029184320589,
+    "spearman_p_value": 0.0,
+    "welch_t_total_spikes": {
+      "t_statistic": 0.07553245441947018,
+      "p_value": 0.9400510708508744,
+      "ours_mean": 6010.3,
+      "reference_mean": 5992.833333333333
+    },
+    "jaccard_majority_active_sets": 1.0
+  },
+  "equivalence_test": {
+    "method": "TOST (two one-sided t-tests), Welch df",
+    "pre_specified_band": "+-10% of reference arm mean (5992.8 -> band 599.3)",
+    "diff": 17.5,
+    "diff_pct": 0.29,
+    "t_low": 2.667,
+    "t_high": -2.516,
+    "p_low": 0.005,
+    "p_high": 0.0073,
+    "max_p": 0.0073,
+    "alpha": 0.05,
+    "verdict": "EQUIVALENT within +-10% (reject both one-sided nulls)",
+    "note": "stronger claim than the earlier Welch t p=0.94, which only failed to reject a difference; TOST affirmatively bounds the difference inside the band"
+  },
+  "protocol_isolation": {
+    "checked": [
+      "duration_ms",
+      "seed set"
+    ],
+    "duration_ms": 1000.0,
+    "seeds": "42-71, one paired trial per seed per arm",
+    "differing_conditions": "seed only (arms use independent RNG streams)",
+    "verdict": "PASS"
+  },
+  "reference_pin": {
+    "repo": "philshiu/Drosophila_brain_model",
+    "file": "model.py",
+    "upstream_commit": "2a83ad611cd9768f8c9723fc613ed27761a5feb5",
+    "commit_date": "2023-05-09T18:18:43Z",
+    "commit_message": "Fixed minor typos and comments in model.py",
+    "blob_sha_git": "5ba7083cf55bf6092967f8d9065e86cd677efed1",
+    "size_bytes": 11900,
+    "sha256_local": "fc45837d7122c6ce2a7f3f2f23c515992e4b232aadb919efabb72337fac88e4e",
+    "verification": "git hash-object of data/raw/reference/shiu_model.py equals GitHub contents API blob sha at the pinned commit; fetched 2026-09-23T15:35:05Z"
+  },
+  "regression_tests": {
+    "test_refractory_freezes_v_and_g_during_refractory": "bug 1: v/g frozen during refractory (unless refractory on both dv/dt and dg/dt)",
+    "test_kick_arriving_during_refractory_is_dropped": "bug 2: kick landing on refractory target is dropped (g pinned at reset)",
+    "test_synaptic_kick_cannot_cause_spike_in_its_arrival_step": "bug 3: Brian2 slot order groups->thresholds->synapses->resets; kick effect appears one dt after arrival"
+  },
+  "arm_implementation": {
+    "reference": "unmodified shiu_model.py (Brian2 2.8, numpy 1.26.4) loaded via importlib from the pinned blob",
+    "ours": "fly/dynamics/lif.py exact coupled-linear update, same params and slot semantics",
+    "inputs": "data/processed/neuprint_snapshots/run-005/reference_inputs (completeness.csv + connectivity.parquet derived from run-005 canonical graph)"
+  }
+}
