@@ -24,6 +24,12 @@ Build a reproducible, validated computational baseline from official MaleCNS dat
 
 ## Work-package registry
 
+- **WP10** — DONE: computational cost baseline
+  (`validation/reference/wp10_compute_baseline.json`). Profile: run-006
+  4,552 steps/s (0.46× bio-realtime, 81 MB RSS); run-007 2,213 steps/s
+  (0.24×, 73 MB — denser driven activity keeps the kick pipeline full).
+  Archive wall-clock/storage for all completed runs. GPU/energy recorded
+  N/A with reasons. psutil added as runtime dep.
 - **WP8v2** — DONE: signed-connectome benchmarks (run-006 + run-007,
   n=30 each, checkpointed). spontaneous 0/30 (clean control);
   stimulus_response 298.8±20.6 spikes/s in 2 spikers (GABAergic
