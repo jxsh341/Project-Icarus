@@ -1,0 +1,124 @@
+# FLY-BASE-001 — Frozen Baseline Manifest (Phase 1)
+
+baseline_id: FLY-BASE-001
+frozen_date: 2026-09-24
+status: FROZEN
+note: >-
+  The Git commit containing this file is the baseline anchor. Future
+  experiments must declare parent_baseline: FLY-BASE-001.
+
+dataset:
+  name: "MaleCNS (male adult CNS, Janelia FlyEM)"
+  version: "male-cns:v0.9"
+  server: "https://neuprint.janelia.org"
+  provenance_note: >-
+    male-cns:v1.0 (used by snapshots run-002..005) was REMOVED from the
+    neuPrint server; v0.9 (v1.0's direct predecessor, same connectome,
+    unrefined annotations) is the live MaleCNS lineage. manc:v1.x is a
+    DIFFERENT dataset (Male Adult Nerve Cord, disjoint body IDs), not a
+    MaleCNS successor. Raw v1.0 data for run-005 is preserved locally and
+    checksummed.
+  snapshots:
+    - run_id: run-005
+      purpose: "WP6a implementation parity (unsigned; superseded biologically by WP6b)"
+      dataset: "male-cns:v1.0 (pre-removal, preserved locally)"
+      checksums: "data/checksums/run-005_raw_sha256.json"
+    - run_id: run-006
+      purpose: "WP6b signed head-to-head + WP8 benchmarks (DNge104-seeded, depth-2)"
+      dataset: "male-cns:v0.9"
+      checksums: "data/checksums/run-006_raw_sha256.json"
+    - run_id: run-007
+      purpose: "WP6c behavioural anchor + WP8 sugar recruitment + WP9 grid"
+      dataset: "male-cns:v0.9"
+      checksums: "data/checksums/run-007_raw_sha256.json"
+
+model:
+  type: "LIF (leaky integrate-and-fire, Brian2-slot-ordered explicit loop)"
+  implementation: "fly/dynamics/lif.py"
+  params: "fly/dynamics/lif.py LIFParams (Shiu et al. 2024 reference values)"
+  validated_against: "philshiu/Drosophila_brain_model (blob-hash-pinned)"
+  two_population_drive: true
+  delayed_onset: true
+
+nt_sign_convention:
+  version: "baseline-v1"
+  mapping:
+    acetylcholine: 1
+    gaba: -1
+    glutamate: -1
+    unknown: 1
+  status: >-
+    CONVENTION-INFERRED, behaviorally anchored for gustatory/motor
+    circuits (WP6c: sugar/bitter to MN9_L direction reproduced only
+    under this mapping; both ablations fail). Synaptic sign is a
+    per-presynaptic-neuron NT property (0 mixed-sign neurons / 138,005
+    in the authors' own connectivity table).
+  validated_scope: "gustatory (lbGRN) to feeding-motor (MN9) circuits, male-cns:v0.9"
+  open_assumption: >-
+    Extending this convention to other neurotransmitter systems or
+    circuits (octopamine, serotonin, dopamine pathways; central brain
+    loops) is an OPEN assumption. Downstream systems (FLY-MEM-001,
+    FLY-WM-001, FLY-PRED-001, FLY-EXEC-001) building on this baseline
+    inherit the SCOPE of this validation, not just its conclusion: the
+    sign convention is validated where WP6c tested it, and nowhere
+    else. Any downstream experiment touching circuits outside
+    gustatory/motor must re-anchor the convention (WP6c-style) before
+    its numbers are interpretable.
+  unknown_nt_default: >-
+    unknown to +1 covers 12.5% of neurons; hub-under-represented
+    (9.0% of top-100 out-weight hubs vs 12.5% base). The default
+    choice is itself a modeling assumption - stated, auditable, and
+    included in build reports.
+
+simulation:
+  timestep_ms: 0.1
+  duration_ms_default: 1000.0
+  determinism: "per-seed (numpy default_rng); checkpointed per trial (JSONL)"
+
+environment:
+  python: "3.11.15"
+  numpy: "1.26.4"
+  scipy: "1.17.1"
+  brian2: "reference arm only, hash-pinned source (see .hermes_citations.json)"
+  os: "Windows 11 (bash/MSYS toolchain)"
+  package_manager: "uv 0.11.28"
+
+validation:
+  structural: "PASS (fly/data/transform.py + fly/network/graph.py; 0 dangling refs)"
+  numerical: "PASS (WP6b: TOST p~0 within +-10%, Spearman rho=0.9999, diff +0.27% vs Shiu Brian2 reference on identical signed inputs)"
+  reference_experiment: "PASS (WP6a implementation parity; WP6b signed parity; WP6c behavioural anchor)"
+  behavioural: "PASS (WP9: 121/121 grid accuracy, off-grid generalization, staggered onset)"
+
+benchmarks:
+  neural: "WP8v2 (benchmarks_v2/; supersedes run-005 unsigned numbers)"
+  compute: "WP10 (validation/reference/wp10_compute_baseline.json)"
+  behavioural: "WP9 (validation/reference/wp9_behavioural_baseline.json)"
+
+key_results:
+  spontaneous_activity: "0 spikes / 30 trials (clean control)"
+  stimulus_response: "298.8 +- 20.6 spikes/s in 2 spiking neurons (DNge104 pair, signed graph)"
+  circuit_propagation: "inhibitory seeds do not recruit (protocol-inevitable: 100% of seed out-edges inhibitory)"
+  excitatory_recruitment: "411.5 +- 9.4 neurons (1.02%) from 17 GRNs, no cascade"
+  decision_boundary: "feed iff sugar present AND bitter absent (vertical at r_bitter=20 Hz; theta-robust [20,60])"
+  compute_cost: "4,284-4,552 steps/s run-006 (0.43-0.46x bio-realtime); activity density, not graph size, dominates wall-clock"
+
+errata_on_record:
+  wp6c_wp8_sugar_rate_mislabel: >-
+    All runs labeled 'sugar 200 Hz' in WP6c/WP8 were actually driven at
+    150 Hz (LIFParams default not overridden). Direction and conclusions
+    unaffected (verified post-fix at TRUE 200 Hz); exact-zero claim
+    corrected to near-complete suppression (0-5 Hz). Errata written into
+    both reports. All WP9 runs set both rates explicitly.
+  wp6b_wall_clock: "per-trial wall_s not recorded (field added later); session-log estimate only"
+
+test_suite: "68 passed (uv run pytest from repo root)"
+
+reports:
+  wp6a: "validation/reference/wp6_head_to_head.json"
+  wp6b: "validation/reference/wp6b_signed_head_to_head.json"
+  wp6c: "validation/reference/wp6c_sign_behavioral_anchor.json"
+  wp8: "validation/reference/wp8_benchmarks_v2_summary.json"
+  wp9: "validation/reference/wp9_behavioural_baseline.json"
+  wp10: "validation/reference/wp10_compute_baseline.json"
+
+citations_ledger: ".hermes_citations.json (16 sources, incl. Agee et al. 2026 Cell)"
