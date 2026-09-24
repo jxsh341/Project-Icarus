@@ -1,0 +1,102 @@
+{
+  "work_package": "WP10",
+  "title": "Computational cost baseline (FLY-BASE-001, plan section 17)",
+  "environment": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "physical_cores": 8,
+    "logical_cores": 12,
+    "total_ram_gb": 16.9,
+    "implementation": "numpy/scipy sparse LIF (fly.dynamics.lif), CPU-only"
+  },
+  "measures_applicability": {
+    "wall_clock": "measured (profile + archive)",
+    "cpu_utilization": "measured as core-seconds proxy via wall clock on this single-threaded loop; detailed per-core % not instrumented",
+    "gpu_utilization": "N/A - CPU-only implementation (recorded, not omitted)",
+    "ram": "measured (peak RSS + trial delta)",
+    "gpu_memory": "N/A - CPU-only implementation",
+    "timesteps_per_second": "measured",
+    "sim_vs_bio_time_ratio": "measured",
+    "storage_generated": "measured (archive)",
+    "energy": "not measurable on this host (no per-process watt metering); wall-clock is the proxy"
+  },
+  "profile": {
+    "run-006": {
+      "substrate": "run-006",
+      "note": "DNge104-seeded depth-2 closure (WP6b/WP8 substrate)",
+      "n_neurons": 47889,
+      "n_edges_signed": 1278154,
+      "duration_ms": 1000.0,
+      "n_timesteps": 10000,
+      "timestep_ms": 0.1,
+      "wall_clock_s": 2.197,
+      "timesteps_per_s": 4551.5,
+      "x_bio_realtime": 0.4552,
+      "spikes_in_trial": 269,
+      "ram_peak_rss_mb": 80.6,
+      "ram_trial_delta_mb": 4.5,
+      "matrix_mem_mb": 15.5
+    },
+    "run-007": {
+      "substrate": "run-007",
+      "note": "GRN-seeded depth-2 closure (WP6c/WP8 substrate)",
+      "n_neurons": 40290,
+      "n_edges_signed": 336245,
+      "duration_ms": 1000.0,
+      "n_timesteps": 10000,
+      "timestep_ms": 0.1,
+      "wall_clock_s": 4.519,
+      "timesteps_per_s": 2213.1,
+      "x_bio_realtime": 0.2213,
+      "spikes_in_trial": 16963,
+      "ram_peak_rss_mb": 73.1,
+      "ram_trial_delta_mb": 5.4,
+      "matrix_mem_mb": 4.2
+    }
+  },
+  "archive": {
+    "wp8_circuit_propagation": {
+      "n_trials": 30,
+      "duration_ms_each": 1000.0,
+      "wall_clock_s": 77.3,
+      "storage_bytes": 23913,
+      "trials_per_s": 0.388
+    },
+    "wp8_spontaneous": {
+      "n_trials": 30,
+      "duration_ms_each": 1000.0,
+      "wall_clock_s": 61.9,
+      "storage_bytes": 11488,
+      "trials_per_s": 0.485
+    },
+    "wp8_stimulus_response": {
+      "n_trials": 30,
+      "duration_ms_each": 1000.0,
+      "wall_clock_s": 69.1,
+      "storage_bytes": 27570,
+      "trials_per_s": 0.434
+    },
+    "wp8_sugar_recruitment": {
+      "n_trials": 30,
+      "duration_ms_each": 1000.0,
+      "wall_clock_s": 134.0,
+      "storage_bytes": 513650,
+      "trials_per_s": 0.224
+    },
+    "wp6b_head_to_head": {
+      "n_trials": 60,
+      "wall_s_recorded": false,
+      "mean_wall_s_per_trial": null,
+      "storage_bytes": 13021,
+      "note": "wall_s not recorded per trial in this run (field added in WP6c); total wall clock for the 30x2 run was ~25 min, from session log"
+    },
+    "wp6c_sugar_bitter": {
+      "n_trials": 60,
+      "wall_s_recorded": true,
+      "mean_wall_s_per_trial": 88.86,
+      "storage_bytes": 10852,
+      "note": null
+    }
+  }
+}
