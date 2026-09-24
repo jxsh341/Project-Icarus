@@ -49,6 +49,12 @@ def main() -> int:
         choices=["neurons", "adjacencies", "both", "closed-subgraph", "incoming"],
         default="both",
     )
+    parser.add_argument(
+        "--depth",
+        type=int,
+        default=1,
+        help="closure depth for closed-subgraph mode (1 = legacy, 2 = partner-to-partner edges)",
+    )
     args = parser.parse_args()
 
     if args.token_file:
@@ -72,7 +78,7 @@ def main() -> int:
     if args.mode == "incoming":
         loader.snapshot_adjacencies(body_ids, direction="incoming")
     if args.mode == "closed-subgraph":
-        loader.snapshot_closed_subgraph(body_ids)
+        loader.snapshot_closed_subgraph(body_ids, depth=args.depth)
     return 0
 
 

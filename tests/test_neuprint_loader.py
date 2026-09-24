@@ -143,8 +143,9 @@ def test_snapshot_closed_subgraph_fetches_both_directions(tmp_path: Path) -> Non
     assert metadata["closed_subgraph"] is True
     assert metadata["seed_body_ids"] == [10, 20]
     assert metadata["expanded_neuron_batches"] == 3
-    assert metadata["seed_adjacency_batches_outgoing"] == 1
-    assert metadata["seed_adjacency_batches_incoming"] == 1
+    assert metadata["closure_depth"] == 1
+    assert metadata["adjacency_rounds"] == 1
+    assert metadata["edge_row_count"] == 4
     assert result["neuron_snapshot_count"] == 3
     assert result["adjacency_snapshot_count_outgoing"] == 1
     assert result["adjacency_snapshot_count_incoming"] == 1

@@ -22,8 +22,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-RUN_DIR = Path("data/processed/neuprint_snapshots/run-005")
-REF_INPUTS = RUN_DIR / "reference_inputs"
+import argparse
+
+import os as _os
+RUN_DIR = Path(_os.environ.get("WP6_RUN_DIR", "data/processed/neuprint_snapshots/run-005"))
+REF_INPUTS = RUN_DIR / _os.environ.get("WP6_REF_INPUTS", "reference_inputs")
+OURS_MATRIX = RUN_DIR / _os.environ.get("WP6_MATRIX", "connectivity_matrix.npz")
 SEED_IDS = [12781, 556329]
 SEED_BASE = 42
 
@@ -187,7 +191,7 @@ def main() -> int:
 
     from scipy import sparse as sp
 
-    matrix = sp.load_npz(RUN_DIR / "connectivity_matrix.npz").tocsr()
+    matrix = sp.load_npz(OURS_MATRIX).tocsr()
 
     shiu = None
     if args.arms in ("both", "reference"):

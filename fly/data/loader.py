@@ -137,26 +137,85 @@ class NeuPrintStreamingLoader:
         )
         return written
 
-    def snapshot_closed_subgraph(self, seed_body_ids: Sequence[int]) -> dict[str, int]:
-        outgoing_paths = self.snapshot_adjacencies(seed_body_ids, direction="outgoing")
-        incoming_paths = self.snapshot_adjacencies(seed_body_ids, direction="incoming")
+    def snapshot_closed_subgraph(
+        self, seed_body_ids: Sequence[int], depth: int = 1
+    ) -> dict[str, int]:
+        """Snapshot a k-hop bidirectionally closed subgraph.
 
+        depth=1 reproduces the original behavior (adjacencies of the seeds
+        only). depth>=2 additionally fetches adjacencies of every
+        first-order partner, so partner-to-partner and partner-to-2nd-order
+        edges exist in the snapshot; the node set is closed over all hops.
+
+        run-005 (depth=1) contains only seed-incident edges, which made
+        second-order propagation a structural zero in the WP8 circuit-
+        propagation benchmark - see benchmarks/ invalidation note and
+        validation/structural/README.md.
+        """
+        if depth < 0:
+            raise ValueError(f"depth must be >= 0, got {depth}")
+
+        all_outgoing_rows: list[dict[str, Any]] = []
+        all_incoming_rows: list[dict[str, Any]] = []
         expanded_body_ids: set[int] = set(seed_body_ids)
-        for path in outgoing_paths + incoming_paths:
-            rows = json.loads(path.read_text(encoding="utf-8"))
-            for row in rows:
-                expanded_body_ids.add(int(row["bodyId_pre"]))
-                expanded_body_ids.add(int(row["bodyId_post"]))
+        frontier: set[int] = set(seed_body_ids)
+        adjacency_rounds = 0
+
+        # depth = number of adjacency-fetch rounds:
+        #   depth=0 -> seeds only (no fetches)
+        #   depth=1 -> seeds' edges (original run-004/005 behavior)
+        #   depth=2 -> + first-order partners' edges (partner-to-partner
+        #              and partner-to-2nd-order edges exist)
+        for _hop in range(depth):
+            if not frontier:
+                break
+            for batch in self.chunk_sequence(sorted(frontier)):
+                all_outgoing_rows.extend(self.client.fetch_adjacencies(batch, direction="outgoing"))
+                all_incoming_rows.extend(self.client.fetch_adjacencies(batch, direction="incoming"))
+            adjacency_rounds += 1
+            new_nodes: set[int] = set()
+            for row in all_outgoing_rows + all_incoming_rows:
+                new_nodes.add(int(row["bodyId_pre"]))
+                new_nodes.add(int(row["bodyId_post"]))
+            frontier = new_nodes - expanded_body_ids
+            expanded_body_ids |= new_nodes
+
+        # Materialize per-direction edge lists in batches (legacy naming).
+        # Rows carry bodyId_pre/bodyId_post; an edge fetched in multiple
+        # rounds may appear more than once - the transform layer's per-ROI
+        # summation deduplicates on load.
+        outgoing_paths: list[Path] = []
+        incoming_paths: list[Path] = []
+        edge_batch_size = self.config.batch_size
+        for batch_index, start in enumerate(range(0, len(all_outgoing_rows), edge_batch_size)):
+            outgoing_paths.append(
+                self.write_snapshot_batch(
+                    kind="adjacencies_outgoing",
+                    batch_index=batch_index,
+                    records=all_outgoing_rows[start : start + edge_batch_size],
+                )
+            )
+        for batch_index, start in enumerate(range(0, len(all_incoming_rows), edge_batch_size)):
+            incoming_paths.append(
+                self.write_snapshot_batch(
+                    kind="adjacencies_incoming",
+                    batch_index=batch_index,
+                    records=all_incoming_rows[start : start + edge_batch_size],
+                )
+            )
 
         neuron_paths = self.snapshot_neurons(sorted(expanded_body_ids))
         self._merge_metadata(
             {
                 "closed_subgraph": True,
+                "closure_depth": depth,
                 "seed_body_ids": list(seed_body_ids),
                 "expanded_body_ids": sorted(expanded_body_ids),
                 "expanded_neuron_batches": len(neuron_paths),
-                "seed_adjacency_batches_outgoing": len(outgoing_paths),
-                "seed_adjacency_batches_incoming": len(incoming_paths),
+                "adjacency_rounds": adjacency_rounds,
+                "edge_row_count": len(all_outgoing_rows) + len(all_incoming_rows),
+                "edge_row_count_outgoing": len(all_outgoing_rows),
+                "edge_row_count_incoming": len(all_incoming_rows),
             }
         )
         return {

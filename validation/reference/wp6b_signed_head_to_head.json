@@ -1,0 +1,82 @@
+{
+  "baseline_id": "FLY-BASE-001",
+  "work_package": "WP6b",
+  "title": "Signed-connectome reproduction, male-cns:v0.9 depth-2 subgraph (run-006)",
+  "status": "PASS",
+  "inputs": {
+    "snapshot": "data/processed/neuprint_snapshots/run-006",
+    "dataset": "male-cns:v0.9 (live MaleCNS lineage; v1.0 removed from server)",
+    "subgraph": "depth-2 bidirectional closure, seeds 12781/556329 (DNge104, GABAergic)",
+    "matrix": "connectivity_matrix_signed.npz (47,889 neurons; 1,278,154 signed edges; E:I weight 2.00)",
+    "reference_inputs": "reference_inputs_signed/ (completeness.csv + connectivity.parquet with negative weights)"
+  },
+  "protocol": {
+    "n_trials_per_arm": 30,
+    "duration_ms": 1000.0,
+    "seeds": "42-71, one paired trial per seed per arm",
+    "stimulated": [
+      12781,
+      556329
+    ],
+    "differing_conditions": "seed only; both arms on identical signed inputs (verified after catching a matrix-asymmetry launch bug)"
+  },
+  "results": {
+    "reference_mean_total_spikes": 295.53333333333336,
+    "ours_mean_total_spikes": 296.3333333333333,
+    "diff_pct": 0.27,
+    "welch_t": {
+      "t_statistic": 0.19787812158226034,
+      "p_value": 0.8438335320958631,
+      "ours_mean": 296.3333333333333,
+      "reference_mean": 295.53333333333336
+    },
+    "spearman_rho": 0.9999999991278792,
+    "tost": {
+      "method": "TOST, Welch df, pre-specified band \u00b110% of reference mean",
+      "band": 29.6,
+      "p_low": 0.0,
+      "p_high": 0.0,
+      "max_p": 0.0,
+      "verdict": "EQUIVALENT within \u00b110%"
+    },
+    "protocol_isolation": "PASS",
+    "n_spiking": "2 of 47,889 (0.004%) in both arms - GABAergic seed pair; near-local suppression is the correct prediction"
+  },
+  "e_i_audit": {
+    "sign_model": "w = nt_sign(source) * synapse_count * w_syn; sign strictly per presynaptic neuron",
+    "evidence_from_authors_data": {
+      "source": "data/raw/reference/Connectivity_783.parquet (downloaded, 15,091,983 rows)",
+      "mixed_sign_presynaptic_neurons": 0,
+      "total_presynaptic_neurons": 138005,
+      "excitatory_synapses": 32494717,
+      "inhibitory_synapses": 21998205,
+      "conclusion": "sign is a per-neuron NT property, matching NT-identity semantics"
+    },
+    "nt_sign_convention": {
+      "acetylcholine": 1,
+      "gaba": -1,
+      "glutamate": -1,
+      "unknown/unclear/monoamines": 1,
+      "status": "CONVENTION-INFERRED, not derived from the authors' NT table (not shipped). Externally anchored by WP6c (behavioral reproduction)."
+    },
+    "unknown_nt_default_audit": {
+      "n_unknown": 5963,
+      "base_rate": 0.125,
+      "top100_out_weight_hub_rate": 0.09,
+      "median_out_partners": 2,
+      "composition": "dominated by low-degree sensory classes (mechanosensory 697, unknown_sensory 432, gustatory 271, olfactory 118)",
+      "conclusion": "under-represented among hubs; minimal structural leverage on propagation"
+    },
+    "signed_ei_ratio_run006": "excitatory 4,859,704 vs inhibitory 2,435,313 weight (E:I = 2.00)"
+  },
+  "limitations": [
+    "NT-to-sign mapping is standard convention (ACh +, GABA/glutamate -), not the authors' actual assignment; validated structurally (per-neuron uniformity in their data) but not externally. WP6c exists to close this.",
+    "Unknown-NT neurons (12.5%) default to excitatory; audited as low-leverage (under-represented among hubs, median 2 partners).",
+    "run-005 (male-cns:v1.0) results rest on a server-removed dataset; raw data preserved and checksummed (data/checksums/run-005_raw_sha256.json) but not re-fetchable.",
+    "Both arms share the NT-sign convention; head-to-head agreement validates implementation parity, not the convention itself."
+  ],
+  "history": {
+    "run-005_unsigned_note": "run-005's WP6 pass remains valid as an implementation check but its inputs lacked sign; its biological numbers (6K spikes, 447 spikers) were produced by an all-excitatory distortion of the connectome.",
+    "run-006_unsigned_rejected": "the 44%-of-network cascade on unsigned run-006 was the same distortion at scale, not biology."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "dataset": "male-cns:v1.0 (server dataset now removed)",
+  "files": {
+    "adjacencies_incoming_batch_0000.json": "775a3d68bdb841be784a12fc7f4906f76fb13216a84350b134da1d1d448311aa",
+    "adjacencies_outgoing_batch_0000.json": "36248af14b3571d3b7de85735b13f0520848b5d37f1fc1e0cbea3255527ac65c",
+    "neurons_batch_0000.json": "77a739fd051026627cec48be405ca17c763d59c03118d78243c0d4e4c2a80580",
+    "neurons_batch_0001.json": "d07e1844bc1c3214a2abfd5c78a0eca70a6a1975fe9ff852942e2697d96b0f99",
+    "neurons_batch_0002.json": "675171d5b51ff0c4ca90c56dc8e83652ceac5c48007dfc046daef15aafd95f93",
+    "neurons_batch_0003.json": "565b219809900e4abd373eb8f88560e5504302e18fcc8c336377f5ba810f17c3",
+    "neurons_batch_0004.json": "d26f5c4535fd6e73b277c62598a430aa68c58665a1cba31946dac3dca19ed065",
+    "neurons_batch_0005.json": "85ecb040eb784268fab18f9865e50d7557e4c3e5dca8a42593d1d1883f50683d",
+    "neurons_batch_0006.json": "6df97a6c0a2f31f13137768b7e0f67d8a0999b86a0c238b10e078f8f27ce81d9",
+    "neurons_batch_0007.json": "c759cf2832e708f71c235548ae35447ec4e0c213aee79392bd45c7a4ec2cf157",
+    "neurons_batch_0008.json": "9c8c633d7fa93eed7f2902ad590027d4031770e9a06002a78e367b96715ed962",
+    "wp5_first_run.json": "a0f1d8d831534dea516e5842809111f8147338d2f395a4565bf84f7fcdd6f4d9"
+  }
+}

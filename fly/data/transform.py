@@ -48,7 +48,66 @@ def load_snapshot_directory(path: Path) -> tuple[list[NeuronRecord], list[Synaps
         neuron_records.extend(load_neuron_records_from_snapshot(neuron_path))
     for synapse_path in sorted(path.glob("adjacencies*_batch_*.json")):
         synapse_records.extend(load_synapses_from_snapshot(synapse_path))
+    synapse_records = _deduplicate_synapse_records(synapse_records)
     return neuron_records, synapse_records
+
+
+def _deduplicate_synapse_records(synapses: list[Synapse]) -> list[Synapse]:
+    """Collapse fetch-artifact duplicate rows before canonical use.
+
+    Depth-2 (k-hop) snapshots re-fetch seed-incident edges in later rounds:
+    the same (source, target, roi, weight) row can arrive once per round
+    (e.g. as seed-incoming in round 1 and partner-outgoing in round 2).
+    Verified on run-006: 383,868 of 1,948,344 raw rows are exact
+    duplicates with zero weight mismatches. Summing those would corrupt
+    the canonical matrix, so identical rows collapse to one.
+
+    Rows sharing (source, target, roi) but with DIFFERENT weights are not
+    fetch artifacts - they are treated as data and summed (conservative),
+    matching the documented duplicate-handling decision for genuinely
+    distinct rows (per-ROI splits remain separate Synapse records).
+    """
+    exact: dict[tuple[int, int, str | None, float], Synapse] = {}
+    weight_conflicts: dict[tuple[int, int, str | None], float] = {}
+    conflict_rows: dict[tuple[int, int, str | None], int] = {}
+    order: list[tuple[int, int, str | None]] = []
+
+    for syn in synapses:
+        key_exact = (syn.source, syn.target, syn.roi, syn.weight_or_count)
+        key_pair = (syn.source, syn.target, syn.roi)
+        if key_exact in exact:
+            continue  # identical row already recorded: fetch artifact
+        if key_pair in weight_conflicts:
+            # same (source, target, roi) as another row, different weight
+            weight_conflicts[key_pair] += syn.weight_or_count
+            conflict_rows[key_pair] += 1
+            continue
+        exact[key_exact] = syn
+        if key_pair not in weight_conflicts:
+            # first occurrence of this pair: remember for conflict merging
+            weight_conflicts[key_pair] = syn.weight_or_count
+            conflict_rows[key_pair] = 1
+            order.append(key_pair)
+
+    out: list[Synapse] = []
+    emitted: set[tuple[int, int, str | None]] = set()
+    for syn in synapses:
+        key_pair = (syn.source, syn.target, syn.roi)
+        if key_pair in emitted:
+            continue
+        emitted.add(key_pair)
+        if conflict_rows[key_pair] > 1:
+            out.append(
+                Synapse(
+                    source=syn.source,
+                    target=syn.target,
+                    weight_or_count=weight_conflicts[key_pair],
+                    roi=syn.roi,
+                )
+            )
+        else:
+            out.append(syn)
+    return out
 
 
 
