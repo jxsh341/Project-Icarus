@@ -70,6 +70,7 @@ def simulate_lif(
     silenced: list[int] | None = None,
     stimulated2: list[int] | None = None,
     r_poisson2_Hz: float | None = None,
+    stim2_start_ms: float | None = None,
     init_v_mV: float | None = None,
     seed: int = 0,
 ) -> LIFRun:
@@ -95,6 +96,8 @@ def simulate_lif(
         )
     if stimulated2 and r_poisson2_Hz is None:
         raise ValueError("stimulated2 requires r_poisson2_Hz")
+    if stim2_start_ms is not None and not stimulated2:
+        raise ValueError("stim2_start_ms requires stimulated2")
     stimulated = _check_ids(node_ids, stimulated or [], "stimulated")
     silenced = _check_ids(node_ids, silenced or [], "silenced")
     stimulated2 = _check_ids(node_ids, stimulated2 or [], "stimulated2")
@@ -207,8 +210,13 @@ def simulate_lif(
 
         # Second Poisson population (reference poi() exc2 loop): identical
         # semantics - direct v kicks, synapses slot, rfc=0 targets.
+        # Optional delayed onset (WP9 staggered protocol): no events
+        # before stim2_start_ms (None/0.0 = drive from t=0).
         if stim2_set.size and n_steps:
-            fires2 = rng.random(stim2_set.size) < poisson2_p
+            if stim2_start_ms is None or t >= stim2_start_ms:
+                fires2 = rng.random(stim2_set.size) < poisson2_p
+            else:
+                fires2 = rng.random(stim2_set.size) < 0.0
             if fires2.any():
                 v[stim2_set[fires2]] += poisson_kick
 

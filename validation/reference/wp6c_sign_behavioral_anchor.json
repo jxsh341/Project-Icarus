@@ -268,5 +268,11 @@
     "NT convention for 'unknown' neurons (14.4% here) defaults to +1; hub-bias check (WP6b) shows unknown-NT neurons are under-represented among out-weight hubs.",
     "Single grid corner (200/200 Hz) tested, not the paper's full 11x11 grid; a dose-response reproduction would be the natural follow-up.",
     "MN9_R (16949) is silent across all arms/conditions in this closure (dynamics of the right-side mirror circuit may require the left GRNs); the paper's readout (MN9_L) is the one reported."
-  ]
+  ],
+  "erratum_2026_09_24": {
+    "finding": "The sugar population was driven at the LIFParams default 150 Hz in all WP6c/WP8 runs, not the 200 Hz the labels recorded: wp6c_run.py passed LIFParams() unmodified, so r_poisson_Hz=150 while only r_poisson2_Hz (bitter) was set explicitly. All cells labeled sugar=200 were actually sugar=150. Results are real but mislabeled.",
+    "impact": "Direction unaffected: TRUE (200,200) verified post-fix (n=5): MN9_L 0-5 Hz (mean 2.4) vs TRUE (200,0) 80-85 Hz - bitter still suppresses 97% of sugar-driven MN9_L firing, reproducing the paper's direction. The exact_zero_note applied to the (150,200) cell, not the true corner: at the true 200/200 corner suppression is near-complete (0-5 Hz), not absolute. Ablation contrasts (abl-glu, all-pos vs signed) were run at identical (150,200) drive in all arms, so the discriminating outcome is unaffected.",
+    "fix": "All future runs set r_poisson_Hz explicitly via dataclasses.replace (WP9 standard).",
+    "verified_by": "results/wp9/true_corner_check.jsonl (checkpointed probe)"
+  }
 }
