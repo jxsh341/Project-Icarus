@@ -1,0 +1,194 @@
+{
+  "work_package": "WP6c",
+  "title": "Behavioral anchor for the NT-sign convention: sugar/bitter feeding",
+  "prediction_source": "Shiu et al. 2024 Fig 3a (bitter GRN co-stimulation suppresses sugar-driven feeding motor output)",
+  "substrate": {
+    "snapshot": "run-007: male-cns:v0.9 depth-2 closed subgraph around the 36 driven GRNs (40,290 neurons, 336,245 signed edges, 0 dangling)",
+    "driven_sugar": "LB3b/LB3c (Gr64f+ sugar lbGRNs), right hemisphere, n=17",
+    "driven_bitter": "LB1a-d (Gr33a+ bitter lbGRNs), right hemisphere, n=19",
+    "population_mapping_source": "Cell 2026 gustatory connectome paper (MaleCNS-native lbGRN type names)",
+    "readout": "MN9 (proboscis-extension motor neuron) firing rate; mean of MN9_R (16949) and MN9_L (10331)"
+  },
+  "protocol": {
+    "duration_ms": 1000.0,
+    "n_trials_per_condition": 10,
+    "seeds": "7000-7009 (identical across arms and conditions)",
+    "drive": "sugar 200 Hz, bitter 200 Hz (paper's Fig 3a high-drive contrast)",
+    "simulator": "fly.dynamics.lif.simulate_lif (WP6b-validated against Shiu Brian2 reference, TOST p~0, rho=0.9999)",
+    "two_population_drive": "stimulated2/r_poisson2_Hz pathway (reference poi() exc2 semantics; rfc=0; TDD'd in tests/test_two_population_drive.py)"
+  },
+  "arms": {
+    "signed": "pipeline NT convention: gaba, glutamate -> -1; ach -> +1; unknown -> +1 (5,794/40,290 neurons unknown, hub-under-represented)",
+    "abl-glu": "glutamate -> +1 (gaba kept inhibitory): 32,165 glutamatergic edges flipped positive",
+    "all-pos": "all weights positive (sign convention fully removed)"
+  },
+  "results_per_arm": {
+    "signed": {
+      "sugar_only": {
+        "mn9_mean_hz": 40.65,
+        "mn9_sem_hz": 0.4017323597731316,
+        "mn9_min_max_hz": [
+          39.0,
+          42.5
+        ],
+        "total_spikes_mean": 17527.9,
+        "n_spiking_mean": 409.8,
+        "n_trials": 10,
+        "seeds": [
+          7000,
+          7001,
+          7002,
+          7003,
+          7004,
+          7005,
+          7006,
+          7007,
+          7008,
+          7009
+        ]
+      },
+      "sugar_bitter": {
+        "mn9_mean_hz": 0.0,
+        "mn9_sem_hz": 0.0,
+        "mn9_min_max_hz": [
+          0.0,
+          0.0
+        ],
+        "total_spikes_mean": 38985.2,
+        "n_spiking_mean": 739.9,
+        "n_trials": 10,
+        "seeds": [
+          7000,
+          7001,
+          7002,
+          7003,
+          7004,
+          7005,
+          7006,
+          7007,
+          7008,
+          7009
+        ]
+      },
+      "delta_hz": -40.65,
+      "direction": "suppressed"
+    },
+    "abl-glu": {
+      "sugar_only": {
+        "mn9_mean_hz": 51.5,
+        "mn9_sem_hz": 0.12909944487358055,
+        "mn9_min_max_hz": [
+          51.0,
+          52.0
+        ],
+        "total_spikes_mean": 114339.1,
+        "n_spiking_mean": 2000.9,
+        "n_trials": 10,
+        "seeds": [
+          7000,
+          7001,
+          7002,
+          7003,
+          7004,
+          7005,
+          7006,
+          7007,
+          7008,
+          7009
+        ]
+      },
+      "sugar_bitter": {
+        "mn9_mean_hz": 53.0,
+        "mn9_sem_hz": 0.2581988897471611,
+        "mn9_min_max_hz": [
+          52.0,
+          55.0
+        ],
+        "total_spikes_mean": 138644.4,
+        "n_spiking_mean": 2211.8,
+        "n_trials": 10,
+        "seeds": [
+          7000,
+          7001,
+          7002,
+          7003,
+          7004,
+          7005,
+          7006,
+          7007,
+          7008,
+          7009
+        ]
+      },
+      "delta_hz": 1.5,
+      "direction": "not_suppressed"
+    },
+    "all-pos": {
+      "sugar_only": {
+        "mn9_mean_hz": 87.85,
+        "mn9_sem_hz": 0.16749792701868152,
+        "mn9_min_max_hz": [
+          87.0,
+          88.5
+        ],
+        "total_spikes_mean": 617803.6,
+        "n_spiking_mean": 8360.9,
+        "n_trials": 10,
+        "seeds": [
+          7000,
+          7001,
+          7002,
+          7003,
+          7004,
+          7005,
+          7006,
+          7007,
+          7008,
+          7009
+        ]
+      },
+      "sugar_bitter": {
+        "mn9_mean_hz": 88.35,
+        "mn9_sem_hz": 0.13017082793177756,
+        "mn9_min_max_hz": [
+          87.5,
+          89.0
+        ],
+        "total_spikes_mean": 628019.7,
+        "n_spiking_mean": 8382.0,
+        "n_trials": 10,
+        "seeds": [
+          7000,
+          7001,
+          7002,
+          7003,
+          7004,
+          7005,
+          7006,
+          7007,
+          7008,
+          7009
+        ]
+      },
+      "delta_hz": 0.5,
+      "direction": "not_suppressed"
+    }
+  },
+  "discriminating_outcome": {
+    "signed_reproduces_paper_direction": true,
+    "all_pos_suppresses_mn9": false,
+    "glutamate_flip_alone_breaks_direction": true,
+    "verdict": "PASS - the signed convention reproduces the paper's directional finding (bitter suppresses sugar-driven MN9 firing) and BOTH ablated conventions fail to reproduce it. The NT-sign assumption is load-bearing: GABA alone is insufficient - glutamatergic inhibition is specifically required for bitter-driven feeding suppression."
+  },
+  "interpretation": {
+    "signed": "Bitter co-drive silences MN9 (40.6 -> 0.0 Hz), reproducing the paper's directional finding on MaleCNS.",
+    "abl-glu": "With glutamate excitatory, bitter co-drive INCREASES MN9 rate (51.5 -> 53.0 Hz): the suppression circuit depends on glutamatergic inhibition, not only GABA. Corroborates the Cell 2026 finding that lbGRN bitter signaling is (partly) glutamatergic.",
+    "all-pos": "Without signs, MN9 runs at ~88 Hz in both conditions - no suppression, and a 16x spike-count explosion (618K vs 39K mean): the unsigned graph is not merely quantitatively wrong, it produces a qualitatively different (epileptiform) network."
+  },
+  "limitations": [
+    "Population identity mapping (FlyWire GRNs -> MaleCNS lbGRN types) is from the Cell 2026 gustatory connectome paper, not from Shiu et al.; literature-based, recorded in wp6c_grn_seeds.json with per-neuron NT.",
+    "Directionality, not rate matching, is the tested prediction (different substrate: MaleCNS vs the paper's FlyWire male-CNS model).",
+    "MN9 firing rate is a scalar circuit proxy for proboscis extension, not a behavioral assay.",
+    "NT convention for 'unknown' neurons (14.4% here) defaults to +1; hub-bias check (WP6b) shows unknown-NT neurons are under-represented among out-weight hubs."
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "work_package": "WP6c",
+  "decision": "behavioral anchor = sugar/bitter feeding experiment (Shiu et al. 2024, Fig 3a)",
+  "chosen_over": "mechanosensory/antennal grooming (Fig 5)",
+  "discriminating_power_analysis": {
+    "why_sugar_bitter_is_sharper": [
+      "Directional qualitative prediction on a fixed readout: bitter must DECREASE sugar-driven MN9 firing; a sign convention that breaks GABA/glutamate inhibition predicts the opposite (increase). The readout flips with the convention.",
+      "Both driven populations are primary sensory GRNs (cholinergic, directly Poisson-driven); no cross-dataset homology mapping of interneurons required.",
+      "Bitter GRNs' effect on MN9 is mediated by inhibitory interneurons - the prediction REQUIRES inhibition to survive in the circuit, which is exactly the assumption under test.",
+      "MN9 motor neurons verified present in male-cns:v0.9 (MN9_L 10331, MN9_R 16949)."
+    ],
+    "why_grooming_is_weaker": [
+      "Key manipulation silences three inhibitory neurons whose identity was model-derived; testing it requires identifying those same neurons in MaleCNS first (homology-mapping confound stacked on the sign question).",
+      "JON->grooming involves complex mechanosensory circuitry where a broken sign convention could still produce a plausible-looking result."
+    ]
+  },
+  "protocol_from_figures_ipynb_cells_23_25": {
+    "sugar_grns": "21 labellar sugar-sensing GRNs (right hemisphere), FlyWire IDs in figures.ipynb cell 23",
+    "bitter_grns": "20 labellar bitter-sensing GRNs (Gr66a class), FlyWire IDs in cell 23",
+    "frequencies": "sugar 0-180 Hz x bitter 0-200 Hz grid (cell 24)",
+    "readout": "MN9 (proboscis-extension motor neuron) firing rate (cell 25 -> fig_3a_rate.csv)",
+    "expected_result": "bitter suppresses sugar-driven MN9 firing (paper Fig 3a)"
+  },
+  "prerequisite": "map FlyWire GRN IDs -> male-cns:v0.9 bodyIds (gustatory class, 1428 candidates; flywireType/matchingNotes fields available as mapping aids)",
+  "pass_criterion": "MN9 rate under sugar+bitter < MN9 rate under sugar alone, reproducing the paper's directional finding",
+  "fail_criterion": "MN9 rate under sugar+bitter >= sugar alone => NT-sign convention is falsified for this circuit (or GRN mapping is wrong - distinguish before concluding)"
+}

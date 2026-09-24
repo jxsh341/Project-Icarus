@@ -68,6 +68,8 @@ def simulate_lif(
     duration_ms: float,
     stimulated: list[int] | None = None,
     silenced: list[int] | None = None,
+    stimulated2: list[int] | None = None,
+    r_poisson2_Hz: float | None = None,
     init_v_mV: float | None = None,
     seed: int = 0,
 ) -> LIFRun:
@@ -80,6 +82,9 @@ def simulate_lif(
     w_syn * f_poi at rate r_poisson, with refractory disabled (poi() in the
     reference sets rfc = 0 for Poisson targets). Neurons in ``silenced``
     have all outgoing weights zeroed (silence() in the reference).
+    ``stimulated2`` mirrors the reference's exc2/r_poi2 pathway: a second
+    Poisson population at rate ``r_poisson2_Hz`` (required when
+    stimulated2 is non-empty), same kick weight and rfc=0 semantics.
 
     Deterministic for a given seed.
     """
@@ -88,8 +93,11 @@ def simulate_lif(
         raise ValueError(
             f"connectivity shape {connectivity.shape} does not match {n} node ids"
         )
+    if stimulated2 and r_poisson2_Hz is None:
+        raise ValueError("stimulated2 requires r_poisson2_Hz")
     stimulated = _check_ids(node_ids, stimulated or [], "stimulated")
     silenced = _check_ids(node_ids, silenced or [], "silenced")
+    stimulated2 = _check_ids(node_ids, stimulated2 or [], "stimulated2")
 
     dt = params.dt_ms
     n_steps = int(round(duration_ms / dt))
@@ -97,6 +105,7 @@ def simulate_lif(
 
     index_of = {node_id: i for i, node_id in enumerate(node_ids)}
     stimulated_idx = [index_of[v] for v in stimulated]
+    stimulated2_idx = [index_of[v] for v in stimulated2]
     silenced_mask = np.zeros(n, dtype=bool)
     for v in silenced:
         silenced_mask[index_of[v]] = True
@@ -129,9 +138,13 @@ def simulate_lif(
     ring_targets = [np.empty(0, dtype=int) for _ in range(ring_len)]
 
     stim_set = np.array(stimulated_idx, dtype=int)
+    stim2_set = np.array(stimulated2_idx, dtype=int)
     stim_refractory = np.zeros(n, dtype=bool)
     stim_refractory[stim_set] = True   # Poisson targets: rfc = 0 (reference poi())
+    if stim2_set.size:
+        stim_refractory[stim2_set] = True  # exc2 targets also get rfc = 0
     poisson_p = params.r_poisson_Hz * dt / 1000.0
+    poisson2_p = (r_poisson2_Hz or 0.0) * dt / 1000.0
     poisson_kick = params.w_syn_mV * params.f_poisson
 
     rng = np.random.default_rng(seed)
@@ -191,6 +204,13 @@ def simulate_lif(
             fires = rng.random(stim_set.size) < poisson_p
             if fires.any():
                 v[stim_set[fires]] += poisson_kick
+
+        # Second Poisson population (reference poi() exc2 loop): identical
+        # semantics - direct v kicks, synapses slot, rfc=0 targets.
+        if stim2_set.size and n_steps:
+            fires2 = rng.random(stim2_set.size) < poisson2_p
+            if fires2.any():
+                v[stim2_set[fires2]] += poisson_kick
 
         # Reset ('resets' slot): runs AFTER kick delivery, destroying any
         # kick that landed on a spiking neuron this step.

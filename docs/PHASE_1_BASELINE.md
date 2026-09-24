@@ -31,12 +31,16 @@ Build a reproducible, validated computational baseline from official MaleCNS dat
   (male-cns:v0.9, depth-2 closure). Both arms on identical signed
   inputs; diff +0.27%, TOST equivalent within ±10%, Spearman ρ = 0.9999.
   Report: `validation/reference/wp6b_signed_head_to_head.json`.
-- **WP6c** — OPEN (external anchor for the NT-sign convention): reproduce
-  a published behavioral experiment from Shiu et al. (feeding or
-  antennal grooming; drive sugar-sensing gustatory or mechanosensory
-  neurons) on the MaleCNS signed connectome. The standard NT→sign
-  convention (ACh +, GABA/glutamate −) is currently convention-inferred;
-  this experiment tests it against published biology. Blocks treating
-  sign-affected benchmark numbers as ground truth; does not block WP8
-  mechanical benchmarking.
+- **WP6c** — DONE (external anchor for the NT-sign convention): the
+  sugar/bitter feeding experiment (Shiu et al. 2024 Fig 3a directional
+  prediction) reproduced on run-007 (GRN-seeded depth-2 closure,
+  male-cns:v0.9). Signed convention: bitter co-drive suppresses
+  sugar-driven MN9 (40.6 → 0.0 Hz), matching the paper. Both ablated
+  conventions fail to reproduce it (abl-glu +1.5 Hz, all-pos +0.5 Hz),
+  and the glutamate-specific ablation shows GABA alone is insufficient
+  — glutamatergic inhibition is specifically required. The NT→sign
+  convention is now anchored to published biology, not convention alone.
+  Report: `validation/reference/wp6c_sign_behavioral_anchor.json`.
+  Limitations (population mapping is literature-based; directionality,
+  not rate matching; MN9 is a circuit proxy) recorded in the report.
 
