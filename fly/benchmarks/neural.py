@@ -17,6 +17,7 @@ and verified against it (validation/reference/wp6_head_to_head.json).
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -62,6 +63,114 @@ PARAMS_PROVENANCE = (
     "fly.dynamics.lif.LIFParams defaults (Shiu et al. 2024 reference; "
     "verified in validation/reference/wp6_head_to_head.json)"
 )
+
+
+def run_benchmark_checkpointed(
+    benchmark_fn: str,
+    matrix: sparse.csr_matrix,
+    node_ids: list[int],
+    n_trials: int,
+    duration_ms: float,
+    seed_base: int,
+    checkpoint: Any,
+    stimulated: list[int] | None = None,
+    params: LIFParams | None = None,
+    dataset: str = "male-cns:v0.9",
+    subgraph_provenance: dict[str, Any] | None = None,
+    depth: int = 2,
+    summarizer: Any = None,
+) -> BenchmarkResult:
+    """Run a benchmark trial-by-trial, appending each to a JSONL checkpoint.
+
+    Resumable: seeds already present in ``checkpoint`` are skipped, so an
+    interrupted run continues instead of restarting. Determinism is
+    preserved because each trial depends only on its seed (verified in
+    tests/test_checkpointed_benchmarks.py).
+
+    This is the standing pattern for multi-trial runs (the WP6c orphan
+    incident: an uncheckpointed 60-trial run was killed by a Hermes
+    restart and lost).
+
+    ``benchmark_fn`` selects the per-trial protocol:
+      - benchmark_spontaneous: no stimulation
+      - benchmark_stimulus_response: Poisson-drive ``stimulated``
+      - benchmark_circuit_propagation: drive + per-hop activity map
+    """
+    from pathlib import Path as _Path
+
+    if checkpoint is None:
+        raise ValueError("checkpoint path is required (resumable-run standard)")
+    checkpoint = _Path(checkpoint)
+    protocols = {
+        "benchmark_spontaneous": benchmark_spontaneous,
+        "benchmark_stimulus_response": benchmark_stimulus_response,
+        "benchmark_circuit_propagation": benchmark_circuit_propagation,
+    }
+    if benchmark_fn not in protocols:
+        raise ValueError(f"unknown benchmark {benchmark_fn!r}")
+    protocol = protocols[benchmark_fn]
+
+    _check_common(matrix, node_ids, n_trials, duration_ms)
+    if stimulated:
+        _check_ids(node_ids, stimulated, "stimulated")
+
+    # resume support
+    done: dict[int, dict[str, Any]] = {}
+    if checkpoint.exists():
+        for line in checkpoint.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                rec = json.loads(line)
+                done[rec["seed"]] = rec
+
+    kwargs: dict[str, Any] = {}
+    if benchmark_fn in ("benchmark_stimulus_response", "benchmark_circuit_propagation"):
+        if not stimulated:
+            raise ValueError(f"{benchmark_fn} requires stimulated ids")
+        kwargs["stimulated"] = stimulated
+    if benchmark_fn == "benchmark_circuit_propagation":
+        kwargs["depth"] = depth
+
+    per_trial: list[dict[str, Any]] = []
+    checkpoint.parent.mkdir(parents=True, exist_ok=True)
+    with checkpoint.open("a", encoding="utf-8") as fh:
+        for i in range(n_trials):
+            seed = seed_base + i
+            if seed in done:
+                per_trial.append(done[seed])
+                continue
+            one = protocol(
+                matrix, node_ids, n_trials=1, duration_ms=duration_ms,
+                seed_base=seed, params=params, dataset=dataset,
+                subgraph_provenance=subgraph_provenance or {"unspecified": True},
+                **kwargs,
+            )
+            trial = one.per_trial[0]
+            rec = {"seed": seed, **trial}
+            fh.write(json.dumps(rec) + "\n")
+            fh.flush()
+            per_trial.append(trial)
+
+    if summarizer is not None:
+        summary = summarizer(per_trial)
+    else:
+        summary = _summarize(
+            per_trial,
+            ["total_spikes", "n_spiking", "mean_rate_hz", "active_fraction",
+             "stimulated_rate_hz", "first_response_latency_ms",
+             "peak_population_rate_hz"],
+        )
+
+    return BenchmarkResult(
+        benchmark=benchmark_fn.replace("benchmark_", ""),
+        dataset=dataset,
+        subgraph_provenance=subgraph_provenance or {"unspecified": True},
+        n_trials=n_trials,
+        duration_ms=duration_ms,
+        seeds=[seed_base + i for i in range(n_trials)],
+        params_provenance=PARAMS_PROVENANCE,
+        per_trial=per_trial,
+        summary=summary,
+    )
 
 
 def _check_common(

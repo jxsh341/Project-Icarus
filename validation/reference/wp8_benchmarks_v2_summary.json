@@ -1,0 +1,201 @@
+{
+  "work_package": "WP8",
+  "version": "v2 (signed connectome)",
+  "supersedes": "run-005 unsigned benchmarks (benchmarks/): spontaneous+stimulus_response were unsigned-graph numbers (epileptiform-inflated); circuit_propagation INVALIDATED (1-hop truncation)",
+  "substrate": {
+    "run-006": "male-cns:v0.9, DNge104-seeded depth-2 closure, NT-signed (WP6b-validated)",
+    "run-007": "male-cns:v0.9, GRN-seeded depth-2 closure, NT-signed (WP6c substrate)",
+    "model": "fly.dynamics.lif, WP6b-verified vs Shiu Brian2 reference (TOST p~0, rho=0.9999)",
+    "protocol": "n=30 seeds/benchmark, 1000 ms, seed_base 1000, per-trial JSONL checkpoints (resumable standard)"
+  },
+  "benchmarks": {
+    "spontaneous": {
+      "summary": {
+        "total_spikes": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "n_spiking": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "mean_rate_hz": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "active_fraction": {
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      },
+      "subgraph": {
+        "run_id": "run-006",
+        "snapshot": "data\\processed\\neuprint_snapshots\\run-006",
+        "matrix": "connectivity_matrix_signed.npz",
+        "dataset": "male-cns:v0.9",
+        "note": "DNge104-seeded depth-2 closure, NT-signed (WP6b)"
+      },
+      "stimulated": null
+    },
+    "stimulus_response": {
+      "summary": {
+        "total_spikes": {
+          "mean": 298.8333333333333,
+          "std": 20.63155155436037,
+          "min": 261.0,
+          "max": 332.0
+        },
+        "n_spiking": {
+          "mean": 2.0,
+          "std": 0.0,
+          "min": 2.0,
+          "max": 2.0
+        },
+        "mean_rate_hz": {
+          "mean": 0.00624012473288925,
+          "std": 0.00043082026257304127,
+          "min": 0.0054501033640293175,
+          "max": 0.0069326985320219674
+        },
+        "active_fraction": {
+          "mean": 4.176324416880705e-05,
+          "std": 2.067631660431043e-20,
+          "min": 4.176324416880703e-05,
+          "max": 4.176324416880703e-05
+        },
+        "stimulated_rate_hz": {
+          "mean": 149.41666666666666,
+          "std": 10.315775777180185,
+          "min": 130.5,
+          "max": 166.0
+        },
+        "first_response_latency_ms": {
+          "mean": 3.356666666666668,
+          "std": 2.493119266734129,
+          "min": 0.1,
+          "max": 9.5
+        },
+        "peak_population_rate_hz": {
+          "mean": 219.33333333333334,
+          "std": 22.884015402012388,
+          "min": 180.0,
+          "max": 290.0
+        }
+      },
+      "subgraph": {
+        "run_id": "run-006",
+        "snapshot": "data\\processed\\neuprint_snapshots\\run-006",
+        "matrix": "connectivity_matrix_signed.npz",
+        "dataset": "male-cns:v0.9",
+        "note": "DNge104-seeded depth-2 closure, NT-signed (WP6b)"
+      },
+      "stimulated": null
+    },
+    "circuit_propagation": {
+      "summary": {
+        "total_spikes": {
+          "mean": 298.8333333333333,
+          "std": 20.63155155436037,
+          "min": 261.0,
+          "max": 332.0
+        },
+        "n_spiking": {
+          "mean": 2.0,
+          "std": 0.0,
+          "min": 2.0,
+          "max": 2.0
+        }
+      },
+      "subgraph": {
+        "run_id": "run-006",
+        "snapshot": "data\\processed\\neuprint_snapshots\\run-006",
+        "matrix": "connectivity_matrix_signed.npz",
+        "dataset": "male-cns:v0.9",
+        "note": "DNge104-seeded depth-2 closure, NT-signed (WP6b)"
+      },
+      "stimulated": null,
+      "hop_spiking_summary": {},
+      "hop_first_trial": {
+        "hop_spiking": {
+          "seeds": 2,
+          "first_order": 0,
+          "second_order": 0
+        },
+        "hop_first_spike_ms": {
+          "seeds": 2.0,
+          "first_order": null,
+          "second_order": null
+        }
+      }
+    },
+    "sugar_recruitment": {
+      "summary": {
+        "total_spikes": {
+          "mean": 17589.9,
+          "std": 367.94539981005244,
+          "min": 16878.0,
+          "max": 18590.0
+        },
+        "n_spiking": {
+          "mean": 411.46666666666664,
+          "std": 9.398214552861049,
+          "min": 389.0,
+          "max": 430.0
+        },
+        "mean_rate_hz": {
+          "mean": 0.43658227848101266,
+          "std": 0.009132424914620317,
+          "min": 0.41891288160833956,
+          "max": 0.4614048150905932
+        },
+        "active_fraction": {
+          "mean": 0.010212625134441962,
+          "std": 0.0002332641983832478,
+          "min": 0.00965500124100273,
+          "max": 0.010672623479771656
+        },
+        "stimulated_rate_hz": {
+          "mean": 148.7078431372549,
+          "std": 3.2711632622075837,
+          "min": 143.52941176470588,
+          "max": 157.64705882352942
+        },
+        "first_response_latency_ms": {
+          "mean": 0.43666666666666665,
+          "std": 0.2953470586572199,
+          "min": 0.1,
+          "max": 1.2000000000000002
+        },
+        "peak_population_rate_hz": {
+          "mean": 49.653005038120476,
+          "std": 1.4419881011369071,
+          "min": 46.41860465116279,
+          "max": 52.75064267352185
+        }
+      },
+      "subgraph": {
+        "run_id": "run-007",
+        "snapshot": "data\\processed\\neuprint_snapshots\\run-007",
+        "matrix": "connectivity_matrix_signed.npz",
+        "dataset": "male-cns:v0.9",
+        "note": "GRN-seeded depth-2 closure, NT-signed (WP6c substrate)"
+      },
+      "stimulated": null
+    }
+  },
+  "findings": {
+    "spontaneous_silence": "Exactly 0 spikes in 30/30 trials on the signed run-006 subgraph: no endogenous activity. Clean-control property - all downstream activity is attributable to injected drive. (Same result as run-005's silent baseline, now on the biologically signed graph.)",
+    "stimulus_response_bounded": "DNge104-pair drive: 298.8 +- 20.6 spikes/s in exactly 2 spiking neurons (the seeds). GABAergic suppression signature (WP6b) holds at benchmark scale: drive confined to seeds, latency 3.4 +- 2.5 ms, peak population rate 219.3 +- 22.9 Hz.",
+    "circuit_propagation_cliff": "hop 0 (seeds) = 2 spikers; ALL deeper hops = 0 spikers in 30/30 trials. Unlike run-005's INVALIDATED structural zero, run-006 is a depth-2 closure where second-order neurons exist (first-order targets are present in the node set), so this cliff is a genuine measurement: inhibitory seeds do not recruit. GABA/glutamate-mediated suppression prevents cascade propagation.",
+    "sugar_recruitment_bounded": "17 sugar GRNs driven at 200 Hz recruit 411.5 +- 9.4 neurons (1.02% of 40,290) at 17,590 +- 368 spikes/s network-wide, peak population rate 49.7 Hz. First excitatory recruitment benchmark: cholinergic sensory drive produces bounded, local recruitment - no cascade - on the signed graph.",
+    "cross_run_consistency": "run-006 stimulus_response (298.8 spikes/s, 2 spikers) matches WP6b's independent 30-trial measurement (308/2 in ours, 299/2 in the reference arm) - benchmark machinery and validation runs agree on the signed graph."
+  }
+}
