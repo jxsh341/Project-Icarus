@@ -7,9 +7,13 @@
 ## Why this task (scoping rationale, evidence-based)
 
 The validated substrate does NOT support arbitrary behavior. Measured properties:
-- Excitatory sensory drive → bounded local recruitment (17 GRNs → 481 neurons, 1.0%)
-- Inhibitory/aversive drive → suppression without motor output (bitter-only: 602
-  recruited, ZERO motor; 400 cb_intrinsic — an aversive-state network)
+- Excitatory sensory drive → bounded local recruitment (17 GRNs → 411.5 ± 9.4 neurons, 1.02%)
+  [WP8 sugar_recruitment, n=30]
+- Bitter-only aversive drive → recruitment WITHOUT motor output (597 ± 3 spiking,
+  MN9_L literal 0 spikes; composition 406 cb_intrinsic / 37 descending / 31
+  ascending / 12 endocrine / 63 cb_sensory / 24 sensory_ascending — an
+  aversive-state network, not a motor program) [probe n=5, this scoping pass]
+- Sugar and bitter programs overlap in only 65/~500 neurons — distinct programs
 - Sugar and bitter programs overlap in only 65/~500 neurons — distinct programs
 - No endogenous activity (0/30 spontaneous) — all activity attributable to drive
 - MN9_L is the paper-validated feeding readout (WP6c: 81.3 Hz sugar → 0.0 bitter)
@@ -49,8 +53,9 @@ action vocabulary in this formulation):
   MN11D_R/MN4b_R as corroborating readouts)
 - **Withhold (reject):** MN9_L < θ_feed (feeding program suppressed)
 - Threshold θ_feed pre-specified from the sugar-only distribution (WP8
-  sugar_recruitment: 82.2 ± 1.6 Hz; θ_feed = 40 Hz, the midline between the
-  bimodal sugar/bitter regimes observed in WP6c)
+  sugar_recruitment n=30: 82.2 ± 1.6 Hz; θ_feed = 40 Hz, the midline between
+  the bimodal sugar/bitter regimes: sugar-only 81.3–82.2 Hz vs bitter
+  co-drive 0.0 Hz, WP6c + WP8)
 
 ## Reward / objective (experimenter-side, not injected into the network)
 
