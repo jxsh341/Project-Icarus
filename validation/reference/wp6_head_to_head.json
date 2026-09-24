@@ -111,5 +111,34 @@
     "issue": "The original bug-3 regression test asserted a SYNAPTIC kick could not spike the target in its arrival step. Surgical revert of the slot order (kick delivery moved before the threshold check) left that test PASSING, because g-mediated kicks only reach v via the next state update - insensitive to delivery order. The test was passing for a different reason than the bug it was named for.",
     "resolution": "Replaced with two tests targeting the actual mechanism (PoissonInput writes to v directly): (a) one-dt delay of the first spike after the first event, (b) same-step event destruction by reset. Both verified discriminating: revert of Poisson-before-threshold makes (a) fail at exactly 0.0 vs 0.1; (b) additionally locks the effective-drive semantics that closed the driven-rate gap.",
     "verified_by": "surgical revert + git checkout restore, 2026-09-23"
+  },
+  "direct_v_write_audit": {
+    "question": "Are there any other direct-v-write pathways (immediate state mutation) besides PoissonInput, where slot-order sensitivity could manifest?",
+    "method": "grep for v[ writes in fly/dynamics/lif.py",
+    "findings": [
+      {
+        "site": "v[stim_set[fires]] += poisson_kick",
+        "pathway": "Poisson drive (PoissonInput equivalent)",
+        "status": "audited; regression-tested (test_poisson_kick_cannot_cause_spike_in_its_arrival_step, test_poisson_event_coinciding_with_spike_is_destroyed_by_reset); discriminating under surgical revert"
+      },
+      {
+        "site": "v[spiking] = params.v_reset_mV",
+        "pathway": "post-spike reset (resets slot)",
+        "status": "audited; position relative to kick delivery is the definition of bug 3b and is locked by the same two regression tests (reset-after-delivery destroys same-step events)"
+      },
+      {
+        "site": "v = params.v0_mV + np.where(frozen, u, u_next)",
+        "pathway": "state update (groups slot)",
+        "status": "not a write pathway; equation-of-motion update, position fixed at loop top, nothing to reorder against"
+      },
+      {
+        "site": "init_v_mV parameter",
+        "pathway": "initialization only, set once before stepping",
+        "status": "not order-sensitive"
+      }
+    ],
+    "conclusion": "Poisson is the only input pathway with immediate state mutation; the reset is the only other direct write. No unaudited direct-v-write pathways exist. Slot-order bugs in this codebase can only manifest through these two sites.",
+    "general_rule": "any future input pathway added to the simulator that writes v (or g) immediately must come with a discriminating regression test established by surgical revert, or it inherits the passes-for-the-wrong-reason gap silently.",
+    "verified_by": "grep + reasoning, 2026-09-23"
   }
 }
