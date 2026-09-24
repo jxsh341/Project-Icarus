@@ -9,7 +9,9 @@
 The validated substrate does NOT support arbitrary behavior. Measured properties:
 - Excitatory sensory drive → bounded local recruitment (17 GRNs → 411.5 ± 9.4 neurons, 1.02%)
   [WP8 sugar_recruitment, n=30]
-- Bitter-only aversive drive → recruitment WITHOUT motor output (597 ± 3 spiking,
+- Bitter-only aversive drive → recruitment WITHOUT motor output (597 ± 3 spiking at 150 Hz —
+  probe pre-dated the explicit-rate convention; superseded by grid (0,200) at explicit 200 Hz:
+  642 ± 7.7 recruited, MN9_L still literal 0,
   MN9_L literal 0 spikes; composition 406 cb_intrinsic / 37 descending / 31
   ascending / 12 endocrine / 63 cb_sensory / 24 sensory_ascending — an
   aversive-state network, not a motor program) [probe n=5, this scoping pass]

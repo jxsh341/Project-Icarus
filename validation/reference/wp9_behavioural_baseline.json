@@ -62,5 +62,16 @@
     "generalization": "results/wp9/generalization_trials.jsonl (40 trials, left-out seeds)",
     "theta_calibration": "results/wp9/theta_calibration.json (frozen pre-sweep)",
     "true_corner_check": "results/wp9/true_corner_check.jsonl (mislabel verification)"
+  },
+  "scoping_probe_rate_erratum": {
+    "finding": "The bitter-only scoping probe (597 +- 3 spiking, zero motor) was run with LIFParams() defaults, so its bitter drive was 150 Hz, not the nominal 'bitter 200 Hz'. It is a valid 150 Hz measurement; the WP9 grid (0,200) cell supersedes it with the explicit-rate measurement.",
+    "grid_0_200_explicit_rate": {
+      "n_spiking": 642.4,
+      "std": 7.7,
+      "mn9_l_hz": 0.0,
+      "total_spikes": 34031.0,
+      "n": 10
+    },
+    "note": "Conclusions unchanged: aversive recruitment without motor output holds at both rates."
   }
 }

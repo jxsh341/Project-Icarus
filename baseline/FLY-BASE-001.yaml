@@ -110,6 +110,21 @@ errata_on_record:
     corrected to near-complete suppression (0-5 Hz). Errata written into
     both reports. All WP9 runs set both rates explicitly.
   wp6b_wall_clock: "per-trial wall_s not recorded (field added later); session-log estimate only"
+  wp9_rate_audit_2026_09_24: >-
+    Post-freeze audit (reviewer-requested): verified the WP9 grid did
+    NOT inherit the 150/200 Hz mislabel. Evidence: (a) code - all WP9
+    scripts set both rates via dataclasses.replace (convention adopted
+    before the grid launched, commit f7ecefb); (b) fingerprint - grid
+    (200,0) total spikes 20,152 +- 395 matches the true-200Hz reference
+    20,316 +- 506 (|delta| 164) and excludes the 150Hz reference 17,590
+    (|delta| 2,562); grid (0,200) n_spiking 642.4 +- 7.7 differs from
+    the 150Hz bitter probe's 597 +- 3. One additional contamination
+    found and corrected: the bitter-only SCOPING probe (597) ran at
+    150 Hz; it is a valid 150 Hz measurement, superseded by grid (0,200)
+    at explicit 200 Hz (642 recruited, still zero motor). No WP9 grid
+    cell was re-run; the grid was immune by construction and verified
+    so after the fact. All other numbers in this manifest trace to
+    explicit-rate runs or are annotated with their true rate.
 
 test_suite: "68 passed (uv run pytest from repo root)"
 
