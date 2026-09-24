@@ -1,0 +1,678 @@
+{
+  "benchmark": "circuit_propagation",
+  "dataset": "male-cns:v1.0",
+  "subgraph_provenance": {
+    "run_id": "run-005",
+    "snapshot": "data\\processed\\neuprint_snapshots\\run-005",
+    "n_neurons": 4293,
+    "n_edges_summed": 6789,
+    "dataset": "male-cns:v1.0",
+    "note": "bidirectional closed subgraph, seeds 12781/556329",
+    "hop_structure": {
+      "seeds": 2,
+      "hop_1": 2937,
+      "hop_2": 0
+    }
+  },
+  "n_trials": 30,
+  "duration_ms": 1000.0,
+  "seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009,
+    1010,
+    1011,
+    1012,
+    1013,
+    1014,
+    1015,
+    1016,
+    1017,
+    1018,
+    1019,
+    1020,
+    1021,
+    1022,
+    1023,
+    1024,
+    1025,
+    1026,
+    1027,
+    1028,
+    1029
+  ],
+  "params_provenance": "fly.dynamics.lif.LIFParams defaults (Shiu et al. 2024 reference; verified in validation/reference/wp6_head_to_head.json)",
+  "per_trial": [
+    {
+      "seed": 1000,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 435,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 2.0,
+        "first_order": 6.2,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 425.0,
+        "first_order": 5770.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6195,
+      "n_spiking": 437
+    },
+    {
+      "seed": 1001,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 490,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.9,
+        "first_order": 9.9,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 451.0,
+        "first_order": 6532.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6983,
+      "n_spiking": 492
+    },
+    {
+      "seed": 1002,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 441,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.9,
+        "first_order": 5.1000000000000005,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 364.0,
+        "first_order": 4198.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 4562,
+      "n_spiking": 443
+    },
+    {
+      "seed": 1003,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 524,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.2,
+        "first_order": 8.4,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 452.0,
+        "first_order": 6844.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 7296,
+      "n_spiking": 526
+    },
+    {
+      "seed": 1004,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 349,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.1,
+        "first_order": 4.3,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 354.0,
+        "first_order": 3879.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 4233,
+      "n_spiking": 351
+    },
+    {
+      "seed": 1005,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 488,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 3.9000000000000004,
+        "first_order": 8.1,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 383.0,
+        "first_order": 4877.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 5260,
+      "n_spiking": 490
+    },
+    {
+      "seed": 1006,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 464,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.0,
+        "first_order": 8.200000000000001,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 445.0,
+        "first_order": 6342.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6787,
+      "n_spiking": 466
+    },
+    {
+      "seed": 1007,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 436,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.5,
+        "first_order": 8.700000000000001,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 409.0,
+        "first_order": 5152.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 5561,
+      "n_spiking": 438
+    },
+    {
+      "seed": 1008,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 455,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 3.2,
+        "first_order": 7.4,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 423.0,
+        "first_order": 6078.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6501,
+      "n_spiking": 457
+    },
+    {
+      "seed": 1009,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 471,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 1.1,
+        "first_order": 5.300000000000001,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 469.0,
+        "first_order": 6920.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 7389,
+      "n_spiking": 473
+    },
+    {
+      "seed": 1010,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 495,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.800000000000001,
+        "first_order": 9.0,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 471.0,
+        "first_order": 7227.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 7698,
+      "n_spiking": 497
+    },
+    {
+      "seed": 1011,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 576,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.8,
+        "first_order": 3.8000000000000003,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 493.0,
+        "first_order": 7714.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 8207,
+      "n_spiking": 578
+    },
+    {
+      "seed": 1012,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 497,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.2,
+        "first_order": 8.4,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 395.0,
+        "first_order": 5161.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 5556,
+      "n_spiking": 499
+    },
+    {
+      "seed": 1013,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 441,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 5.300000000000001,
+        "first_order": 10.3,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 438.0,
+        "first_order": 6261.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6699,
+      "n_spiking": 443
+    },
+    {
+      "seed": 1014,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 478,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 1.4000000000000001,
+        "first_order": 5.6000000000000005,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 487.0,
+        "first_order": 7416.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 7903,
+      "n_spiking": 480
+    },
+    {
+      "seed": 1015,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 358,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 6.300000000000001,
+        "first_order": 10.200000000000001,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 350.0,
+        "first_order": 4049.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 4399,
+      "n_spiking": 360
+    },
+    {
+      "seed": 1016,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 426,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.6000000000000001,
+        "first_order": 5.6000000000000005,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 433.0,
+        "first_order": 5671.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6104,
+      "n_spiking": 428
+    },
+    {
+      "seed": 1017,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 478,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.5,
+        "first_order": 8.700000000000001,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 402.0,
+        "first_order": 5129.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 5531,
+      "n_spiking": 480
+    },
+    {
+      "seed": 1018,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 515,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 3.0,
+        "first_order": 7.2,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 453.0,
+        "first_order": 6383.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6836,
+      "n_spiking": 517
+    },
+    {
+      "seed": 1019,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 452,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 9.5,
+        "first_order": 14.5,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 373.0,
+        "first_order": 4708.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 5081,
+      "n_spiking": 454
+    },
+    {
+      "seed": 1020,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 393,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 6.800000000000001,
+        "first_order": 11.8,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 345.0,
+        "first_order": 3757.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 4102,
+      "n_spiking": 395
+    },
+    {
+      "seed": 1021,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 464,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 3.1,
+        "first_order": 7.300000000000001,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 467.0,
+        "first_order": 6750.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 7217,
+      "n_spiking": 466
+    },
+    {
+      "seed": 1022,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 397,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.1,
+        "first_order": 3.5,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 418.0,
+        "first_order": 5327.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 5745,
+      "n_spiking": 399
+    },
+    {
+      "seed": 1023,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 427,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 4.1000000000000005,
+        "first_order": 9.1,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 378.0,
+        "first_order": 4348.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 4726,
+      "n_spiking": 429
+    },
+    {
+      "seed": 1024,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 419,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 3.4000000000000004,
+        "first_order": 8.4,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 415.0,
+        "first_order": 5547.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 5962,
+      "n_spiking": 421
+    },
+    {
+      "seed": 1025,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 466,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.4,
+        "first_order": 5.4,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 455.0,
+        "first_order": 6521.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6976,
+      "n_spiking": 468
+    },
+    {
+      "seed": 1026,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 496,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 3.7,
+        "first_order": 8.0,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 437.0,
+        "first_order": 6061.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6498,
+      "n_spiking": 498
+    },
+    {
+      "seed": 1027,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 449,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.2,
+        "first_order": 3.9000000000000004,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 474.0,
+        "first_order": 6980.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 7454,
+      "n_spiking": 451
+    },
+    {
+      "seed": 1028,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 494,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 8.9,
+        "first_order": 12.9,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 457.0,
+        "first_order": 6609.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 7066,
+      "n_spiking": 496
+    },
+    {
+      "seed": 1029,
+      "hop_spiking": {
+        "seeds": 2,
+        "first_order": 466,
+        "second_order": 0
+      },
+      "hop_first_spike_ms": {
+        "seeds": 0.8,
+        "first_order": 4.800000000000001,
+        "second_order": null
+      },
+      "hop_rate_hz": {
+        "seeds": 419.0,
+        "first_order": 5817.0,
+        "second_order": 0.0
+      },
+      "total_spikes": 6236,
+      "n_spiking": 468
+    }
+  ],
+  "summary": {
+    "hop_spiking_seeds": {
+      "mean": 2.0,
+      "std": 0.0
+    },
+    "hop_first_spike_ms_seeds": {
+      "mean": 3.356666666666668,
+      "std": 2.493119266734129
+    },
+    "hop_spiking_first_order": {
+      "mean": 458.0,
+      "std": 47.453062108237816
+    },
+    "hop_first_spike_ms_first_order": {
+      "mean": 7.666666666666669,
+      "std": 2.704827527592654
+    },
+    "hop_spiking_second_order": {
+      "mean": 0.0,
+      "std": 0.0
+    }
+  },
+  "wall_clock_seconds": 25.302072048187256,
+  "generated": "2026-09-24T10:05:24+0200"
+}
