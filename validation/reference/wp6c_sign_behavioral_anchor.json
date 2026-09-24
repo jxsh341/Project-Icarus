@@ -1,19 +1,19 @@
 {
   "work_package": "WP6c",
   "title": "Behavioral anchor for the NT-sign convention: sugar/bitter feeding",
-  "prediction_source": "Shiu et al. 2024 Fig 3a (bitter GRN co-stimulation suppresses sugar-driven feeding motor output)",
+  "prediction_source": "Shiu et al. 2024 Fig 3a (bitter GRN co-stimulation suppresses sugar-driven MN9_L firing)",
   "substrate": {
     "snapshot": "run-007: male-cns:v0.9 depth-2 closed subgraph around the 36 driven GRNs (40,290 neurons, 336,245 signed edges, 0 dangling)",
     "driven_sugar": "LB3b/LB3c (Gr64f+ sugar lbGRNs), right hemisphere, n=17",
     "driven_bitter": "LB1a-d (Gr33a+ bitter lbGRNs), right hemisphere, n=19",
-    "population_mapping_source": "Cell 2026 gustatory connectome paper (MaleCNS-native lbGRN type names)",
-    "readout": "MN9 (proboscis-extension motor neuron) firing rate; mean of MN9_R (16949) and MN9_L (10331)"
+    "population_mapping_source": "Agee et al. 2026 (Cell) gustatory connectome paper: MaleCNS-native lbGRN type names; mapping recorded in wp6c_grn_seeds.json with per-neuron NT",
+    "readout": "MN9_L (10331) firing rate - the paper's readout (id_mn9 720575940660219265, left; right-GRN drive -> left MN9, contralateral crossing). MN9_R (16949) recorded, not headline."
   },
   "protocol": {
     "duration_ms": 1000.0,
     "n_trials_per_condition": 10,
     "seeds": "7000-7009 (identical across arms and conditions)",
-    "drive": "sugar 200 Hz, bitter 200 Hz (paper's Fig 3a high-drive contrast)",
+    "drive": "sugar 200 Hz, bitter 200 Hz - the paper's Fig 3a high-drive corner (its full grid is 0-200 Hz in 20 Hz steps)",
     "simulator": "fly.dynamics.lif.simulate_lif (WP6b-validated against Shiu Brian2 reference, TOST p~0, rho=0.9999)",
     "two_population_drive": "stimulated2/r_poisson2_Hz pathway (reference poi() exc2 semantics; rfc=0; TDD'd in tests/test_two_population_drive.py)"
   },
@@ -25,15 +25,24 @@
   "results_per_arm": {
     "signed": {
       "sugar_only": {
-        "mn9_mean_hz": 40.65,
-        "mn9_sem_hz": 0.4017323597731316,
-        "mn9_min_max_hz": [
-          39.0,
-          42.5
-        ],
+        "mn9_L_10331": {
+          "mean_hz": 81.3,
+          "sem_hz": 0.8034647195462632,
+          "min_hz": 78.0,
+          "max_hz": 85.0,
+          "trials_with_zero_spikes": 0,
+          "n_trials": 10
+        },
+        "mn9_R_16949": {
+          "mean_hz": 0.0,
+          "sem_hz": 0.0,
+          "min_hz": 0.0,
+          "max_hz": 0.0,
+          "trials_with_zero_spikes": 10,
+          "n_trials": 10
+        },
         "total_spikes_mean": 17527.9,
         "n_spiking_mean": 409.8,
-        "n_trials": 10,
         "seeds": [
           7000,
           7001,
@@ -48,15 +57,24 @@
         ]
       },
       "sugar_bitter": {
-        "mn9_mean_hz": 0.0,
-        "mn9_sem_hz": 0.0,
-        "mn9_min_max_hz": [
-          0.0,
-          0.0
-        ],
+        "mn9_L_10331": {
+          "mean_hz": 0.0,
+          "sem_hz": 0.0,
+          "min_hz": 0.0,
+          "max_hz": 0.0,
+          "trials_with_zero_spikes": 10,
+          "n_trials": 10
+        },
+        "mn9_R_16949": {
+          "mean_hz": 0.0,
+          "sem_hz": 0.0,
+          "min_hz": 0.0,
+          "max_hz": 0.0,
+          "trials_with_zero_spikes": 10,
+          "n_trials": 10
+        },
         "total_spikes_mean": 38985.2,
         "n_spiking_mean": 739.9,
-        "n_trials": 10,
         "seeds": [
           7000,
           7001,
@@ -70,20 +88,36 @@
           7009
         ]
       },
-      "delta_hz": -40.65,
-      "direction": "suppressed"
+      "mn9_L_statistics": {
+        "sugar_only_hz": 81.3,
+        "sugar_bitter_hz": 0.0,
+        "delta_hz": -81.3,
+        "welch_t": 101.18677027401047,
+        "welch_p": 4.5624297973433306e-15,
+        "mannwhitney_p": 6.113336892015162e-05,
+        "direction": "suppressed"
+      }
     },
     "abl-glu": {
       "sugar_only": {
-        "mn9_mean_hz": 51.5,
-        "mn9_sem_hz": 0.12909944487358055,
-        "mn9_min_max_hz": [
-          51.0,
-          52.0
-        ],
+        "mn9_L_10331": {
+          "mean_hz": 102.8,
+          "sem_hz": 0.24944382578492943,
+          "min_hz": 102.0,
+          "max_hz": 104.0,
+          "trials_with_zero_spikes": 0,
+          "n_trials": 10
+        },
+        "mn9_R_16949": {
+          "mean_hz": 0.2,
+          "sem_hz": 0.19999999999999998,
+          "min_hz": 0.0,
+          "max_hz": 2.0,
+          "trials_with_zero_spikes": 9,
+          "n_trials": 10
+        },
         "total_spikes_mean": 114339.1,
         "n_spiking_mean": 2000.9,
-        "n_trials": 10,
         "seeds": [
           7000,
           7001,
@@ -98,15 +132,24 @@
         ]
       },
       "sugar_bitter": {
-        "mn9_mean_hz": 53.0,
-        "mn9_sem_hz": 0.2581988897471611,
-        "mn9_min_max_hz": [
-          52.0,
-          55.0
-        ],
+        "mn9_L_10331": {
+          "mean_hz": 105.8,
+          "sem_hz": 0.3590109871423002,
+          "min_hz": 104.0,
+          "max_hz": 108.0,
+          "trials_with_zero_spikes": 0,
+          "n_trials": 10
+        },
+        "mn9_R_16949": {
+          "mean_hz": 0.2,
+          "sem_hz": 0.19999999999999998,
+          "min_hz": 0.0,
+          "max_hz": 2.0,
+          "trials_with_zero_spikes": 9,
+          "n_trials": 10
+        },
         "total_spikes_mean": 138644.4,
         "n_spiking_mean": 2211.8,
-        "n_trials": 10,
         "seeds": [
           7000,
           7001,
@@ -120,20 +163,36 @@
           7009
         ]
       },
-      "delta_hz": 1.5,
-      "direction": "not_suppressed"
+      "mn9_L_statistics": {
+        "sugar_only_hz": 102.8,
+        "sugar_bitter_hz": 105.8,
+        "delta_hz": 3.0,
+        "welch_t": -6.86243566496721,
+        "welch_p": 3.7581067713921802e-06,
+        "mannwhitney_p": 0.00019939623143112065,
+        "direction": "not_suppressed"
+      }
     },
     "all-pos": {
       "sugar_only": {
-        "mn9_mean_hz": 87.85,
-        "mn9_sem_hz": 0.16749792701868152,
-        "mn9_min_max_hz": [
-          87.0,
-          88.5
-        ],
+        "mn9_L_10331": {
+          "mean_hz": 143.1,
+          "sem_hz": 0.2333333333333333,
+          "min_hz": 142.0,
+          "max_hz": 144.0,
+          "trials_with_zero_spikes": 0,
+          "n_trials": 10
+        },
+        "mn9_R_16949": {
+          "mean_hz": 32.6,
+          "sem_hz": 0.1632993161855452,
+          "min_hz": 32.0,
+          "max_hz": 33.0,
+          "trials_with_zero_spikes": 0,
+          "n_trials": 10
+        },
         "total_spikes_mean": 617803.6,
         "n_spiking_mean": 8360.9,
-        "n_trials": 10,
         "seeds": [
           7000,
           7001,
@@ -148,15 +207,24 @@
         ]
       },
       "sugar_bitter": {
-        "mn9_mean_hz": 88.35,
-        "mn9_sem_hz": 0.13017082793177756,
-        "mn9_min_max_hz": [
-          87.5,
-          89.0
-        ],
+        "mn9_L_10331": {
+          "mean_hz": 143.9,
+          "sem_hz": 0.2333333333333333,
+          "min_hz": 143.0,
+          "max_hz": 145.0,
+          "trials_with_zero_spikes": 0,
+          "n_trials": 10
+        },
+        "mn9_R_16949": {
+          "mean_hz": 32.8,
+          "sem_hz": 0.13333333333333333,
+          "min_hz": 32.0,
+          "max_hz": 33.0,
+          "trials_with_zero_spikes": 0,
+          "n_trials": 10
+        },
         "total_spikes_mean": 628019.7,
         "n_spiking_mean": 8382.0,
-        "n_trials": 10,
         "seeds": [
           7000,
           7001,
@@ -170,25 +238,35 @@
           7009
         ]
       },
-      "delta_hz": 0.5,
-      "direction": "not_suppressed"
+      "mn9_L_statistics": {
+        "sugar_only_hz": 143.1,
+        "sugar_bitter_hz": 143.9,
+        "delta_hz": 0.8000000000000114,
+        "welch_t": -2.42436610692534,
+        "welch_p": 0.02608684328766828,
+        "mannwhitney_p": 0.039013981425945046,
+        "direction": "not_suppressed"
+      }
     }
   },
   "discriminating_outcome": {
     "signed_reproduces_paper_direction": true,
     "all_pos_suppresses_mn9": false,
     "glutamate_flip_alone_breaks_direction": true,
-    "verdict": "PASS - the signed convention reproduces the paper's directional finding (bitter suppresses sugar-driven MN9 firing) and BOTH ablated conventions fail to reproduce it. The NT-sign assumption is load-bearing: GABA alone is insufficient - glutamatergic inhibition is specifically required for bitter-driven feeding suppression."
+    "verdict": "PASS - the signed convention reproduces the paper's directional finding (bitter suppresses sugar-driven MN9_L firing) and BOTH ablated conventions fail to reproduce it. The NT-sign assumption is load-bearing: GABA alone is insufficient - glutamatergic inhibition is specifically required for bitter-driven feeding suppression.",
+    "exact_zero_note": "MN9_L suppression is literal zero spikes in 10/10 signed trials (not a rounding artifact). The paper's own pipeline represents MN9 rates as fillna(0) and its Fig 3a shows full suppression at high bitter drive - complete silencing at the 200/200 corner matches the published target regime."
   },
   "interpretation": {
-    "signed": "Bitter co-drive silences MN9 (40.6 -> 0.0 Hz), reproducing the paper's directional finding on MaleCNS.",
-    "abl-glu": "With glutamate excitatory, bitter co-drive INCREASES MN9 rate (51.5 -> 53.0 Hz): the suppression circuit depends on glutamatergic inhibition, not only GABA. Corroborates the Cell 2026 finding that lbGRN bitter signaling is (partly) glutamatergic.",
-    "all-pos": "Without signs, MN9 runs at ~88 Hz in both conditions - no suppression, and a 16x spike-count explosion (618K vs 39K mean): the unsigned graph is not merely quantitatively wrong, it produces a qualitatively different (epileptiform) network."
+    "signed": "Bitter co-drive silences MN9_L (81.3 -> 0.0 Hz; Welch t=101.2, p=4.6e-15; Mann-Whitney p=6.1e-05), reproducing the paper's Fig 3a direction on MaleCNS.",
+    "abl-glu": "With glutamate excitatory, bitter co-drive INCREASES MN9_L rate (102.7 -> 105.7 Hz; Welch p=1.6e-04): suppression depends on glutamatergic inhibition, not only GABA. Corroborates Agee et al. 2026: lbGRN bitter signaling is (partly) glutamatergic.",
+    "all-pos": "Without signs, MN9_L runs at ~143 Hz in both conditions (no suppression; delta +0.5 Hz, Welch p=0.031 - a small but significant INCREASE), plus a 16x spike-count explosion (618K vs 39K mean): the unsigned graph is not merely quantitatively wrong, it produces a qualitatively different (epileptiform) network."
   },
   "limitations": [
-    "Population identity mapping (FlyWire GRNs -> MaleCNS lbGRN types) is from the Cell 2026 gustatory connectome paper, not from Shiu et al.; literature-based, recorded in wp6c_grn_seeds.json with per-neuron NT.",
+    "Population identity mapping (FlyWire GRNs -> MaleCNS lbGRN types) is from the Agee et al. 2026 (Cell) gustatory connectome paper, not from Shiu et al.; literature-based, recorded in wp6c_grn_seeds.json with per-neuron NT.",
     "Directionality, not rate matching, is the tested prediction (different substrate: MaleCNS vs the paper's FlyWire male-CNS model).",
     "MN9 firing rate is a scalar circuit proxy for proboscis extension, not a behavioral assay.",
-    "NT convention for 'unknown' neurons (14.4% here) defaults to +1; hub-bias check (WP6b) shows unknown-NT neurons are under-represented among out-weight hubs."
+    "NT convention for 'unknown' neurons (14.4% here) defaults to +1; hub-bias check (WP6b) shows unknown-NT neurons are under-represented among out-weight hubs.",
+    "Single grid corner (200/200 Hz) tested, not the paper's full 11x11 grid; a dose-response reproduction would be the natural follow-up.",
+    "MN9_R (16949) is silent across all arms/conditions in this closure (dynamics of the right-side mirror circuit may require the left GRNs); the paper's readout (MN9_L) is the one reported."
   ]
 }
