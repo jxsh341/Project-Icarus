@@ -24,6 +24,16 @@ Build a reproducible, validated computational baseline from official MaleCNS dat
 
 ## Work-package registry
 
+- **WP9** — DONE: behavioural baseline — taste-driven action selection
+  (plan §16 task 8). 11×11 grid × 10 seeds (1,210 trials, 3.71 h),
+  θ_feed=41.5 Hz frozen pre-sweep. Boundary: **feed iff sugar present
+  AND bitter absent** (vertical at r_bitter=20 Hz; 81.7→2.7 Hz even at
+  sugar 200). Two disjoint regimes, 0/121 mixed cells, 121/121
+  ground-truth accuracy, θ-robust for any θ∈[20,60]. Staggered onset:
+  76→17 Hz collapse in first 100 ms bin, 95% suppression, residual 3.9
+  Hz (silence not reached at staggered onset). Off-grid + left-out-seed
+  generalization all correct. Report:
+  `validation/reference/wp9_behavioural_baseline.json`.
 - **WP10** — DONE: computational cost baseline
   (`validation/reference/wp10_compute_baseline.json`). Profile: run-006
   4,552 steps/s (0.46× bio-realtime, 81 MB RSS); run-007 2,213 steps/s
