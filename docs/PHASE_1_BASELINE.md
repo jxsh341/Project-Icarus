@@ -24,6 +24,15 @@ Build a reproducible, validated computational baseline from official MaleCNS dat
 
 ## Work-package registry
 
+- **WP8v2** — DONE: signed-connectome benchmarks (run-006 + run-007,
+  n=30 each, checkpointed). spontaneous 0/30 (clean control);
+  stimulus_response 298.8±20.6 spikes/s in 2 spikers (GABAergic
+  suppression at benchmark scale); circuit_propagation genuine
+  measured cliff (inhibitory seeds don't recruit; supersedes run-005's
+  structural zero); sugar_recruitment 411.5±9.4 neurons (1.02%,
+  bounded excitatory recruitment). Supersedes all run-005 unsigned
+  benchmark numbers. Report:
+  `validation/reference/wp8_benchmarks_v2_summary.json`.
 - **WP6a** — DONE (commit ebf0f43, audit 6535713/12ec79f): implementation
   parity vs the Shiu reference on run-005 (unsigned inputs; valid as an
   implementation check, superseded biologically by WP6b).
