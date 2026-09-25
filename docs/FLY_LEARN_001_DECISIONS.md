@@ -329,3 +329,121 @@ point 1 — the GNG521 caveat):**
 4. L1 insufficient on this substrate.
 (4) may NOT be concluded without (1)-(3) checked and recorded.
 n=3 seeds is NOT a statistical comparison; it gates WP4's design only.
+
+## WP3 pilot — Stage B erratum + v2 amendment (pre-registered before v2 launch)
+
+**Stage B implementation bug (self-caught, post-run audit):** the
+TrainingRun was constructed INSIDE the trial loop, so each of the 10
+"training trials" started from the pristine matrix and weight updates
+never accumulated. The Stage B probe therefore legitimately read 0 at
+every eta, and eta* was selected by the FALLBACK rule (largest eta
+with no guard fire = 1e-3) - the registered primary rule (smallest eta
+with probe expression) never actually operated. Eta sensitivity is
+UNMEASURED. Stage C/D were built correctly (run hoisted outside the
+loop; verified by the accumulating probe curves) and are unaffected.
+The bugged artifact stays on record (stage_b_eta.jsonl); v2 writes to
+stage_b_eta_v2.jsonl.
+
+**v2 amendment (registered before launch):** re-run Stage B with the
+accumulation fix for BOTH cues (not GNG521-only as originally
+registered - the PRW043 null and the review's eta-consistency
+question motivate the extension). Seeds: GNG521 31300-31309 (reused;
+accumulated matrices differ from the bugged run anyway), PRW043
+31400-31409 (fresh block); probes 31350/31450. Per-cue eta* per the
+original rule; the CROSS-CUE comparison is the review's population-
+size signal. Save accumulated weight matrices after the probe for
+edge-identity audit.
+
+**Stage C/D results (valid, unaffected by the bug):**
+- GNG521 (n=2): cue-alone probe 0 -> 87-91 Hz at trial 5, saturating
+  95-99 Hz by trial 20, all 3 seed blocks. Acquisition is FAST and
+  complete. Edge audit: 24 edges/trial changed (= cue out-degree
+  range), no guard fires.
+- PRW043 (n=5): probe 0 Hz at trials 5/10/15/20, all 3 blocks.
+  Plasticity IS applied (35-39 edges/trial change, net positive
+  mass, total_delta +1347 last trial) but never expresses.
+- L0 control: 24/24 probes = 0 Hz (null distribution exact);
+  cosugar training readouts 75-87 Hz = unlearned baseline intact.
+- Pre-registered success criterion MET: Stage-C probe > 0 with all
+  Stage-D probes 0, no guard events, weight changes confined to
+  cue-incident edges. FEASIBILITY SIGNAL: POSITIVE.
+
+**Pre-registered interpretation order, applied to the PRW043 null:**
+1. eta/exposure insufficient - PENDING v2 (this amendment).
+2. population too small - CONTRA-INDICATED by direction: the n=2 cue
+   acquired; the n=5 cue did not. Population size is not limiting at
+   this stage; if anything it predicts the wrong ordering.
+3. potentiated edges land where they cannot reach the readout
+   (location, not magnitude) - structural check running now.
+4. mechanism insufficient - CONTRADICTED for the substrate by
+   GNG521's success; for PRW043 the claim narrows to "this cue's
+   potentiable edge set does not intersect a sufficient path at this
+   eta/exposure", which is (1)+(3), not (4).
+
+**v2 grid extension (registered before v2 launch):** eta grid extended
+to {1e-5, 1e-4, 1e-3, 1e-2} for BOTH cues. 1e-2 is added because the
+structural audit makes magnitude-vs-location the live question: if
+PRW043 expresses only at 1e-2 (10x the eta* of GNG521), the null was
+magnitude (hypothesis 1) at a 3-hop route; if it never expresses even
+at 1e-2 (or the guard fires), the null is location (hypothesis 3).
+The guard watches every arm; a guard fire at 1e-2 is information, not
+failure.
+
+**Structural audit result (prw043_structural_audit.json):**
+- GNG521: 2 excitatory hops to MN9_L; direct targets 1605/1957/1672
+  are 1 hop from MN9_L (strong second leg, w up to 24).
+- PRW043: 3 excitatory hops on every neuron; no direct target is
+  1 hop from MN9_L; second-leg edges weak (w mostly 1-8).
+Hypothesis (3) has a concrete mechanism: potentiation of the same
+MAGNITUDE lands at different DEPTHS. v2 discriminates (1) vs (3).
+
+## WP3 pilot — v2 eta verdict + PRW043 location CONFIRMED-CONSISTENT; Task A fork opened
+
+**Stage B v2 (accumulation fixed, both cues, 4-decade grid;
+stage_b_eta_v2.jsonl / stage_b_eta_v2_verdict.json):**
+- GNG521: probe MN9_L = 0 / 77 / 95 / 103 Hz at eta 1e-5/1e-4/1e-3/1e-2.
+  eta* = 1e-4. Expression appears BETWEEN 1e-5 and 1e-4; saturating by
+  1e-2. No guard fires anywhere.
+- PRW043: probe MN9_L = 0 at ALL eta through 1e-2 (100x GNG521's
+  eta*). No guard fires. eta* = 1e-2 by fallback (no expression).
+
+**Interpretation order, final status:**
+1. eta/exposure insufficient - EXCLUDED for PRW043 (100x does nothing;
+   for GNG521 refuted by expression at 1e-4).
+2. population too small - CONTRA-INDICATED in both directions (n=2
+   cue acquires; n=5 cue does not).
+3. location not magnitude - SUPPORTED by intervention-free evidence
+   and now the sole surviving hypothesis; proposed CONFIRMATORY step
+   is the 2-hop-window intervention below.
+   (inhibitory-cancellation variant of the original (3): excluded -
+   both cues' total_delta net positive: +590 / +1347.)
+4. mechanism insufficient - CONTRADICTED for the substrate (GNG521
+   acquires robustly under the identical rule).
+
+**Mechanism, precisely stated:** the driver's L1 observation window is
+1-hop (cue-incident edges only). GNG521's potentiated first leg lands
+on neurons already 1 hop from MN9_L (1605/1957/1672) with strong
+existing second legs (w up to 24). PRW043's only excitatory routes are
+3-hop with weak second/third legs (w 1-8 = 0.3-2.2 mV kicks, below
+the ~3 mV threshold gap) that the 1-hop window can NEVER strengthen.
+Geometry (survivor_geometry.json): 9/11 batch survivors are <=2-hop;
+PRW043 and pIP1 are the 3-hop exceptions. The pair-matching rules
+(degree bands + Jaccard) admitted exactly one pair - which happens to
+pair a 2-hop with a 3-hop cue. The criteria set lacked a hop-parity
+requirement because expression geometry was unknown at freeze time;
+that is what the pilot exists to surface.
+
+**TASK A FORK (registered before any resolution):**
+- (a) INTERVENTION: broaden the L1 observation window to 2-hop for
+  BOTH cues (pre-registered as a mechanism-implementation amendment,
+  not per-cue tuning) and re-run v2 for PRW043. If PRW043 expresses,
+  the location hypothesis is CONFIRMED causally and the frozen pair
+  stands under a uniform 2-hop window. Cost: ~4 arms x 10 trials.
+- (b) Keep PRW043 as a deliberately NON-EXPRESSING within-task control
+  cue; Task A becomes one-learnable-cue + structural-null. Breaks the
+  D1 arm-swap symmetry; requires protocol amendment.
+- (c) Re-select the pair under amended criteria (add <=2-hop parity;
+  degree bands must widen - no <=2-hop survivor matches GNG521 within
+  20%); natural candidate pair GNG611+GNG622 (both 2-hop). Full
+  re-verification cost (group probes, Stage A at n=10, eta*).
+Decision recorded after review.
