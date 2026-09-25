@@ -175,3 +175,111 @@ record with the same status as positive ones.
   registered when WP3 lands)
 - compute costing of the §35 experiment matrix at Phase 1 measured rates
   (0.09–0.15 trials/s high-activity) before the confirmatory stage
+
+
+## Cue selection — probe and screen results (2026-09-25, post-WP1)
+
+**LB2a probe VERDICT: REJECT on both frozen criteria**
+(results/phase2/wp2_cue_probe_lb2a.jsonl, n=5 seeds 21000-21004, explicit 200 Hz).
+- (c) FAIL: cue-alone MN9_L = 1 Hz in 5/5 seeds (criterion: max == 0).
+  Perfectly reproducible single spike; possibly an onset transient —
+  noted as a criterion refinement candidate (steady-state window
+  instead of whole-trial count), but this does NOT rescue LB2a because
+  (d) fails regardless.
+- (d) FAIL: co-drive with sugar suppresses MN9_L 82 -> [9,10,19,30,54] Hz,
+  4/5 seeds below the frozen 41.5 Hz threshold (criterion: min >= 41.5).
+- Mechanism: co-drive recruits ~2x the neurons sugar alone does
+  (n_spiking 859-985 vs 440) while MN9_L FALLS — the LB2a direct
+  cholinergic path is dominated by recruited inhibitory intermediates.
+
+**Path-influence screen: validation FAIL — rankings discarded per the
+pre-registered rule** (results/phase2/wp2_synthetic_cue_screen.json).
+- Validated on 3/4 measured cases (sugar +88.6k, bitter -732.7k,
+  ir94e -209.1k — all correct signs; these are the STRONG-influence
+  regime).
+- FAILED on LB2a: predicted net +772 (positive) vs measured
+  co-suppression. Boundary: linear path-product sums are gain-blind;
+  they are unreliable precisely in the weak-influence regime where
+  Task A cue candidates live. Structural screening cannot substitute
+  for a direct probe of criterion (d). The screen's candidate/pair
+  outputs are NOT to be used for selection.
+
+**Design insight — criterion (d) is load-bearing for the minimal L1
+acquisition experiment:** the first L1 experiment is Pavlovian-shaped
+(cue co-presented with sugar during training), because pure Hebbian
+learning needs postsynaptic activity to correlate with cue activity,
+and the co-presented sugar is what supplies it. A co-suppressing cue
+corrupts both the coincidence signal and the trained direction.
+Symmetric-task corollary: the aversive direction's postsynaptic site
+is the inhibitory INTERNEURON (active under bitter co-drive), not
+MN9_L itself (near-silent, nothing to correlate) — Hebbian-legal, but
+a different edge set; recorded for the two-cue design.
+
+**Root-cause hypothesis for three straight cue rejections:** the
+run-007 closure is seeded/centered on the feeding hub; its local
+cholinergic neighbors sit in an inhibitory-rich neighborhood, so
+co-drive tends to recruit suppression. Prediction: candidates farther
+from the hub (weaker structural paths, e.g. central-brain types)
+are less likely to co-suppress. The batch probe below tests this
+implicitly.
+
+**Batch probe (launched 2026-09-25, background):** enumerate ALL
+cholinergic, non-sensory/motor (type-prefix LB/Gr/Ir/ppk/MN/DN/ES/og/CG
+excluded), <=2-hop-upstream-of-MN9_L neurons with in-deg 5-400 and
+out-deg 5-200; probe each as a single-neuron cue at explicit 200 Hz,
+arms cue-alone + cue-cosugar, 5 seeds each (22000-22004), frozen
+criteria unchanged, checkpointed to
+results/phase2/wp2_cue_probe_batch.jsonl. If >15 candidates pass the
+filter, sample every k-th by bodyId (rule stated in advance,
+screen-independent) — single-neuron probes are a SCREEN; survivors
+get probed again as populations/type-groups before any cue is frozen.
+If NO candidate passes (d), the pre-declared fork is a documented
+protocol discussion (withhold-direction task, alternate readout, or
+Task A restructure) — not a quiet criterion rewrite.
+
+
+## Task A cue pair — FROZEN (2026-09-25)
+
+**Batch probe** (results/phase2/wp2_cue_probe_batch.jsonl, 15 sampled
+candidates, cue-alone + cue-cosugar, 5 seeds each, explicit 200 Hz):
+11/15 PASS both frozen criteria. The four rejects all failed (c) by
+driving MN9_L alone at 50-81 Hz - they are pre-wired into the feed
+program (ANXXX462a, dorsal_tpGRN, ANXXX255, GNG318: hub-adjacent),
+independently confirming the hub-distance hypothesis.
+
+**Pair selection** (pre-declared rules: in/out-degree within 20%,
+target Jaccard < 0.2): exactly ONE pair qualifies -
+results/phase2/wp2_cue_pairs.json.
+- **Cue A: GNG521-type** - 2 members [15957, 16327], in=47/out=19
+- **Cue B: PRW043-type** - 5 members [25250, 26891, 37670, 39767,
+  69045], in=51/out=20, target Jaccard 0.0
+
+**Population-level verification** (pre-declared freeze gate;
+results/phase2/wp2_cue_probe_groups.jsonl, 5 seeds each, explicit
+200 Hz, driven as the PRIMARY population exactly as the training
+driver will drive them):
+- GNG521 group: alone MN9_L=[0,0,0,0,0]; cosugar=[82,83,86,84,84]
+- PRW043 group: alone MN9_L=[0,0,0,0,0]; cosugar=[80,83,81,81,82]
+Both PASS (c) and (d) at group level. PAIR FROZEN as the Task A cues.
+
+**Two-direction readout definitions (established by the probe):**
+- FEED-acquisition readout: cue-ALONE MN9_L rate. Baseline 0 Hz in
+  10/10 group-probe trials, so ANY post-training expression is
+  attributable to potentiation. Trained by cue+sugar co-presentation
+  (Pavlovian; sugar supplies postsynaptic activity).
+- WITHHOLD-acquisition readout: cue+COSUGAR MN9_L rate. Baseline
+  80-86 Hz (feed mode intact for both cues), so learned suppression
+  has room to appear. Trained by cue+bitter co-presentation; the
+  postsynaptic site is the inhibitory interneuron population active
+  under bitter (registry corollary above), Hebbian-legal.
+Both cues support BOTH directions. Cue->direction assignment is
+arbitrary (swapped between training arms per D1's anti-confound
+design); both arms are now fully specified.
+
+**Cue-pair properties worth noting for the write-up:** both types are
+SEZ local interneurons (GNG = subesophageal ganglion; PRW = prow),
+cholinergic, non-sensory, non-motor - circuit-level cues rather than
+sensory-neuron cues, which is the registry's synthetic-fallback
+family. The all-sensory candidates (water/IR94e/LB2a/LB2b) are all
+rejected; the surviving pair is exactly the structurally-matched
+interneuron family the fallback criterion described.
