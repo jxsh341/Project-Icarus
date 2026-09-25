@@ -447,3 +447,93 @@ that is what the pilot exists to surface.
   20%); natural candidate pair GNG611+GNG622 (both 2-hop). Full
   re-verification cost (group probes, Stage A at n=10, eta*).
 Decision recorded after review.
+
+## Fork resolution (2026-09-25, review-directed): decoupled
+
+**Decision:** the two bundled questions are decoupled per review.
+(a) runs as a MECHANISM EXPERIMENT only; (c) is the Task A path. The
+frozen L1 definition (1-hop cue-incident window) is UNCHANGED for all
+downstream WPs. A window change would need standalone justification
+(a biologically motivated eligibility-trace model, e.g.Reviewed
+literature), never "it saves the frozen pair" (protocol SS6.5 shape).
+
+**(a) Mechanism experiment - pre-registered design:** window_hops=2
+implemented as cue-gated leg-2 eligibility (postsynaptic neuron must
+itself be a cue 1-hop target; pre-rate = CUE's rate as eligibility
+source; NOT open-ended 2-hop eligibility). TDD: leg-1 semantics
+provably unchanged (test_window_1_default_leaves_second_leg_alone),
+leg-2 gated growth verified on toy circuit, N-observe accumulation
+test added (Stage B v1 bug class). Runs: GNG521 AND PRW043, eta grid
+{1e-4, 1e-2}, 10 training trials, probe after (seeds 31500-31509 /
+31600-31609; probes 31550 / 31650).
+**PREDICTIONS registered before launch:**
+- P1 (location hypothesis confirmed): PRW043 expresses under
+  window=2 at some eta (probe > 0) AND its potentiated mass shifts to
+  leg-2 edges.
+- P2 (refined understanding): GNG521 under window=2 saturates or
+  over-potentiates (both routes already strong) - guard may fire.
+- P3 (null survives): PRW043 still silent under window=2 even at
+  1e-2 -> location hypothesis needs revision (e.g. delay/timing, not
+  topology).
+**Interpretation rules registered in advance:** window=2 is reported
+as the mechanism experiment's result whatever it shows; it is NOT
+adopted as L1 regardless of outcome. PRW043's negative result stays
+on the record as a well-diagnosed limit of the 1-hop rule either way.
+If P1, the Task A question moves to (c) pair re-selection with the
+amended criterion set (hop parity added) - full probe suite re-run
+per IR94e's lesson, plus literature valence check for GNG611/GNG622
+before any freeze.
+
+**(c) Task A path (pre-staged):** candidate pair GNG611+GNG622 (both
+2-hop, in=16/23 out=17/22 - within widened 30% bands). Both run the
+FULL original probe suite (structural census, cue-alone, cue-cosugar
+- criteria a-f) + literature valence check + Stage-A-style
+confirmatory n=10 baseline before any freeze. No shortcuts because a
+candidate clears the currently-focused check.
+
+## Mechanism experiment verdict (2026-09-25): LOCATION CONFIRMED causally
+
+**Result** (mechanism_window2.jsonl, cue-gated leg-2 window, 10
+accumulated trials + probe per arm):
+- PRW043 eta=1e-4, window=2: cue-alone probe MN9_L = 76 Hz from a
+  0-at-all-eta baseline under window=1. Leg-2 potentiated mass
+  +10,335 on cue-1-hop-target->downstream edges. NO guard fire.
+- GNG521 eta=1e-4, window=2: probe 45 Hz (vs 77 Hz window=1 at same
+  eta). Leg-2 mass +14,689. No guard fire.
+- Both cues at eta=1e-2, window=2: GUARD FIRED (150,247 / 162,954
+  spikes > 150k threshold). Over-potentiation caught by the D6 guard
+  exactly as designed.
+
+**Registered predictions scorecard:**
+- P1 CONFIRMED: PRW043 expresses under window=2 (76 Hz) with mass
+  shifted to leg-2 edges. The PRW043 null under frozen L1 is
+  LOCATION, not magnitude - causally established by intervention.
+- P2 PARTIALLY WRONG in an informative direction: predicted GNG521
+  saturation/over-potentiation; at eta=1e-4 it instead produced LESS
+  expression (45 vs 77 Hz). Leg-2 potentiation DIVERTS correlation
+  signal from the effective first leg into second-leg mass (total
+  leg-2 mass ~ 3.5x PRW043's, yet less readout) - window=2 is not
+  strictly additive for an already-effective cue.
+- P3 eliminated: no residual unexplained null.
+
+**Interpretation (frozen):** window=2 causally rescues PRW043
+expression but does NOT rescue the frozen L1 definition - the
+review's decoupling holds. Notably window=2 HURTS the already-
+functional GNG521 arm (45 < 77 Hz), independent evidence that the
+1-hop window is not simply deficient; it is a different mechanism,
+not a strictly better one. The PRW043-under-1-hop negative result
+stands on the record as a genuine, well-diagnosed limit of the
+frozen rule: a 3-hop cue with sub-threshold intermediate legs is
+unlearnable under a 1-hop Hebbian window at any eta through 1e-2.
+
+**Disposition:** frozen L1 = 1-hop window, unchanged. The mechanism
+experiment is reported as its own result (cue-gated leg-2 eligibility
+is a sufficient causal intervention for 3-hop cue expression). Task
+A proceeds via (c) pair re-selection with hop parity added to the
+criteria; GNG611+GNG622 pre-staged. Literature check on GNG611/
+GNG622: no type-specific documented valence found in available
+sources (SEZ interneuron types are largely uncharacterized beyond IN1
+ingestion neurons, prow-region cholinergic IN1 inputs, group-4
+proboscis-motor types - all hunger/feeding-associated; GNG611/622
+are not among the characterised classes). Full probe suite re-run
+required before freeze regardless - IR94e's lesson.

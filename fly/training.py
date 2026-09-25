@@ -46,6 +46,7 @@ class TrialSpec:
     r_cue_hz: float                       # cue drive rate
     r_drive_hz: float                     # primary drive rate
     r_drive2_hz: float                    # second drive rate (0 = absent)
+    window_hops: int = 1                  # L1 observation window (frozen=1)
     duration_ms: float = 1000.0
     is_probe: bool = False                # probe trials: no plasticity applied
 
@@ -88,6 +89,8 @@ class TrainingRun:
         self.matrix = matrix.tocsr()
         self.node_ids = list(node_ids)
         self.plasticity = plasticity
+        # window_hops lives ONLY on TrialSpec (explicit-everything
+        # discipline): every trial declares its own observation window.
         self.guard = guard
         self.readout_body_id = readout_body_id
         self.run_id = run_id
@@ -129,8 +132,12 @@ class TrainingRun:
         }
 
         if self.plasticity is not None and not spec.is_probe:
-            # rate-form Hebbian observation over the cue's downstream
-            # 1-hop neighborhood, then apply
+            # rate-form Hebbian observation, then apply. window_hops=1 is
+            # the FROZEN L1 definition (cue-incident edges only).
+            # window_hops=2 is the registered mechanism-experiment arm:
+            # it ADDS cue-gated leg-2 eligibility (postsynaptic neuron
+            # must itself be a cue 1-hop target - not open-ended 2-hop
+            # eligibility) while leaving leg-1 semantics unchanged.
             self._observe_coincidences(spec, result)
             new_matrix = self.plasticity.apply(self.matrix)
             rec["weight_diff"] = self._diff_summary(self.matrix, new_matrix)
@@ -154,6 +161,7 @@ class TrainingRun:
         """
         idx_of = {n: i for i, n in enumerate(self.node_ids)}
         rates = {n: len(ts) for n, ts in result.spike_times.items()}
+        window = spec.window_hops if spec.window_hops in (1, 2) else 1
         for cue_id in spec.cue_body_ids:
             if cue_id not in idx_of:
                 continue
@@ -162,13 +170,32 @@ class TrainingRun:
             if x_hz == 0:
                 continue
             row = self.matrix.getrow(ci)
-            for tgt_idx in row.indices:
+            leg1_targets = set(row.indices.tolist())
+            # leg-1: cue -> its 1-hop targets
+            for tgt_idx in leg1_targets:
                 tgt = self.node_ids[tgt_idx]
                 y_hz = rates.get(tgt, 0)
                 if y_hz == 0:
                     continue
                 self.plasticity.observe_rate_pair(ci, tgt_idx, self.matrix,
                                                   x_hz=x_hz, y_hz=y_hz)
+            # leg-2 (window_hops=2, mechanism-experiment arm only):
+            # edge (m -> n) with m a cue 1-hop target and n a 1-hop
+            # target of m; potentiation gate is cue activity x_m's own
+            # co-firing with n (cue-gated leg-2, NOT open eligibility)
+            if window == 2:
+                for m_idx in leg1_targets:
+                    m_row = self.matrix.getrow(m_idx)
+                    for n_idx in m_row.indices:
+                        n = self.node_ids[n_idx]
+                        y_hz = rates.get(n, 0)
+                        if y_hz == 0:
+                            continue
+                        # pre rate for leg-2 is the CUE's rate (the
+                        # eligibility source), post rate is n's rate
+                        self.plasticity.observe_rate_pair(
+                            m_idx, n_idx, self.matrix,
+                            x_hz=x_hz, y_hz=y_hz)
 
     def _diff_summary(self, old: sparse.csr_matrix, new: sparse.csr_matrix) -> dict:
         if old.shape != new.shape:

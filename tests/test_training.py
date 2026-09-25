@@ -178,3 +178,50 @@ def test_rates_are_per_trial_and_cue_gated(tmp_path) -> None:
     rec = run.run_trial(spec)
     assert rec.get("weight_diff", {}).get("n_edges_changed", 0) == 0
     assert weight_matrix_hash(run.matrix) == h0
+
+
+# ---- state persistence across trials (Stage B v1 bug class) ----------------
+
+def test_state_persists_across_trials(tmp_path) -> None:
+    """Constructing the run inside the trial loop (the v1 bug) resets all
+    accumulation. A single run across 3 trials must accumulate: the
+    weight hash changes every trial and the cue-incident edge grows."""
+    cfg = PlasticityConfig(eta=0.1, semantics=Semantics.V_MAG, w_max=1e6)
+    run = _run(tmp_path, plasticity=HebbianRule(cfg))
+    hashes = [weight_matrix_hash(run.matrix)]
+    w_edge = [run.matrix[0, 2]]
+    for t in range(3):
+        run.run_trial(_spec(trial=t, seed=100 + t))
+        hashes.append(weight_matrix_hash(run.matrix))
+        w_edge.append(run.matrix[0, 2])
+    assert len(set(hashes)) == 4          # every trial leaves a trace
+    assert all(b > a for a, b in zip(w_edge, w_edge[1:]))  # monotone growth
+
+
+# ---- 2-hop observation window (mechanism experiment support) ----------------
+
+def test_window_1_default_leaves_second_leg_alone(tmp_path) -> None:
+    """Frozen L1 semantics: only cue-incident (1-hop) edges potentiate.
+    The chain edge 2->4 must NOT change when only the cue is the
+    plasticity source, even though 2 and 4 both fire."""
+    cfg = PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6)
+    run = _run(tmp_path, plasticity=HebbianRule(cfg))
+    w24_before = run.matrix[2, 4]
+    # cue=(0,) driven; drive=(4,) driven directly -> 2 fires via 0->2
+    run.run_trial(_spec(trial=0, seed=100, cue=(0,), drive=(4,)))
+    assert run.matrix[0, 2] > 10.0        # first leg potentiated
+    assert run.matrix[2, 4] == w24_before  # second leg untouched (window=1)
+
+
+def test_window_2_potentiates_second_leg(tmp_path) -> None:
+    """window_hops=2 adds cue-gated leg-2 eligibility: edge (m->n) where
+    m is a cue's 1-hop target and n is m's 1-hop target potentiates by
+    eta * x_cue * y_n when cue and n co-fire."""
+    cfg = PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6)
+    run = _run(tmp_path, plasticity=HebbianRule(cfg))
+    w24_before = run.matrix[2, 4]
+    spec = dataclasses.replace(_spec(trial=0, seed=100, cue=(0,), drive=(4,)),
+                               window_hops=2)
+    run.run_trial(spec)
+    assert run.matrix[0, 2] > 10.0        # first leg still potentiated
+    assert run.matrix[2, 4] > w24_before  # second leg NOW potentiated

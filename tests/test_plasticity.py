@@ -173,3 +173,23 @@ def test_tiny_eta_no_overflow_over_many_events() -> None:
         rule.observe(pre=0, post=1, weight=w)
         w = rule.apply(w)
     assert np.isfinite(w[0, 1]) and w[0, 1] <= 50.0
+
+
+# ---- accumulation across observe() calls (Stage B v1 bug class) -------------
+
+def test_observe_n_times_accumulates_n_deltas() -> None:
+    """State must persist across observe() calls: N observations produce
+    N x the delta of one. The Stage B v1 bug (state silently reset per
+    iteration) is this test's reason to exist."""
+    cfg = PlasticityConfig(eta=0.1, semantics=Semantics.V_MAG, w_max=1e6)
+    w = sparse.csr_matrix(([5.0], ([0], [1])), shape=(4, 4))
+    once = HebbianRule(cfg)
+    once.observe(pre=0, post=1, weight=w)
+    w_once = once.apply(w)
+    thrice = HebbianRule(cfg)
+    for _ in range(3):
+        thrice.observe(pre=0, post=1, weight=w)
+    w_thrice = thrice.apply(w)
+    assert w_once[0, 1] == pytest.approx(5.1)
+    assert w_thrice[0, 1] == pytest.approx(5.3)
+    assert w_thrice[0, 1] - w[0, 1] == pytest.approx(3 * (w_once[0, 1] - w[0, 1]))
