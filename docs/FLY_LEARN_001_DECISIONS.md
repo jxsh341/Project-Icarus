@@ -23,14 +23,37 @@ emphasizing Task B, not as a unilateral resequencing.
 solved by the frozen baseline; WP9: 121/121) is removed by *redesign*, not
 by reordering. Task B remains the sharper single test and will follow
 immediately; L0-vs-L1 acquisition is still measured first, as written.
-**Redesigned Task A (frozen definition):** classify two neutral chemosensory
-cues into feed/withhold categories whose assignment is arbitrary relative
-to the innate boundary — water GRNs (LB3a) → withhold, IR94e (LB1e) →
-feed — with the cue→action assignment swapped between training arms to
-break any innate-link confound. Neutral cues avoid the sugar/bitter innate
-valences entirely; the frozen baseline demonstrably produces neither
-response pair natively (WP9: both cues absent from the grid).
-**Evidence:** WP9 grid (results/wp9/grid_trials.jsonl); census below.
+**Redesigned Task A (frozen definition, AMENDED 2026-09-25 after the
+cue-valence check):** the original neutral-cue choice (water LB3a /
+IR94e LB1e) is REJECTED. The review asked whether either cue carries
+innate valence beyond the sugar/bitter axes; both do:
+- IR94e/LB1e: probe shows direct suppression of sugar-driven MN9_L
+  (82 → 2–8 Hz, mean 5.2, n=5) — the substrate itself expresses the
+  aversive interaction, matching Guillemin et al. 2024 (Cell Reports
+  43:114625: IR94e activation drives mild feeding aversion) and
+  Shiu figures.ipynb fig_3b (Sugar_Ir94e is a suppression condition).
+- Water/LB3a: probe shows NO MN9_L expression (silent in 5/5) and only
+  small local recruitment (~94 neurons) — safe in the closure — but
+  literature shows ppk28+ water GRNs drive proboscis-extension/drinking
+  (innately positive valence, state-dependent; sated flies avoid water,
+  thirsty flies seek it: Jourjine et al.; Lin et al. 2014/2017). A cue
+  whose biological valence is state-dependent is exactly the kind of
+  hidden confound Phase 2 must not build its first association on.
+**Replacement cue family (frozen):** olfactory-proxy cues via two
+chemosensory neuron populations with NO documented feeding valence and
+no probe-detectable MN9_L expression — candidate classes from the
+run-007 census: LB3d (high-salt aversive per Agee 2026 — REJECTED for
+the same reason), LB2a/LB2b (lbGRN types with no documented valence
+in the closure's literature; small populations, n=2-3/hemisphere —
+verify before freezing). If no gustatory family is defensibly neutral,
+the fallback is **synthetic cue stimulation of arbitrary SEZ
+interneuron pairs** (circuit-level cues rather than sensory-neuron
+cues), which guarantees no peripheral valence but must be probed for
+innate MN9_L expression before freezing. Final cue selection is an
+OPEN item blocking WP2, not WP1.
+**Evidence:** probe results/phase2/wp0_cue_valence_probe.jsonl (n=5
+seeds/arm, explicit 200 Hz); Guillemin et al. 2024; Shiu fig_3b;
+WP9 grid.
 
 ## D2 — Substrate: run-007 only; MB-completeness recorded as a scope boundary
 
