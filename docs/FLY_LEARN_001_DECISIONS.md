@@ -39,21 +39,43 @@ innate valence beyond the sugar/bitter axes; both do:
   thirsty flies seek it: Jourjine et al.; Lin et al. 2014/2017). A cue
   whose biological valence is state-dependent is exactly the kind of
   hidden confound Phase 2 must not build its first association on.
-**Replacement cue family (frozen):** olfactory-proxy cues via two
-chemosensory neuron populations with NO documented feeding valence and
-no probe-detectable MN9_L expression — candidate classes from the
-run-007 census: LB3d (high-salt aversive per Agee 2026 — REJECTED for
-the same reason), LB2a/LB2b (lbGRN types with no documented valence
-in the closure's literature; small populations, n=2-3/hemisphere —
-verify before freezing). If no gustatory family is defensibly neutral,
-the fallback is **synthetic cue stimulation of arbitrary SEZ
-interneuron pairs** (circuit-level cues rather than sensory-neuron
-cues), which guarantees no peripheral valence but must be probed for
-innate MN9_L expression before freezing. Final cue selection is an
-OPEN item blocking WP2, not WP1.
+**Replacement cue selection — criterion set FROZEN before any probe
+(2026-09-25, review-driven):** a cue population must satisfy ALL of
+(a)–(e), verified in order of cheapness:
+- (a) excitatory NT (acetylcholine) — potentiation must be *able* to
+  create expression; an inhibitory cue cannot be learned into a feed
+  response;
+- (b) structural path to the readout within <=3 hops — a cue with no
+  path is UNLEARNABLE (potentiation with no route never expresses),
+  which is impossibility, not neutrality;
+- (c) probe-verified zero baseline MN9_L expression when driven alone;
+- (d) no suppression of the innate sugar-feed program under
+  co-stimulation (the IR94e failure mode);
+- (e) no literature-documented or NT-mediated state-conditional
+  valence (the water/LB3d/LB2b failure mode: hydration, salt-stress,
+  arousal modulators);
+- (f) target-set overlap between the two cues neither ~1.0 (same
+  channel) nor ~0 with disjoint readout access.
+**Structural census (2026-09-25, pre-probe):**
+- **LB2a — LEADING CANDIDATE**: 4 neurons, all cholinergic, all Traced,
+  out-deg 75-127, ALL upstream of MN9_L within 2 hops (criterion a, b
+  satisfied structurally; c/d pending probe; e: no documented valence).
+- **LB2b — DISQUALIFIED pre-probe**: 2 of 3 neurons are OCTOPAMINERGIC
+  (the arousal/stress modulator) — the same state-conditional-valence
+  category as water, caught by the NT census at zero simulation cost.
+  The glutamatergic third is a single neuron (n=1 is not a population).
+**Synthetic-cue fallback (criterion frozen now, per review):** if LB2a
+fails its probe, synthetic SEZ-interneuron cues are selected by
+structure, not arbitrariness — cholinergic, in-degree matched to
+within 20% of each other, matched out-degree, both upstream of MN9_L
+within 3 hops, non-overlapping target sets, no literature-documented
+role in feeding/valence circuits. 'Arbitrary pair' was never a
+defensible selection rule; matched-by-structure is.
+**Status:** LB2a probe (criterion c/d verification) is the open item
+blocking WP2, not WP1.**
 **Evidence:** probe results/phase2/wp0_cue_valence_probe.jsonl (n=5
-seeds/arm, explicit 200 Hz); Guillemin et al. 2024; Shiu fig_3b;
-WP9 grid.
+seeds/arm, explicit 200 Hz); structural census (this registry update);
+Guillemin et al. 2024; Shiu fig_3b; WP9 grid.
 
 ## D2 — Substrate: run-007 only; MB-completeness recorded as a scope boundary
 
