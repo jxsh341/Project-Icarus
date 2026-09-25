@@ -283,3 +283,49 @@ sensory-neuron cues, which is the registry's synthetic-fallback
 family. The all-sensory candidates (water/IR94e/LB2a/LB2b) are all
 rejected; the surviving pair is exactly the structurally-matched
 interneuron family the fallback criterion described.
+
+
+## WP3 L1 acquisition pilot — pre-registered design (2026-09-25, BEFORE launch)
+
+**Stage A — confirmatory baseline (review point 2):** the frozen pair's
+two load-bearing facts (cue-alone MN9_L == 0; cue-cosugar MN9_L 80-86)
+were established at n=5. Re-verify at n=10 FRESH seeds (30000-30009)
+per (cue, arm) before any training. PASS = per cue: max(alone) == 0 AND
+min(cosugar) >= 41.5. FAIL -> HALT the pilot (exit 2); the frozen pair
+must be re-examined, not trained past a broken baseline.
+
+**Stage B — eta range-finder:** eta in {1e-5, 1e-4, 1e-3} (D4 range),
+GNG521 only (conservative: the thinnest cue), seed block 31300-31309,
+10 training trials + 1 cue-alone probe (seed 31350). eta* = smallest
+eta with probe MN9_L > 0 and no guard fire; else largest eta without
+guard fire; all guard-fire -> halt. Same eta* is used for both cues in
+Stage C (recorded choice, not per-cue tuning).
+
+**Stage C — L1 pilot:** 3 seeds x 2 cues x 20 training trials
+(cue @200 Hz primary + sugar @200 Hz secondary — wiring identical to
+the group probes for baseline comparability), cue-alone probes after
+trials 5/10/15/20. GNG521 seed blocks 31000/31100/31200; PRW043 same.
+V_MAG, w_max = 766 (measured run-007 max), guard = D6 thresholds live.
+Cue driven as primary population; sugar ids from wp6c_grn_seeds.json.
+
+**Stage D — L0 control:** identical schedule, plasticity=None, seed
+blocks 33000/33100/33200. Null distribution for probe readouts.
+
+**Success criteria (dev-phase feasibility signal ONLY — WP4 does the
+seeds-level statistics):** acquisition signal = any Stage-C probe
+readout > 0 while all Stage-D probes == 0; no guard events; weight
+changes confined to cue-incident edges (audited via per-trial
+weight_diff).
+
+**PRE-REGISTERED interpretation order for a null/weak result (review
+point 1 — the GNG521 caveat):**
+1. eta below effective threshold at this weight scale (check Stage B);
+2. cue population too small to carry a reliable correlation signal —
+   the GNG521 (n=2) vs PRW043 (n=5) comparison is the built-in test;
+   LB2a's reproducible 1 Hz functional path is precedent that
+   few-neuron cues can express weakly;
+3. V_MAG potentiation of inhibitory cue->GABA edges cancels excitatory
+   growth — checkable from per-arm signed total_delta;
+4. L1 insufficient on this substrate.
+(4) may NOT be concluded without (1)-(3) checked and recorded.
+n=3 seeds is NOT a statistical comparison; it gates WP4's design only.
