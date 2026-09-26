@@ -655,3 +655,155 @@ its own eta* range-finder before any freeze. If GNG557 fails, the
 remaining 2-hop strong-leg-2 pool is thin (GNG491 max 5, GNG610
 max 7, AN17A024 max 4) - fallback is a documented protocol
 discussion, not another quiet criterion edit.
+
+## GNG557 diligence — degree-asymmetry check PRE-REGISTERED (2026-09-25, before any GNG557 acquisition data)
+
+**Factual correction (recorded):** the asymmetry direction was
+inverted in review: GNG521 in-deg = 47, GNG557 in-deg = 8 (batch
+census). The concern is UNCHANGED in substance - 6x presynaptic-
+surface asymmetry between task arms - but the proven expresser is
+the high-degree one and the new candidate is the thin one (population
+intuitions invert again, consistent with WP3's contra-indication of
+population size for learnability).
+
+**Why the check matters (review point, adopted):** the degree band may
+have guarded ARM COMPARABILITY (statistical symmetry between task
+arms), not learnability. Task A's D1 arm-swap partially controls
+cue-level asymmetries (each cue trains in each role across arms),
+but a systematic acquisition-speed or noise difference between cues
+would still surface as arm-level variance WP4 must interpret.
+
+**Registered design:**
+- GNG557 full suite first: literature check -> census (a)/(b') ->
+  group probes (c)/(d) n=10 seeds 32100-32109 -> (f) Jaccard vs
+  GNG521. Any criterion fail -> fallback fork (registry), no freeze.
+- eta* range-finder: grid {1e-5, 1e-4, 1e-3}, 10 accumulated trials
+  + probe; GNG557 seeds 31900-31909, probe 31950.
+- SHARED eta rule (restated from the pilot): both task cues run at
+  the same eta - the smallest eta at which BOTH express. If GNG557
+  eta* = 1e-4 (same as GNG521), shared eta = 1e-4 and BOTH cues get
+  fresh 3x20 curves at 1e-4 (GNG521's existing Stage C ran at 1e-3,
+  the v1 fallback, and is NOT the comparison basis). If GNG557
+  needs 1e-3, shared eta = 1e-3 and GNG521's existing Stage C curve
+  serves as its comparison arm.
+- Curves: 3 blocks x 20 trials + probes at 5/10/15/20 per block.
+  GNG557 blocks 32200/32300/32400 (+500 probe offsets); GNG521 (if
+  fresh) blocks 32500/32600/32700 (+500).
+
+**Registered comparison metrics (computed from the curves, both cues
+at shared eta):**
+1. trial-of-first-expression per block (first probe > 0)
+2. probe level at trial 5 (early) and trial 20 (saturated) per block
+3. cross-block SD of the trial-20 level
+4. guard events
+**Registered interpretation rules:**
+- COMPARABLE: both cues express by trial 5, trial-20 levels within
+  ~15 Hz, similar cross-block SD -> arms interpretable symmetrically;
+  note in WP4 handoff.
+- ASYMMETRIC (speed): one cue trails by >1 probe interval
+  consistently -> record acquisition-speed asymmetry as a WP4
+  interpretation caveat; D1 arm-swap becomes REQUIRED (not merely
+  available) for symmetric claims.
+- ASYMMETRIC (noise): cross-block SD differs >2x -> same caveat,
+  plus WP4 power analysis must use the noisier cue's variance.
+- Either asymmetry is recorded REGARDLESS of the freeze decision;
+  it does not block the freeze (both cues expressing is the freeze
+  gate), it modifies how WP4 interprets arm differences.
+
+## GNG557 diligence — comparability analysis pre-registered BEFORE its curve exists (2026-09-25)
+
+**Review refinement adopted:** the degree band's purpose is ARM
+COMPARABILITY (both arms of the D1 swapped-assignment design should
+learn at comparable speed/noise), not a learnability guard. The band
+yields to the (b') expressibility gate for GNG521+GNG557 (in-deg
+47 vs 8), and is REPLACED by this pre-registered analysis.
+
+**Comparability analysis (registered before GNG557 has any
+acquisition data):** matched 20-trial curves for BOTH cues at the
+SHARED eta* = smallest eta at which both express with no guard fire.
+Fresh seed blocks: GNG521 34000/34100/34200, GNG557 34300/34400/
+34500; probes (cue-alone) after trials 5/10/15/20 at base+500.
+Metrics: (i) per-cue eta* from range-finders; (ii) trial-to-first-
+expression (probe > 0; granularity 5 trials); (iii) plateau = mean
+trial-20 probe readout; (iv) across-block spread of (ii) and (iii).
+**Interpretation rule (fixed now):** asymmetry is recorded as a
+cue-identity covariate for ALL WP4 interpretation; the D1 arm-swap
+still controls the cue->direction confound, so speed asymmetry does
+not invalidate Task A, but cross-arm effect-size claims must state
+it. NOT a freeze gate - a required analysis whose result ships with
+the pair wherever the pair is used.
+
+**Diligence order for GNG557 (all before any freeze):**
+1. literature valence check (type-specific; uncharacterized !=
+   neutral recorded)
+2. full original suite (c)-(f): census (nt/status/hops/in-out/
+   leg-2 max), group cue-alone + cue-cosugar probes n=10 (seeds
+   33600-33609), aggregate target Jaccard vs GNG521
+3. eta* range-finder under FROZEN 1-hop L1, grid {1e-5,1e-4,1e-3},
+   seeds 33700-33709, probe 33750
+4. comparability curves per the design above (needs eta* from 3)
+5. freeze decision: pair v3 = GNG521 + GNG557 iff suite passes AND
+   acquisition gate opens; comparability covariate recorded either
+   way. If GNG557 cannot learn: fallback = documented protocol
+   discussion (strong-leg-2 pool after GNG557 is thin: GNG491 max 5,
+   GNG610 max 7, AN17A024 max 4).
+
+## GNG557 verdict: suite FAIL on (c); acquisition OPEN — the (b')-(c) trade-off (2026-09-25)
+
+**Result** (wp2_gng557_verdict.json / wp2_cue_probe_gng557.jsonl /
+stage_b_gng557.jsonl): GNG557 [12595, 12901], both cholinergic/Traced,
+2-hop, max leg-2 = 92 on both neurons, Jaccard vs GNG521 = 0.023.
+- (c) FAIL: cue-alone MN9_L = [0,0,0,0,2,0,1,1,1,0] - 4/10 seeds
+  express 1-2 Hz. Mean 0.6 Hz. NOT zero-baseline.
+- (d) PASS: cosugar 82-87.
+- Acquisition: eta*=1e-4 (probe 20 Hz), rising to 66 Hz at 1e-3, no
+  guard fires. The (b') criterion is PREDICTIVE - strong leg-2 gave
+  exactly the predicted learnability.
+- FREEZE: NO.
+
+**The trade-off, stated precisely:** the same strong direct leg into
+the readout that makes a cue LEARNABLE under a 1-hop Hebbian window
+((b') satisfied) is what gives it a weak INNATE expression tail
+((c) violated). GNG521 achieves both (leg-2 max 96, baseline 0/20
+across two n=10 suites) - but is apparently unusual in doing so.
+This is a structural tension in the criterion set, not a flaw in one
+candidate: the joint density of {strong leg-2, zero innate tail} is
+low in this closure. Candidates measured so far: 2 expressers
+(GNG521 0-tail, GNG557 0.6-Hz tail), 9 non-expressers.
+
+**Pre-registered comparability analysis note:** GNG557's innate tail
+is itself an arm-comparability asymmetry (its baseline is 0.6 Hz vs
+GNG521's 0.0) - so the degree-band concern and the (c) concern
+CONVERGE on the same question: are the two arms comparable? Both
+reasons point the same way.
+
+**The emerging pattern (candidate-selection audit trail):** five
+families probed; every failure at a different criterion -
+IR94e (d), water (e-literature), LB2a (c+d), GNG611/622 (b'-
+expressibility), GNG557 (c). The criterion set is now measured as a
+whole: each criterion has caught a real candidate that passed all
+the others. The set is doing its job; the JOINT density of
+satisfying all of them is the scarce commodity.
+
+**FORK (registered before resolution):** pair v3 is dead under the
+frozen criteria. Options:
+- (i) Widen the search: batch-probe the remaining ~1011 unsampled
+  cholinergic candidates for {leg-2 max >= 20-ish, (c), (d)} - the
+  audit trail suggests several hundred are structurally eligible;
+  cost ~2-4 background-hours, mechanical, no new criteria. Pre-stage:
+  structural pre-filter (leg-2 max, (a)) FIRST at zero simulation
+  cost, then probe survivors in batches of 15.
+- (ii) Accept GNG521 alone as a single-cue design with the
+  withheld-direction problem solved by the WITHIN-cue comparison
+  (cue-alone vs cue+cosugar readout directions), dropping the
+  two-cue arm-swap. Protocol change, re-registered.
+- (iii) Accept the innate tail as a cue-identity covariate (like the
+  comparability covariate) and freeze GNG521+GNG557 anyway - REJECTED
+  by the standing rule: (c) exists to make 'learned' attributable to
+  plasticity, and a 0.6 Hz innate tail is a real confound for a
+  boundary measured to 1 Hz precision, not a bookkeeping nuance. The
+  1 Hz innateness is distinguishable from learned expression only
+  statistically, and the whole point of Task A is clean attribution.
+Recommendation recorded: (i) first - mechanical, no criteria change,
+and the pool is large; (ii) held as the fallback if the widened
+search exhausts; (iii) rejected with reasoning above.
