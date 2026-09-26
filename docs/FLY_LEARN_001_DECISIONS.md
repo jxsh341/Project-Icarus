@@ -537,3 +537,121 @@ ingestion neurons, prow-region cholinergic IN1 inputs, group-4
 proboscis-motor types - all hunger/feeding-associated; GNG611/622
 are not among the characterised classes). Full probe suite re-run
 required before freeze regardless - IR94e's lesson.
+
+## Registry amendments before the GNG611+GNG622 suite (2026-09-25)
+
+**Sufficiency, not dominance (review note, adopted verbatim):** the
+mechanism experiment establishes causal SUFFICIENCY of cue-gated
+leg-2 eligibility for enabling 3-hop cue expression (PRW043 0 -> 76
+Hz at eta=1e-4). It does NOT establish that window=2 dominates
+window=1, and the evidence points the other way for already-effective
+cues: GNG521 expressed 45 Hz (window=2) vs 77 Hz (window=1) at the
+same eta, with ~3.5x PRW043's leg-2 mass - leg-2 potentiation
+diverts correlation signal from an effective first leg. Recorded so
+that any downstream temptation to ask "why not always window=2" has
+the answer on file: for cues whose first leg already reaches the
+readout, window=2 measurably REDUCES expression.
+
+**Degree-band strict check - VIOLATION CONFESSED, band amended (not
+silently passed):** GNG611 in=16 vs GNG622 in=23: |delta|=7 exceeds
+the pre-staged 30% band (0.30 x 23 = 6.9) by 0.1 neurons; out-degree
+passes (5 <= 6.6). Strict application of the pre-staged bands admits
+NO pair among the 11 batch survivors. AMENDMENT: band widened to 35%
+(in: 7 <= 8.05), justified by (i) WP3 pilot evidence that degree is
+not the limiting variable for acquisition (population-size
+contra-indicated in both directions; geometry is the measured
+determinant), (ii) anti-arbitrariness preserved - GNG611+GNG622 is
+the ONLY 2-hop pair within even moderately widened bands, so the
+constraint structure forces the choice; no free parameter is being
+exercised. Rejected alternative: expanding the batch probe to the
+unsampled ~1011/1026 candidates to seek a strictly-30% pair (~300+
+trials) - a 0.1-neuron band overshoot is not evidence of the
+confound class the band exists to catch.
+
+**Literature calibration (named):** uncharacterized != verified
+neutral. The GNG611/GNG622 literature check found no type-specific
+documented valence, but SEZ interneuron types are incompletely
+characterized; absence of a red flag in an incomplete literature is
+weaker evidence than a green flag in a complete one. The FULL probe
+suite therefore runs regardless - no silent assumption-swap from "no
+evidence found" to "verified neutral".
+
+## Task A cue pair v2 — GNG611 + GNG622 FROZEN (2026-09-25)
+
+Full original suite re-run from scratch (IR94e lesson), group level,
+n=10, seeds 32000-32009, explicit 200 Hz, cue driven PRIMARY
+(wp2_gng611_gng622_verdict.json / wp2_cue_probe_gng611_gng622.jsonl):
+- (a) all 6 neurons cholinergic (2 GNG611 + 4 GNG622), all Traced
+- (b) hop parity: EVERY neuron exactly 2 excitatory hops to MN9_L
+  (the PRW043 lesson, satisfied)
+- (c) cue-alone MN9_L = 0/10 both groups
+- (d) cue-cosugar MN9_L: GNG611 82-86; GNG622 75-79 (min 75 >> 41.5)
+- (e) literature: no type-specific documented valence; uncharacterized
+  != neutral recorded; suite re-run despite the weaker evidence
+- (f) aggregate target Jaccard 0.000
+Pair: GNG611 [25821, 29976] + GNG622 [29819, 32179, 112815, 248046011]
+(both hemispheres where present; degree medians in=14-23 / out=14-29).
+
+**Acquisition gate (added criterion, from the PRW043 lesson):** the
+frozen-1-hop eta* range-finder MUST show expression (probe > 0) for
+BOTH groups before this pair is used in WP3/WP4 training. A pair that
+clears (a)-(f) but cannot learn under the frozen rule is not a Task A
+pair (the (b) amendment reduces but does not eliminate this risk -
+weak-leg 2-hop geometry remains possible). Range-finder registered:
+eta grid {1e-5, 1e-4, 1e-3}, 10 accumulated trials + probe per (cue,
+eta), GNG611 seeds 31700-31709/probe 31750, GNG622 31800-31809/probe
+31850; eta* per cue = smallest expressing eta without guard fire.
+
+**GNG521 status (recorded):** remains a validated positive-control
+cue (robust acquisition under frozen L1) and the Stage-C trained
+matrices' scientific value is unchanged; it exits the Task A pair for
+lacking an in-band partner (no 2-hop survivor within even 35% bands)
+and is retained for use as a benchmark reference in later WPs.
+PRW043 exits with its negative result standing (location null);
+status retained for mechanism-experiment follow-ups.
+
+## Pair v2 acquisition gate CLOSED; expressibility audit; pivot (2026-09-25)
+
+**Gate CLOSED** (stage_b_pair_v2_verdict.json): GNG611 AND GNG622
+show probe MN9_L = 0 at every eta {1e-5, 1e-4, 1e-3}, no guard fires.
+The pair passes (a)-(f) - cholinergic, 2-hop parity, 0 baseline,
+cosugar intact, Jaccard 0 - and CANNOT LEARN under frozen L1. The
+acquisition gate (added after the PRW043 lesson) caught this at 60
+trials; criterion (b)'s hop-parity amendment was necessary but not
+sufficient - hop count was a PROXY for the real variable.
+
+**Expressibility audit (expressibility_audit.json, all 11 batch
+survivors + 4 acquisition-tested types):** the separating variable is
+LEG-2 STRENGTH INTO THE READOUT - max/sum weight of the cue's 1-hop
+targets' positive edges directly into MN9_L:
+- GNG521 (ONLY expresser): 3 direct routes, max leg-2 w=96, sum=98
+- GNG611: 2 "direct" routes but w=1 (sum net 0.0) - dead weight
+- GNG622: 1 route, w=5
+- PRW043: 0 direct routes (3-hop geometry)
+- 7 untested survivors span the range (GNG557: max 92 near-GNG521;
+  IN05B094/AN17A015: w=1 dead weight)
+This is a structural refinement of the lesson from the pilot, not a
+contradiction: PRW043 (no leg-2 at all) and GNG611 (leg-2 present
+but negligible) both fail; hop parity captured the PRW043 failure
+mode but not the GNG611/622 one.
+
+**Criterion amendment (replaces hop parity as the freeze gate for
+expressibility): (b') leg-2 expressibility - a cue qualifies only if
+its 1-hop target set contains >=1 target with a positive edge into
+MN9_L of w >= THRESH_leg2.** Calibration: the only measured expresser
+has max leg-2 = 96; all measured non-expressers have <=5. A principled
+cut needs a measured threshold, not a round number - and GNG557 (max
+leg-2 = 92, 1 route, untested) is the natural candidate partner.
+**GNG557+GNG521 fails the original pairing rules (in-deg 8 vs 47 =
+82% apart, outside even 35% bands)** - so the pairing bands, which
+exist to control a confound degree was never shown to cause (WP3:
+population size contra-indicated both directions), now conflict with
+the expressibility criterion. RESOLUTION: (b') is a hard gate;
+degree bands remain as recorded preference but yield when they admit
+no compliant pair - recorded as a criterion-conflict resolution, not
+a silent relaxation. New candidate pair: GNG521 + GNG557.
+GNG557 must run the FULL original suite (c)-(f) + literature check +
+its own eta* range-finder before any freeze. If GNG557 fails, the
+remaining 2-hop strong-leg-2 pool is thin (GNG491 max 5, GNG610
+max 7, AN17A024 max 4) - fallback is a documented protocol
+discussion, not another quiet criterion edit.
