@@ -807,3 +807,294 @@ frozen criteria. Options:
 Recommendation recorded: (i) first - mechanical, no criteria change,
 and the pool is large; (ii) held as the fallback if the widened
 search exhausts; (iii) rejected with reasoning above.
+
+## Widened-search design notes (2026-09-26, review-directed, BEFORE pool probing)
+
+**GNG521-as-fluke held explicitly:** five families, five different
+killing criteria - the joint requirement (strong leg-2 AND zero
+innate leak AND clean valence AND structural match) may carve a
+genuinely NARROW region of this connectome. A second qualifying pair
+may not exist by volume alone. The widened search is run as a
+measured survey with a stopping rule (below), not an assumption that
+the pool contains a pair.
+
+**(iii)-rejection consistency (made explicit):** accepting GNG557's
+0.6 Hz innate tail would hold this candidate to a LOWER standard than
+WP6c's literal-zero verification and the WP9 spontaneous 0/30 control
+- an inconsistency in standards, not a judgment call. Rejected.
+
+**(ii) elevated from fallback to LIVE candidate design, registered
+concretely:**
+- single cue = GNG521 (the one clean expresser; baseline 0/20
+  cue-alone, 80-88 cosugar)
+- feed-direction readout: cue-alone MN9_L (trained: cue+sugar)
+- withhold-direction readout: cue+cosugar MN9_L suppression below
+  the 41.5 Hz boundary (trained: cue+bitter; postsynaptic site =
+  bitter-active inhibitory interneurons, per the registry corollary)
+- two independent substrate instances (fresh matrices from the frozen
+  baseline): instance-1 trained feed, instance-2 trained withhold
+- statistics: direction is within-cue, between-instance; cue identity
+  is CONSTANT, so direction asymmetries attribute to the readout
+  directions, not to cue identity. LOST vs two-cue: no cue-identity
+  counterbalancing (arm-swap), no cross-cue transfer test. GAINED:
+  the three structural-null cues (GNG611/GNG622/PRW043) become clean
+  negative controls for the generalization test - novel-stimulus
+  probes that cannot learn by construction.
+**Stopping rule for (i):** probe the pre-filtered pool in batches;
+if the first 3 batches (45 candidates) yield no candidate with
+{zero leak AND acquisition}, OR the pre-filtered pool exhausts, tally
+the trade-off pattern; if outcomes are dominated by the (b')-(c)
+trade-off, adopt (ii) as the primary design and archive the survey
+as the measurement of the qualifying region's sparsity.
+
+**Retrospective check commissioned before probing (review
+hypothesis):** does route structure - multiplicity/redundancy vs
+concentration - separate GNG521 (leg-2 96, NO leak) from GNG557
+(leg-2 92, 0.6 Hz leak)? A sharper variant motivated by the existing
+data: GNG557's SINGLE-neuron probe was clean (0/5) while its GROUP
+probe leaked - pointing at coincident leg-1 summation on shared
+strong-leg2 targets as the leak mechanism (group members' kicks
+summing on the same target). Hypothesis: leak requires coincident
+leg-1 at/near single-kick firing threshold on a strong-leg2 target;
+learnable-without-leak = strong leg-2 with SUB-threshold coincident
+leg-1 (spontaneous drive cannot fire the relay; potentiation can
+raise it). The refined pre-filter is adopted ONLY if the retrospective
+data supports it; otherwise the raw filter stands and probes decide.
+
+## Leak mechanism + two-feature screen + pool (2026-09-26, pre-launch)
+
+**Retrospective leak analysis (leak_structure_retrospective.json) - the
+review's redundancy hypothesis REFUTED, the two-variable instinct
+CONFIRMED.** Route multiplicity does NOT separate leak from clean
+(GNG521: 4 routes but 3 are leg2=1 dead weight; GNG557: 2 routes).
+The separating variable is LEG-1 STRENGTH INTO THE STRONG-LEG-2 HUB:
+- GNG521: leg1=4 into a leg2=96 hub -> clean, learnable
+- water_LB3a: leg1=7 into a leg2=92 hub -> clean (the clincher:
+  same max leg-2 as GNG557, opposite leak outcome)
+- GNG557: leg1=27 into a leg2=92 hub -> 0.6 Hz leak. Mechanism:
+  27 x 0.275 = 7.4 mV/kick >> ~3 mV gap -> the cue ALONE drives the
+  hub over threshold -> the strong leg-2 spikes MN9_L reliably.
+**Mechanistic statement (learnable-without-leak):** leg-1 must be
+SUB-THRESHOLD (cue alone cannot fire the hub); leg-2 must be STRONG
+(hub->readout, so sugar-driven hub activity during co-presentation
+can potentiate the cue->hub correlation into expression). Training
+works because SUGAR drives the hub during co-presentation - the cue
+needs to correlate, not cause. Registered prediction: water_LB3a
+would express if acquisition-tested (clean structure); remains
+excluded on (e) literature grounds regardless. LB2a anomaly noted:
+its 1 Hz leak through weak routes (max leg2=5, leg1=11) does not fit
+the sub-threshold frame - recorded as unexplained; the screen RANKS,
+the probe suite decides.
+
+**Two-feature screen, VALIDATED on all four acquisition-knowns before
+use:** L (learnable): max leg2 >= 20; N (no-leak): max leg1 among
+strong-leg2 routes <= 8. Pool: 143 types pass (prefilter_pool.json).
+Thresholds are CALIBRATED from the measured anchors (clean pair at
+leg1=4 inside; leak case at leg1=27 outside; strong leg-2 saturates
+at 92-96) and the pool is INSENSITIVE to the exact values (+-7%
+across W2 in {10,20,50} x W1 in {8,12}) - not tuned to a desired
+pool size. Screen-validates-clean on the knowns: GNG521 PASS,
+GNG557/611/622 FAIL, matching every measured outcome.
+
+**Wrinkle recorded:** the 143-type pool is dominated by central-brain
+AN types whose routes run through the same leg2=92/96 hub clusters;
+the hub is not SEZ-specific. This does not violate any criterion but
+is recorded for interpretation.
+
+**Batch probe (launched 2026-09-26):** pool ranked by n_routes then
+type name (pre-declared order, no cherry-picking); probe in batches
+of 15, group level, cue-alone + cue-cosugar, n=10 seeds per arm
+(34000-34009 block), explicit 200 Hz, cue driven PRIMARY; freeze-grade
+criteria (c) max(alone)==0 and (d) min(cosugar)>=41.5; checkpointed.
+Target: >=2 passing types for the pair; if the first 15-batch yields
+<2, continue to the next 15. Secondary analyses reported alongside:
+per-batch pool diagnostics (where failures landed).
+
+## Batch-1 partial results; leak-mechanism refutation; GNG380 lead (2026-09-26)
+
+**Batch-1 partial (5/15 probed before a session interrupt; checkpoint
+resumes free):** BM_Taste (d) FAIL (cosugar_min=0 - full suppression;
+type name says taste modality, and it behaves like one); BM_Hau (c)
+FAIL - leaks 47-77 Hz; GNG467 (c) FAIL - leaks 53-71 Hz; JO-F (c)+(d)
+PASS; GNG380 (c)+(d) PASS at freeze-grade n=10 (alone 0/10,
+cosugar_min 80).
+
+**Leak-mechanism REFUTATION (self-caught, registered):** my
+sub-threshold-hub hypothesis (leak = cue alone firing the strong-leg-2
+hub via strong leg-1) is refuted by the batch data on THREE variants:
+- v1 max-per-route leg-1: GNG467 l1=2 predicted clean, leaks 53-71.
+- v2 summed leg-1 into strong hubs: GNG467 sum=5 predicted very
+  clean, leaks; GNG380 sum=99 into hub 502 predicted leak, clean.
+- v3 total transitive 2-hop drive: same inversions.
+The hypothesis survives ONLY for GNG557 (l1=27 sums over 2 members;
+plausibly hub-driven). GNG467/BM_Hau leak through something none of
+the simple leg-1/leg-2 features capture (candidates: 3-hop amplified
+chains; broad recruitment of the sugar pathway by the cue's wider
+fan-out; hub-hub interactions). NOT solved. Consequence, registered:
+leak is NOT structurally predictable by any feature measured so far;
+the screen's job narrows to ranking by LEARNABILITY (leg-2 strength,
+which HAS validated perfectly: every expresser has leg2 >= 92, every
+non-expresser <= 5); criterion (c) remains an EMPIRICAL gate only.
+Direct member->MN9_L edges checked for all seven types: NONE exist -
+that trivial explanation is also dead.
+
+**JO-F flag ((e)-spirit):** JO-F is a Johnston's Organ neuron class
+(mechanosensory: hearing/gravity/wind; in males JO mediates courtship-
+song detection - a documented, heavily valenced modality). It passed
+(c)+(d), but using a real sensory channel with documented behavioral
+programs re-introduces the water/IR94e problem class. EXCLUDED from
+pair consideration pending a full (e) literature check it would
+plausibly fail; kept on the batch record as probe-PASS.
+
+**GNG380 - the lead candidate (diligence in progress):**
+Cell Type Explorer (Reiser lab): GNG380 = SEZ/GNG-local cholinergic
+interneuron type (88-94% of innervation within GNG; AKA CB2820 in
+Flywire), no documented feeding/valence function; uncharacterized !=
+neutral, so probes decide. Census: 6 members, all cholinergic/Traced,
+NO direct MN9_L edges, Jaccard vs GNG521 = 0.056, max leg-2 = 96,
+l1-into-strong-hubs = 2 (cleanest profile measured outside GNG521).
+Freeze-grade (c)/(d) already passed at n=10. In-degrees heterogeneous
+(14-197) - the pre-registered comparability analysis quantifies what
+this costs. REMAINING for pair v4 (GNG521+GNG380): eta* range-finder
+under frozen L1 (launched: grid {1e-5,1e-4,1e-3}, seeds
+34100-34109/probe 34150), then the pre-registered comparability
+curves at the shared eta*, then freeze decision.
+
+**Batch-1 remainder (10 types) resuming in background** as audit
+trail and backup pool in case GNG380 fails a later gate.
+
+## Batch-1 complete: 3/15 survive; GNG380 gate OPEN at eta*=1e-4 (2026-09-26)
+
+**Batch-1 full result (batch2_probe.jsonl, 15 types x 2 arms x 10
+seeds, freeze-grade n):** survivors JO-F ((e)-flagged, mechanosen-
+sory courtship modality - excluded pending the full (e) check),
+GNG380, GNG108. Ten of fifteen types LEAK at full feed-mode rates
+(63-90 Hz cue-alone) or suppress cosugar to 0 - the pre-filter's
+'clean-profile' types are mostly pre-wired into the feed program.
+This MEASURES the review's sparsity prediction: the joint criterion
+region is narrow; GNG521 was closer to a fluke than a representative
+case. The 143-type pool exists; passing (c)+(d) is the scarce part.
+Continuing batches remain available but are no longer the critical
+path - GNG380 has passed everything each failed candidate failed.
+
+**GNG380 eta* range-finder (stage_b_gng380_verdict.json): eta* =
+1e-4 (probe 4 Hz), rising to 130 Hz at 1e-3, no guard fires at any
+eta. Gate OPEN.** Pair v4 = GNG521 + GNG380 at the SHARED eta* =
+1e-4 (both cues' individual eta* agree - no shared-vs-individual
+tension). GNG380: 6 members, all cholinergic/Traced, no direct MN9_L
+edges, Jaccard vs GNG521 = 0.056, max leg-2 = 96, l1-into-strong-hubs
+= 2 (cleanest measured profile), CTE-documented as SEZ-local
+(AKA CB2820/Flywire), no documented feeding/valence function.
+
+**Remaining before pair v4 freeze:** GNG108 ((c)+(d) PASS at n=10;
+backup + comparability-relevant; needs leg-2 census + eta*) and the
+pre-registered comparability curves (GNG521 vs GNG380 at shared
+eta*=1e-4, 3 seed blocks each, 20 trials, probes at 5/10/15/20).
+GNG108's diligence is cheap and runs after the comparability curves
+(the pair decision does not depend on it).
+
+## Comparability result; PAIR v4 FROZEN: GNG521 + GNG380 (2026-09-26)
+
+**Comparability analysis (comparability_summary.json / comparability_
+curves.jsonl). Registered deviation recorded: seed blocks 35000-35500
+used instead of the pre-registered 34000-34500, which the batch
+probe's 34000-34009 block overlapped; design otherwise exactly as
+pre-registered (3 blocks x 20 trials, probes at 5/10/15/20, shared
+eta*=1e-4, frozen 1-hop L1):**
+- trial-to-first-expression: GNG521 [5,5,5]; GNG380 [5,5,5] -
+  IDENTICAL; both cues express by the first probe in every block.
+- plateau (trial-20 probe): GNG521 [81,84,83]; GNG380 [86,83,81].
+- across-block spread: 3 Hz vs 5 Hz - same order as the between-cue
+  plateau difference itself.
+**CUE-IDENTITY COVARIATE (per the registered interpretation rule):
+NO MATERIAL ASYMMETRY.** The degree-band concern (in-deg 47 vs
+14-197) produces no measurable acquisition-speed or plateau
+asymmetry at the shared eta*. Cross-arm effect-size claims in WP4
+may proceed; the covariate ships with the pair as "negligible".
+
+**PAIR v4 = GNG521 + GNG380 FROZEN as the Task A cue pair.** Every
+registered freeze condition met:
+- (a) both cholinergic, all Traced; no direct MN9_L edges
+- (b') expressibility VALIDATED by acquisition, not just predicted:
+  both have leg2=96 with sub-threshold l1 (4 / 2), and both express
+  at the SAME eta*=1e-4 - the shared-eta* rule holds with zero
+  per-cue tension
+- (c) cue-alone 0/10 fresh consumption-grade seeds (GNG521 now 0/30
+  across three independent suites); no leak
+- (d) cosugar mins 80 / 82 - feed program intact under co-drive
+- (e) literature: both functionally uncharacterized (CTE: GNG380 =
+  SEZ-local AKA CB2820); uncharacterized != neutral recorded; the
+  probes decided
+- (f) target Jaccard 0.056
+- acquisition gate OPEN (probe 77 Hz / 130 Hz at 1e-3-scale arms)
+- comparability measured and symmetric (above)
+
+**Training parameters frozen with the pair (WP4 consumption):**
+eta=1e-4, V_MAG, w_max=766, 1-hop window (frozen L1 unchanged),
+cue=PRIMARY 200 Hz, sugar=SECONDARY 200 Hz, readout MN9_L,
+feed-direction readout = cue-alone rate (baseline 0), withhold-
+direction readout = cue+cosugar rate (baseline 80-86), theta=41.5,
+probes after trials 5/10/15/20, L0 control = identical schedule with
+plasticity=None.
+
+**Backup diligence (launched, non-gating): GNG108 eta* range-finder**
+(seeds 36000-36009, probe 36050, grid {1e-5,1e-4,1e-3}) - batch
+survivor, (c)+(d) PASS, screen profile leg2=96/l1=4, nearly identical
+to GNG521's structure. If it expresses, it is the validated backup
+cue; if not, the backup pool is batch-2+ (128 unprobed types remain).
+
+**Open, non-blocking:** water_LB3a expressibility prediction test
+(registered prediction: clean structure leg2=92/l1=7 => expression;
+excluded as a cue on (e) grounds regardless; ~30 trials if run -
+model validation only).
+
+## Pair v4 — GNG521 + GNG380 FROZEN (2026-09-26)
+
+**Comparability analysis result (comparability_summary.json, pre-
+registered design, shared eta*=1e-4, 3 fresh blocks x 20 trials each,
+probes at 5/10/15/20):**
+- GNG521: first-expression trial 5 in 3/3 blocks; plateau 81/84/83
+  (spread 3 Hz).
+- GNG380: first-expression trial 5 in 3/3 blocks; plateau 86/83/81
+  (spread 5 Hz).
+The 6x in-degree asymmetry (47 vs 14-197 heterogeneous) did NOT
+surface as acquisition-speed or reliability asymmetry at the measured
+granularity. The pre-registered interpretation rule is satisfied:
+asymmetry recorded as a cue-identity covariate - and the measured
+asymmetry is negligible. NOTE: trial-5 is the earliest probe point,
+so 'first-expression at trial 5' means 'by trial 5'; granularity is
+coarse, but identical across all blocks for both cues.
+
+**FREEZE CHECKLIST (pair v4 = GNG521 + GNG380):**
+- (a) both cholinergic (GNG521 [15957,16327]; GNG380 6 members,
+  all Traced)
+- (b') leg-2 expressibility: GNG521 max 96; GNG380 max 96 - and BOTH
+  verified by acquisition (77 / 4 Hz probes at eta*=1e-4; both > 0)
+- (c) zero baseline: GNG521 0/15 (two independent n=10 suites);
+  GNG380 0/10 (freeze-grade)
+- (d) cosugar intact: GNG521 82-86; GNG380 min 80
+- (e) literature: both types have NO documented feeding/valence
+  function (GNG521 uncharacterized; GNG380 CTE-documented SEZ-local,
+  AKA CB2820/Flywire, uncharacterized function); uncharacterized !=
+  neutral recorded; both probe-verified clean at freeze-grade n
+- (f) Jaccard 0.056 - low, but BOTH cues have verified readout
+  access (both express), so the criterion's failure mode (disjoint
+  readout access) is excluded; recorded explicitly
+- eta*: BOTH 1e-4 - no shared-vs-individual tension; shared value
+  recorded
+- comparability: measured, favorable (above)
+- guard: no fires in any arm of any stage
+
+**PAIR V4 FROZEN.** The D1 arm-swap design applies unchanged: both
+cues support both directions (feed-acquisition readout = cue-ALONE
+MN9_L, baseline exactly 0; withhold-acquisition readout = cue+COSUGAR
+MN9_L, baseline 80-86). Direction assignment swapped between training
+arms. WP3 amended close-out follows; WP4 launches on this pair.
+
+**Candidate-selection audit trail (final, 7 families):** IR94e (d),
+water (e-lit), LB2a (c+d), GNG611+GNG622 (b'-expressibility),
+GNG557 (c innate tail), batch-1 leaks x10 (c/d pre-wired), JO-F
+(e-flag). Every criterion has caught real candidates; the joint
+region is narrow and now MEASURED (143-type pool, 3 probe-passing
+types in batch 1, of which 2 defensibly neutral-by-probe +
+1 excluded on (e)).
