@@ -1209,3 +1209,83 @@ subset's inhibitory mass can beat the 80-86 Hz sugar drive is
 EXACTLY what WP4 measures. A withhold null is a publishable result
 (landscape note already covers the geometry framing), not a failure
 of the run.
+
+## WP4 amendment (pre-launch, review-directed): symmetric criteria + seed count
+
+**Feed criterion FIXED (asymmetric criteria were a real confound in
+the frozen draft):**
+- PRIMARY (both directions, symmetric): the assigned readout CROSSES
+  theta=41.5 Hz in the assigned direction by trial 20 - feed: cue-
+  alone probe >= 41.5; withhold: cue+cosugar probe < 41.5.
+- SECONDARY: any-expression (feed: > 0; withhold: any decrease below
+  the 75-86 baseline range) - reported, never load-bearing.
+- Acquisition-speed metric: trials-to-theta (first probe point at/
+  beyond the criterion), reported per cue with across-seed spread -
+  GNG380's ramp makes this the meaningful speed measure, not
+  first-expression.
+Rationale: the draft's feed criterion (> 0) would have been
+satisfiable by GNG380's 2-8 Hz onset flickers while the withhold
+criterion sat at the decision threshold - a difference between
+directions could have come from the criteria themselves. The theta
+readout exists to make 'feed' mean something specific; the criteria
+now both sit at it.
+
+**Seed count RAISED per protocol S22 (development stage: 5-10 seeds,
+seed-as-unit S23/S24):** WP4 runs 6 seed blocks PER ARM (was 3) -
+arm-1 seeds 37000/37100/37200/37600/37700/37800; arm-2
+37300/37400/37500/37900/38000/38100. n=6 seeds/arm at seed-level
+aggregation, powered for GNG380's observed across-seed spread
+(trial-5 probes: 3-34 Hz). L0 control: same 12 blocks, plasticity
+None. n=6 is inside the protocol's 5-10 development band; the
+WP5+ confirmatory stage remains 10 frozen seeds per S22.
+
+**Probe schedule unchanged** (1,2,3,4,5,10,15,20 - both cues
+located onset in (1,4]; trials-to-theta measured at the same
+granularity for both cues). Cross-direction probes at every point
+(4 probes/point) unchanged. Interleaving unchanged. D1 arm-swap
+unchanged. Guard live. Interpretation orders unchanged.
+
+## WP4 v2 relaunch (2026-09-27, post-audit)
+
+**Reviewer's flush-at-block-end hypothesis: empirically DISPROVEN**
+(two mid-block samples: 39 records -> 52, exactly matching the
+cumulative schedule; the writer appends per-record). But the audit it
+triggered found three REAL defects, worse than the hypothesis:
+- **(1) Weight state was NEVER checkpointed in v0** (run.save() never
+  called; 0 run_state.json, 0 weight .npz files): a mid-block resume
+  would have replayed completed trials WITHOUT their potentiation -
+  records from two different weight trajectories stitched silently.
+  This is the trajectory-stitching failure the reviewer's question
+  was circling; it is worse than lost compute.
+- (2) The v0 seed scheme had 4 training-seed overlaps with onset
+  probe seeds (37001-37004) and 16 probe/train collisions
+  (38000-38113 range).
+- (3) The missing-dir crash was real but trivial (mkdir added).
+
+**v0 run DISCARDED per fresh-seeds rule:** 7 blocks (~50 min compute)
+preserved at results/phase2/wp4_discarded_v0/ as the superseded
+artifact; never to be aggregated with v2. The "zero lost trials"
+claim in the launch report was WRONG - corrected: ~50 min of compute
+was lost on discard, nothing lost from the record (files intact).
+
+**v2 fixes (all verified by tests before relaunch):**
+- run.save() after EVERY simulation; TrainingRun.load() at block
+  start with hash verification (tests: resume continues from
+  checkpointed weights, reproduces continuation bit-for-bit, no
+  stitching; I/O artifacts appear after first simulation).
+- New seed scheme: training 40000 + bi*100 + t; probe
+  50000 + bi*1000 + t*10 + pi (bi = global block index 0-23).
+  VERIFIED disjoint from ALL prior stages including discarded v0
+  (0 overlaps, 0 internal collisions; audit artifact
+  results/phase2/wp4_seed_audit.json).
+
+**Development-stage labeling (reviewer point, registered):** WP4 is
+DEVELOPMENT-stage per protocol S22 (5-10 seeds); nothing in its
+report reads as confirmatory - the confirmatory stage requires a
+separately pre-registered frozen seed set (S22) and runs in WP5+.
+
+**L0 zero-variance note (reviewer point, registered):** L0 cue-alone
+is exactly 0 by construction - the feed-direction comparison is
+"is L1 above zero at each seed" (a one-sample claim against a
+degenerate null), not a two-sample test with a real null
+distribution. The analysis states this; no fake two-sample framing.
