@@ -1098,3 +1098,114 @@ GNG557 (c innate tail), batch-1 leaks x10 (c/d pre-wired), JO-F
 region is narrow and now MEASURED (143-type pool, 3 probe-passing
 types in batch 1, of which 2 defensibly neutral-by-probe +
 1 excluded on (e)).
+
+## Fine-grained onset probe + landscape note (2026-09-27, pre-registered before launch)
+
+**Review point adopted: the trial-5 quantization caveat must be
+resolved before the acquisition protocol freezes**, because WP5-WP7
+compare rates/magnitudes at a precision coarse probes could wash out.
+
+**Design (registered):** per (cue, seed block): ONE run, training
+trials 1-4 with a cue-alone PROBE after EACH trial (probes are
+is_probe - no plasticity applied, accumulation clean). GNG521 blocks
+36000/36100/36200; GNG380 36300/36400/36500; probe seeds base+501..+504.
+Frozen L1, shared eta*=1e-4, cue PRIMARY, explicit 200 Hz.
+
+**Interpretation rule (fixed now, before data):**
+- Identical onset pattern at trial-1 granularity -> comparability
+  claim upgraded from 'by trial 5' to trial-level resolution.
+- Divergence in trials 1-4 (one cue expresses at k, the other later)
+  -> recorded as the REFINED cue-identity covariate: an acquisition-
+  speed asymmetry exists below the comparability design's
+  resolution. Pair v4 STAYS FROZEN (the D1 arm-swap still controls
+  the cue->direction confound; selection criteria are unaffected),
+  but ALL WP4+ rate/slope comparisons must use PER-CUE baselines and
+  report onset per cue - never pooled. This is a covariate
+  refinement, not a selection reopening.
+- Zero expression before trial 5 in BOTH cues at both granularities
+  is also informative: it locates onset in (4,5] and the WP4
+  protocol should probe at trial 4 AND 5.
+
+**Landscape note (review point 2):** the seven-family audit trail is
+being written up NOW as its own scientific note
+(docs/PLASTICITY_LANDSCAPE.md) while every candidate's death is fresh
+and precisely characterized - the finding is independent of Task A's
+outcome: under frozen 1-hop Hebbian plasticity, learnability on this
+connectome is concentrated in a specific anatomical configuration
+(strong leg-2 convergence onto the readout), empirically sparse
+(3/15 batch types pass (c)+(d); 2 of those defensibly neutral), and
+NOT structurally predictable from leak-side features (three screen
+variants refuted).
+
+## Fine-grained onset result (2026-09-27): divergence CONFIRMED below coarse resolution
+
+**Result** (onset_finegrained_summary.json, trials 1-4 probed after
+EACH trial, 3 blocks per cue, frozen L1, eta*=1e-4):
+- GNG521: [0,0,0,62] / [0,0,0,75] / [0,0,0,62] - onset SHARP at the
+  trial-4 boundary, perfectly reproducible, step-function shape
+  (silent -> near-plateau in one trial).
+- GNG380: [0,8,3,26] / [0,2,0,0] / [0,0,19,7] - onset GRADUAL and
+  NOISY: low-rate flickers (2-8 Hz) anywhere from trial 2-3, one
+  block with no expression through trial 4, inconsistent across
+  seeds, ramp shape.
+
+**Per the pre-registered interpretation rule:** a real acquisition-
+speed/shape asymmetry exists below the comparability design's
+resolution - the 6x in-degree gap surfaces in ONSET DYNAMICS (sharp
+vs noisy-ramp), not in first-expression-at-probe or plateau. PAIR V4
+STAYS FROZEN (D1 arm-swap still controls cue->direction; selection
+criteria unaffected). MANDATORY for WP4+: (i) per-cue baselines and
+per-cue onset reporting, never pooled across cues; (ii) acquisition
+protocols probe at trial granularity 1-5 (both cues located onset
+in (1,4]); (iii) GNG380's noisier onset means its direction claims
+need across-seed spread reported, not just means. This refines the
+cue-identity covariate; it does not reopen selection.
+
+## WP4 pre-registration (Task A acquisition, L0 vs L1) - registered BEFORE launch
+
+**Frozen inputs:** pair v4 (GNG521 [15957,16327]; GNG380 [50843,
+53901,103327,129624,556072,559464]); shared eta*=1e-4; frozen 1-hop
+V_MAG; w_max=766; guard = D6 thresholds live; cue PRIMARY @200,
+drive SECONDARY @200 (feed=sugar_R, withhold=bitter_R from
+wp6c_grn_seeds.json); duration 1000 ms.
+
+**Arms (D1 anti-confound swap):** arm-1 = GNG521->feed,
+GNG380->withhold; arm-2 = GNG521->withhold, GNG380->feed.
+3 seed blocks per arm: arm-1 37000/37100/37200, arm-2 37300/37400/
+37500. Identical seed structure across arms; only the drive
+assignment swaps.
+
+**Schedule per run:** 20 interleaved training trials (even: GNG521
+trained toward its assigned direction; odd: GNG380). Probes (no
+plasticity) after trials 1,2,3,4,5,10,15,20 - 4 probes per point:
+cue-A alone, cue-A cosugar, cue-B alone, cue-B cosugar (cross-
+direction leakage measured by design). Probe seeds base+1000+trial.
+L0 control: identical schedule+seeds, plasticity=None, all 6 runs.
+
+**Success criteria (frozen now):**
+- Feed acquisition: L1 feed-assigned cue's cue-alone probe > 0 by
+  trial 20 in every run; L0 cue-alone probes = 0 throughout.
+- Withhold acquisition: L1 withhold-assigned cue's cue+cosugar
+  probe < 41.5 Hz (frozen WP9 threshold) by trial 20; L0 stays
+  >= 75.
+- Per-cue reporting mandatory (refined covariate); n=3 seeds/arm is
+  pilot-grade - WP5+ confirmatory uses 10 seeds per protocol S12.
+- Guard silent throughout; any fire = halt + report.
+
+**Pre-registered interpretation order if WITHHOLD direction fails:**
+(1) insufficient inhibitory-edge overlap - check per-run signed
+weight-delta on negative cue-incident edges (potentiated GABA-edge
+mass present but cosugar suppression absent = overlap insufficient);
+(2) eta below the suppressive pathway's threshold - recorded,
+WP5 follow-up at eta=1e-3 withhold-only arm; (3) withhold needs
+mechanisms beyond frozen L1 - registered as NEGATIVE RESULT (never
+a silent mechanism change; the leg-2 geometry that enables feed
+learning has no measured suppressive analog yet).
+
+**Known risk recorded honestly:** bitter co-drive suppresses
+broadly, so the cue's potentiated edge set under withhold training
+is the aversive-active subset of its 1-hop targets; whether that
+subset's inhibitory mass can beat the 80-86 Hz sugar drive is
+EXACTLY what WP4 measures. A withhold null is a publishable result
+(landscape note already covers the geometry framing), not a failure
+of the run.
