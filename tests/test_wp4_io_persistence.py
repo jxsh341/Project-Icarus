@@ -93,6 +93,22 @@ def test_resume_continues_from_checkpointed_weights(tmp_path) -> None:
     assert weight_matrix_hash(loaded.matrix) == h_after_2
 
 
+def test_probe_is_readonly(tmp_path) -> None:
+    """A probe simulation must leave the weight hash unchanged (the
+    measurement must not perturb the thing measured): hash before and
+    after a probe are equal, with plasticity live."""
+    cfg = PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6)
+    nodes = list(range(N_NODES))
+    run = TrainingRun(_matrix(), nodes, HebbianRule(cfg), _guard(), READOUT,
+                      "t", tmp_path / "probe" / "ckpt",
+                      lif_params=dataclasses.replace(LIFParams(), r_poisson_Hz=200.0))
+    run.run_trial(_spec(trial=0, seed=100))  # one training trial
+    h_before = weight_matrix_hash(run.matrix)
+    probe_spec = dataclasses.replace(_spec(trial=0, seed=200), is_probe=True)
+    run.run_trial(probe_spec)
+    assert weight_matrix_hash(run.matrix) == h_before
+
+
 def test_resume_reproduces_continuation(tmp_path) -> None:
     """Resumed runner's next trial must match the un-resumed
     continuation bit-for-bit (no trajectory stitching)."""
@@ -117,3 +133,43 @@ def test_resume_reproduces_continuation(tmp_path) -> None:
 
     assert r_res["readout_hz"] == r_ref["readout_hz"]
     assert weight_matrix_hash(loaded.matrix) == h_ref
+
+
+def test_probe_is_read_only(tmp_path) -> None:
+    """A probe with plasticity present must leave the weight hash
+    unchanged - the measurement must not perturb the thing measured
+    (probes are interleaved at 8 points; a Hebbian-applying probe
+    would train on cue-alone/cosugar and contaminate every later
+    probe)."""
+    cfg = PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6)
+    ckpt = tmp_path / "pure" / "ckpt"
+    run = TrainingRun(_matrix(), list(range(N_NODES)), HebbianRule(cfg),
+                      _guard(), READOUT, "t", ckpt,
+                      lif_params=dataclasses.replace(LIFParams(), r_poisson_Hz=200.0))
+    run.run_trial(_spec(trial=0, seed=100))  # build potentiation state
+    h_before = weight_matrix_hash(run.matrix)
+    probe_spec = TrialSpec(trial=0, seed=200, cue_body_ids=(0,), drive_body_ids=(1,),
+                           drive2_body_ids=(), r_cue_hz=200.0, r_drive_hz=150.0,
+                           r_drive2_hz=0.0, is_probe=True)
+    rec = run.run_trial(probe_spec)
+    assert rec["is_probe"] is True
+    assert weight_matrix_hash(run.matrix) == h_before
+
+
+def test_probe_repeated_leaves_state_identical(tmp_path) -> None:
+    """N probes on a potentiated run must leave the hash identical to
+    one probe - no accumulation through probe calls."""
+    cfg = PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6)
+    ckpt = tmp_path / "pure_n" / "ckpt"
+    run = TrainingRun(_matrix(), list(range(N_NODES)), HebbianRule(cfg),
+                      _guard(), READOUT, "t", ckpt,
+                      lif_params=dataclasses.replace(LIFParams(), r_poisson_Hz=200.0))
+    run.run_trial(_spec(trial=0, seed=100))
+    probe_spec = TrialSpec(trial=0, seed=200, cue_body_ids=(0,), drive_body_ids=(1,),
+                           drive2_body_ids=(), r_cue_hz=200.0, r_drive_hz=150.0,
+                           r_drive2_hz=0.0, is_probe=True)
+    run.run_trial(probe_spec)
+    h_after_1 = weight_matrix_hash(run.matrix)
+    for k in range(5):
+        run.run_trial(dataclasses.replace(probe_spec, seed=300 + k))
+    assert weight_matrix_hash(run.matrix) == h_after_1

@@ -1262,11 +1262,17 @@ triggered found three REAL defects, worse than the hypothesis:
   (38000-38113 range).
 - (3) The missing-dir crash was real but trivial (mkdir added).
 
-**v0 run DISCARDED per fresh-seeds rule:** 7 blocks (~50 min compute)
-preserved at results/phase2/wp4_discarded_v0/ as the superseded
-artifact; never to be aggregated with v2. The "zero lost trials"
-claim in the launch report was WRONG - corrected: ~50 min of compute
-was lost on discard, nothing lost from the record (files intact).
+**v0 run DISCARDED per fresh-seeds rule:** ALL 24 BLOCKS COMPLETED
+(verified by file count 2026-09-27: 24/24 block JSONLs, all 52
+records) on the flawed design - roughly 10 HOURS of compute
+discarded, preserved at results/phase2/wp4_discarded_v0/ as the
+superseded artifact; never to be aggregated with v2. The "zero lost
+trials" claim in the launch report was WRONG - corrected: the
+compute was lost on discard, nothing lost from the record (files
+intact). CORRECTION TRAIL for this erratum: first stated "7 blocks
+(~50 min)" - a miscount; the reviewer caught the self-contradiction
+(24 blocks at ~25 min/block cannot be 50 min); file count settles
+it: 24 completed, ~10 h.
 
 **v2 fixes (all verified by tests before relaunch):**
 - run.save() after EVERY simulation; TrainingRun.load() at block
@@ -1289,3 +1295,49 @@ is exactly 0 by construction - the feed-direction comparison is
 "is L1 above zero at each seed" (a one-sample claim against a
 degenerate null), not a two-sample test with a real null
 distribution. The analysis states this; no fake two-sample framing.
+
+## WP4 RESULT (2026-09-28, development-stage; report: docs/WP4_REPORT.md)
+
+**Arm1 PASSES both directions (6/6 seeds each):** GNG521-feed
+(alone 69-81, all >= theta=41.5; L0 exactly 0) and GNG380-withhold
+(cosugar 2-6, all < 41.5; L0 83-87 - suppression to ~1/15 of
+baseline). Guard silent in all 24 blocks. Cross-direction leakage:
+none - failures produced NO direction-appropriate expression, not
+wrong-direction expression.
+
+**Arm2 FAILS both directions (0/6 each):** GNG521-withhold (cosugar
+83-89 vs L0 81-87, never suppressed) and GNG380-feed (alone 3-9,
+never above theta). Potentiation OCCURRED in both arms (weight_diff
+nonzero per trial; arm2 blk0 t19: 233 edges, sum|D| 419.6) - arm2
+learned toward something that did not express.
+
+**NEW STRUCTURAL FINDING (extends PLASTICITY_LANDSCAPE.md): the
+cue x direction interaction.** Each cue's FEED direction was trained
+in exactly one arm (D1 swap), so cue and direction are crossed, not
+confounded: GNG521 learned feed-ONLY; GNG380 learned withhold-ONLY.
+Seed-stable (6/6 vs 0/6, no overlap), not noise/guard/stitching.
+Leg-2 connectivity that enables acquisition is not just RARE - it is
+DIRECTION-SPECIFIC per cue: GNG521's leg-2 reaches the readout's
+excitatory (sugar-path) side; GNG380's reaches the suppressive side.
+A cue that learns both directions was NOT found; whether one exists
+is an open structural question (WP5+).
+
+**Per-registered interpretation orders applied:** GNG521-withhold
+fails at step 1 (inhibitory-edge overlap insufficient - potentiation
+present, suppression never crossed theta); eta=1e-3 withhold-only
+follow-up arm REGISTERED for WP5. GNG380-feed fails outside that
+order (pathway-specific leg-2: its suppressive connectivity works,
+its feed-mode potentiation never cleared theta against the
+exactly-zero baseline) - recorded as its own negative result.
+
+**Downstream (registered):** WP5 retention proceeds on the LEARNED
+directions only (GNG521-feed, GNG380-withhold) at confirmatory seed
+count (S22), asymmetry carried as covariate. Task B (reversal) as
+specified requires direction-switchable cues - the current pair is
+not; reversal design must be reopened with this finding on record.
+
+**Erratum CORRECTED (reviewer-caught):** v0 = 24 COMPLETED blocks
+(~10 h compute discarded; earlier '7 blocks / ~50 min' was a
+miscount; file count verified 24/24, all 52 records). Probe purity
+VERIFIED BY TEST (hash unchanged through probe; N-probes no
+accumulation; 7/7 I/O tests, suite 102/102).
