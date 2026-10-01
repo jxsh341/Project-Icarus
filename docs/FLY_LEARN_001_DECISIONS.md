@@ -1340,4 +1340,4 @@ not; reversal design must be reopened with this finding on record.
 (~10 h compute discarded; earlier '7 blocks / ~50 min' was a
 miscount; file count verified 24/24, all 52 records). Probe purity
 VERIFIED BY TEST (hash unchanged through probe; N-probes no
-accumulation; 7/7 I/O tests, suite 102/102).
+accumulation; 7/7 I/O tests, suite 98/98).
