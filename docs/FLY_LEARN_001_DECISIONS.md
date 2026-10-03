@@ -1446,7 +1446,65 @@ against existing dose-response data BEFORE launch. Applied to Task B
 below (dose table in docs/TASK_B_DESIGN.md).
 
 **Seed scheme for Task B (verified disjoint by computation NOW,
-pre-launch):** training 80000 + bi*100 + t (bi 0-11, max 81229);
+pre-launch):** training 80000 + bi*100 + t (bi 0-11; verified max 81129 for t in range(30), 81114 for R1's t 0-14);
 probe 90000 + bi*1000 + pt*10 + ty*2 + rep (bi 0-11, pt 0-6, ty
 0-3, rep 0-1; max 101067; >=2 probe sims per point per type).
 0 internal collisions; min ranges > prior max (73193).
+
+## R2 masking probe + R1 interpretation (2026-10-03, pre-launch, review-directed)
+
+**Reversal outcome has TWO possible states:** under potentiative-only
+V_MAG, R2 reversal works by ADDING a new strong pathway that
+outcompetes the old one at the readout - not by weakening the old
+weights. A cue passing R2's criterion is therefore either (i)
+GENUINELY REORGANIZED or (ii) MASKED - old pathway fully intact,
+suppressed by a stronger competing drive present during the reversal
+protocol's own probes. Different predictions under a condition R2
+must test: the reversed cue probed WITHOUT the competing drive after
+reversal succeeds.
+
+**MASKING TEST (registered, LOAD-BEARING for R2 claims):**
+- GNG521 (feed->withhold reversal; old = excitatory): cue-ALONE probe
+  (no bitter, no sugar) at the final reversal points. alone >= theta
+  = MASKED (old pathway intact; readout reflects the current winner);
+  alone < theta = GENUINE REORGANIZATION (old response gone even
+  without the competitor - includes the case of a spontaneously
+  active new suppressive pathway).
+- GNG380 (withhold->feed reversal; old = suppressive): cue+COSUGAR
+  probe at the final points. cosugar < theta STILL = old suppression
+  intact (NOT unlearned - two state-dependent mappings);
+  cosugar >= theta = GENUINE REORGANIZATION.
+- >=2 sims/point. Claim entitlement: 'reversed' requires the masking
+  test passed; otherwise the finding is 'masked by a second,
+  competing association' (two-association coexistence - still a
+  result, a different one). Registered BEFORE any R2 data exists.
+
+**R1 interpretation (ambiguity resolved pre-launch):** weights are
+FROZEN during retention - no decay mechanism exists in the model -
+so the 'decay curve' is a DISTRIBUTIONAL STABILITY test at the
+retained state: 5 points x 2 reps x 4 probe types at distinct seeds,
+plasticity off (is_probe). The +N spacing is decorative; points are
+repeated measurements. Point passes iff BOTH reps on the learned
+side of theta (conservative: a wrong-side spike = instability
+signal); block passes iff all points pass; criterion >=5/6 blocks.
+Below-theta = recorded retention failure - investigated, never
+patched by retraining.
+
+**Seed ranges (verified pairwise-disjoint by computation NOW):**
+- R1 training 80000 + bi*100 + t (bi 0-11, t 0-14; max 81114)
+- R1 probes 90000 + bi*1000 + pt*10 + ty*2 + rep (pt 0-4; max 101047)
+- R2 training 85000 + bi*100 + t (t 0-24; verified max 86124 -
+  separate range: R2 continues R1's blocks, so it cannot reuse
+  80000+ ranges)
+- R2 probes 120000 + bi*2000 + pt*10 + ty*2 + rep (pt 0-6; verified
+  max 142047; base 120000 - far above every other range, collision
+  impossible by construction. CORRECTION TRAIL: the first draft
+  (95000 + bi*1000) collided with r1_probe at 280 values; bi*2000
+  still collided at 160 (r1 bi=7 window = r2 bi=1 window at 97000);
+  caught by the pre-launch pairwise check, settled by computation
+  before launch)
+- L0-R shares R1's seed structure BY DESIGN (matched-seed paired
+  comparison, as in WP4)
+- all pairwise disjoint (verified after TWO collision fixes), above prior max 73193
+- CORRECTION: the 'WP4 addendum' seed line said 'max 81229' - typo;
+  verified max is 81129 (t in range(30)) / 81114 (R1's t 0-14).
