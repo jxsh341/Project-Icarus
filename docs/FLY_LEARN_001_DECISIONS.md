@@ -1423,3 +1423,30 @@ WP4 at matched dose.** 'GNG380 learned withhold-only' is WRONG.
 earlier measurement of the same nominal condition, FIRST diff the
 trial-dose (trials-per-direction per arm), not just the config -
 interleaved designs halve per-cue dose silently.
+
+## WP4 addendum (2026-10-03, review-directed): negative-result downgrade + proactive dose rule
+
+**GNG521-withhold negative DOWNGRADED to provisional** (reviewer
+point 1): the blk5 probe-variance caveat applies to it, and more
+severely - a single probe per point could sit just under theta by
+noise (false NEGATIVE risk; the symmetric case of blk5's false-
+positive spike to 81 Hz). No dose reference exists for
+GNG521+bitter anywhere in the project. '0/6 FAIL' must NOT be read
+with arm1-pass confidence until it has the >=2-probes-per-point
+treatment now required going forward. Arm1's clean passes are the
+strong results; this negative is weaker evidence, explicitly.
+
+**Dose-diffing rule upgraded from reactive to PROACTIVE (reviewer
+point 2):** the v0 root cause was a DESIGN property (interleaved
+equal-trial schedules silently halve per-cue dose), which is why the
+config diff came back clean. NEW RULE: every future design
+COMPUTES and pre-registers expected per-condition dose (trials per
+cue per direction under its interleaving scheme) and CHECKS it
+against existing dose-response data BEFORE launch. Applied to Task B
+below (dose table in docs/TASK_B_DESIGN.md).
+
+**Seed scheme for Task B (verified disjoint by computation NOW,
+pre-launch):** training 80000 + bi*100 + t (bi 0-11, max 81229);
+probe 90000 + bi*1000 + pt*10 + ty*2 + rep (bi 0-11, pt 0-6, ty
+0-3, rep 0-1; max 101067; >=2 probe sims per point per type).
+0 internal collisions; min ranges > prior max (73193).
