@@ -17,9 +17,13 @@ Guard: **0 fires in all 24 blocks.** Cross-direction leakage: none in the failin
 
 **Acquisition succeeded in arm1 (both directions) and failed in arm2 (both directions).** L1-vs-L0: arm1 feed = every seed above θ over an exactly-zero null; arm1 withhold = suppression to 2–6 Hz against an 83–87 Hz L0 baseline (a 15–25× reduction, every seed below θ).
 
-## The cue×direction interaction
+## ERRATUM (2026-10-01): the 'cue×direction interaction' section below is RETRACTED — dose artifact
 
-Potentiation occurred in BOTH arms (per-trial `weight_diff` nonzero everywhere — arm2 blk0 trial 19: 233 edges changed, Σ|Δ| 419.6), so arm2's failure is **not** "plasticity did nothing": it learned, toward something that didn't express. Each cue's FEED direction was trained in exactly one arm (D1 swap), so cue and direction are crossed, not confounded: **GNG521 learned feed-only; GNG380 learned withhold-only.** The asymmetry is real, seed-stable (0/6 vs 6/6 — no overlap), and NOT an artifact of noise, guard, or trajectory stitching.
+The reviewer flagged arm2 GNG380-feed (3–9 Hz) as contradicting the WP3 pilot (81–86 Hz). Resolved from data on disk: **config diff clean** (all rates explicit 200.0, η=1e-4 both); **the real difference is DOSE** — the pilot gave GNG380 20 consecutive feed trials, WP4's interleaved schedule gives each cue 10. At matched dose the curves agree: pilot at 10 feed trials = 5, 5, 19 Hz (below θ); WP4 arm2 final probe (= 10 feed trials) = 3–9 Hz across 6 seeds. GNG380 crosses θ between feed-trials 15–20 (pilot: 19–21 Hz at 15 trials, still below θ); arm2 only gave it 10. **GNG380 CAN learn feed — the pilot replicated at matched dose.** 'GNG521 learned feed-only; GNG380 learned withhold-only' is WRONG. Corrected finding: per-direction acquisition SPEED differs (GNG521-feed fast, θ by trial 5–10; GNG380-feed slow, θ at 15–20 feed trials; GNG380-withhold fast ≤10; GNG521-withhold not achieved at 10 trials), and equal-trials interleaved designs under-dose slow directions. Arm1 stands; arm2 GNG521-withhold is a genuine negative at this dose (no dose reference exists for GNG521+bitter). Full erratum: registry 'WP4 ERRATUM (2026-10-01)'. Probe-variance caveat: blk5's single 81 Hz probe at 5 feed trials came back down at later points — WP5+ averages ≥2 probe sims per point.
+
+## [RETRACTED] The cue×direction interaction
+
+Potentiation occurred in BOTH arms (per-trial `weight_diff` nonzero everywhere — arm2 blk0 trial 19: 233 edges changed, Σ|Δ| 419.6), so arm2's failure is **not** "plasticity did nothing": it learned, toward something that didn't express. Each cue's FEED direction was trained in exactly one arm (D1 swap), so cue and direction are crossed, not confounded: **GNG521 learned feed-only; GNG380 learned withhold-only.** The asymmetry is real, seed-stable (0/6 vs 6/6 — no overlap), and NOT an artifact of noise, guard, or trajectory stitching. **[RETRACTED 2026-10-01: the 0/6 was a dose artifact — 10 feed trials vs the pilot's 20; see erratum above.]**
 
 ## Pre-registered interpretation order (withhold failures)
 
@@ -32,9 +36,9 @@ GNG380-feed (arm2) fails for its own reason, not covered by that order: GNG380's
 ## What this means
 
 - **Task A's primary question (L0 vs L1) is answered affirmatively at development grade in arm1**: Hebbian plasticity on the frozen substrate produces acquisition in BOTH directions when the cue's geometry supports that direction — feed from exactly-zero baseline, withhold from an 83–87 Hz innate baseline down to 2–6 Hz, guard silent, no leakage.
-- **The learned-direction asymmetry is a new structural finding** (extends the landscape note): leg-2 connectivity that enables acquisition is not just rare — it is *direction-specific per cue*. GNG521's leg-2 feeds the readout's excitatory side; GNG380's feeds the suppressive side. A cue that learns both directions was not found; whether one exists is an open structural question for WP5+.
+- **[RETRACTED — see erratum]** The learned-direction asymmetry was a dose artifact, not structure: GNG380's feed direction received 10 interleaved trials; the pilot shows it needs 15–20. The corrected finding is per-direction acquisition-speed asymmetry (GNG521-feed fast, GNG380-feed slow, both withhold-side behaviors fast-or-negative at 10 trials).
 - **WP5 (retention) proceeds on the learned directions only**: GNG521-feed and GNG380-withhold, at confirmatory seed count (§22), with the asymmetry carried as a covariate and the η=1e-3 withhold follow-up arm registered.
-- Cross-direction claims (reversal, generalization) must be designed around the fact that neither cue learned its opposite direction — Task B (reversal) as specified requires direction-switchable cues, which the current pair is not (GNG521: feed-only; GNG380: withhold-only).
+- Task B (reversal) reopening proceeds on the DOSE finding, not the retracted direction-specificity claim: any design training both directions in one run must match per-direction trial dose to per-direction acquisition speed (GNG380-feed needs 15–20 trials; equal-trials interleaving under-doses it silently).
 
 ## Provenance
 

@@ -1311,16 +1311,26 @@ never above theta). Potentiation OCCURRED in both arms (weight_diff
 nonzero per trial; arm2 blk0 t19: 233 edges, sum|D| 419.6) - arm2
 learned toward something that did not express.
 
-**NEW STRUCTURAL FINDING (extends PLASTICITY_LANDSCAPE.md): the
-cue x direction interaction.** Each cue's FEED direction was trained
-in exactly one arm (D1 swap), so cue and direction are crossed, not
-confounded: GNG521 learned feed-ONLY; GNG380 learned withhold-ONLY.
-Seed-stable (6/6 vs 0/6, no overlap), not noise/guard/stitching.
-Leg-2 connectivity that enables acquisition is not just RARE - it is
-DIRECTION-SPECIFIC per cue: GNG521's leg-2 reaches the readout's
-excitatory (sugar-path) side; GNG380's reaches the suppressive side.
-A cue that learns both directions was NOT found; whether one exists
-is an open structural question (WP5+).
+**RETRACTED (2026-10-01, reviewer-caught): the 'cue x direction
+interaction / GNG380 learned withhold-ONLY' claim above was a
+TRIAL-BUDGET ARTIFACT, not a structural finding.** The audit:
+(1) configs verified correct from records - arm2 GNG380-feed train
+trials read 81-89 Hz (sugar co-drive wired, no rate default, no
+label swap); arm2 GNG521-withhold train trials read 0 (bitter
+wired); budget 10/10 per cue as designed. (2) The pilot's own
+GNG380 feed curve (20 CONSECUTIVE trials) was 3-34 Hz at trial 5,
+5-19 Hz at trial 10, 19-21 at 15, and only 81-86 at 20 - the ramp
+crosses theta between feed-trials 15-20. Arm2's interleaved
+schedule delivers only 10 feed trials by the trial-20 probe point,
+and arm2's GNG380 alone-probes (3-9 Hz) sit INSIDE the pilot's
+trial-10 range. Same ramp, half the budget - there is no conflict
+with the pilot and no direction-specificity. 'Seed-stable 0/6' was
+stability of an under-dosed schedule, not of a structural property.
+CORRECTED asymmetry: GNG521 = feed YES / withhold NO (genuine:
+GNG380 suppressed by withhold-trial 5 with the SAME 10-trial budget
+GNG521-withhold never engaged in - the contrast is built into the
+arms); GNG380 = withhold YES / feed UNKNOWN at 10 trials (re-test
+launched). Task B reopening ON HOLD pending the re-test.
 
 **Per-registered interpretation orders applied:** GNG521-withhold
 fails at step 1 (inhibitory-edge overlap insufficient - potentiation
@@ -1341,3 +1351,75 @@ not; reversal design must be reopened with this finding on record.
 miscount; file count verified 24/24, all 52 records). Probe purity
 VERIFIED BY TEST (hash unchanged through probe; N-probes no
 accumulation; 7/7 I/O tests, suite 98/98).
+
+## GNG380-feed re-test (2026-10-01, registered before launch)
+
+Reviewer's option-1 vs option-2 resolved by a two-arm re-test:
+- **Arm A (budget test):** 20 CONSECUTIVE GNG380-feed trials x 3
+  seeds (42000/42100/42200) - exact replication of the pilot's
+  schedule at WP4's seed scheme. Prediction: alone crosses theta
+  between trials 15-20 (replicating pilot 81-86).
+- **Arm B (interleave test):** 40 interleaved trials (GNG380-feed
+  odd, GNG521-withhold even - arm2's structure doubled) x 3 seeds
+  (42300/42400/42500) - GNG380 receives 20 feed trials, same as
+  arm A, but alternating with bitter-drive trials. If B also
+  crosses theta by feed-trial 15-20: arm2's failure was pure
+  budget, no suppression. If B stays low while A crosses: the
+  interleaved (bitter-alternating) context suppresses GNG380's
+  excitatory path - a REAL finding (reviewer option 2), and the
+  WP4 interleave design itself would be implicated for future
+  multi-cue schedules.
+Probes: alone + cosugar at feed-trials 5/10/15/20 (A) and at
+cumulative feed-trials 5/10/15/20 (B, probe after the Nth feed
+trial); probe seeds 80000+bi*1000+t*10+pi (A) / 81000+... (B) -
+disjoint from all prior ranges (nothing above 73193 in use).
+Frozen L1, eta*=1e-4, guard live, per-simulation checkpoints,
+explicit 200 Hz. Interpretation registered above.
+
+## WP4 ERRATUM (2026-10-01, reviewer-caught): 'direction-specific leg-2' RETRACTED - dose artifact
+
+**The reviewer's conflict was real and resolved by data already on
+disk (no new compute):** arm2 GNG380-feed (3-9 Hz at final probe)
+vs the WP3 pilot (81-86 Hz) looked like a direct contradiction.
+CONFIG DIFF: clean - all drive rates explicit 200.0 in both scripts,
+eta=1e-4 both; no rate-default reversion, no wiring mix-up (drive=
+sugar for feed in both). THE REAL DIFFERENCE: DOSE. The pilot gave
+GNG380 20 CONSECUTIVE feed trials; WP4's interleaved schedule gives
+each cue 10 (odd indices only). At MATCHED dose the curves AGREE:
+- pilot at 10 feed trials: 5, 5, 19 Hz (below theta)
+- WP4 arm2 final probe (= 10 feed trials): 3-9 Hz across 6 seeds
+The pilot's 81-86 Hz was at 20 feed trials (19-21 at 15 trials,
+STILL below theta). GNG380 crosses theta between feed-trials 15-20;
+arm2 gave it 10. **GNG380 CAN learn feed - the pilot replicated in
+WP4 at matched dose.** 'GNG380 learned withhold-only' is WRONG.
+
+**Corrected findings:**
+- Arm1 STANDS: GNG521-feed 6/6 (10 trials suffice - sharp onset);
+  GNG380-withhold 6/6 (suppression fast, <=10 trials). No leakage,
+  guard silent.
+- Arm2 GNG380-feed 0/6 = DOSE ARTIFACT, not structural. Retracted
+  from the landscape framing (the landscape note itself never
+  claimed direction-specificity - no edit needed there).
+- Arm2 GNG521-withhold: genuine NEGATIVE at 10-trial dose (no dose
+  reference exists for GNG521+bitter anywhere in the project);
+  pre-registered interpretation order stands; eta=1e-3 follow-up
+  registered for WP5.
+- NEW FINDING (replaces the retracted one): per-direction
+  ACQUISITION SPEED differs - GNG521-feed fast (theta by trial 5-10),
+  GNG380-feed slow (theta at 15-20 feed trials), GNG380-withhold
+  fast (<=10 trials), GNG521-withhold not achieved at 10 trials.
+  The equal-trials interleaved design UNDER-DOSES slow directions;
+  per-direction dose must be matched to per-direction speed in any
+  design that trains both directions in one run.
+- Task B implication CHANGES: not 'cues cannot switch directions'
+  (retracted) but 'per-direction dose matching required'; reversal
+  design reopening proceeds on the dose finding.
+- Probe-variance caveat registered: blk5 showed an 81 Hz probe at 5
+  feed trials (single probe per combo per point; probe-seed variance
+  can spike; came back down at later points). WP5+ probes should
+  average >=2 probe sims per point at distinct seeds.
+
+**Standing rule (new):** when a WP4-style result contradicts an
+earlier measurement of the same nominal condition, FIRST diff the
+trial-dose (trials-per-direction per arm), not just the config -
+interleaved designs halve per-cue dose silently.
