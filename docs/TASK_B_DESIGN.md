@@ -63,15 +63,57 @@ schedule — every cue gets its full dose, no silent halving.
 - **Per condition:** 25 reversal trials (dose table row 3–4; room above
   the unknown GNG521-withhold requirement; ≥20 for GNG380-feed).
   Probes at trials 1, 2, 3, 5, 10, 15, 15+5, 20, 25 (≥2 sims/point).
-- **Pre-registered criteria:**
-  - *Unlearning:* the OLD direction's readout crosses θ in the reverse
-    direction by trial 25 (feed-trained cue's cosugar rises ≥41.5;
-    withhold-trained cue's alone rises — wait: see the sign note below).
-  - *Relearning:* the NEW direction's readout crosses θ in the new
-    direction by trial 25.
+- **Pre-registered criteria (CORRECTED 2026-10-03 — the drafted
+  parenthetical had the unlearning metrics SWAPPED, which made them
+  contradict the relearning criteria; the reviewer's no-competing-
+  drive probe exposed it):**
+  - *Unlearning (GNG521, feed→withhold):* the OLD feed response is
+    GONE **without the competing drive** — cue-alone probe < 41.5 by
+    trial 25. (Cue-alone IS the no-competing-drive condition: no
+    bitter in it.)
+  - *Unlearning (GNG380, withhold→feed):* the OLD suppression is
+    GONE under the old readout condition — cosugar probe ≥ 41.5 by
+    trial 25.
+  - *Relearning (GNG521):* cosugar < 41.5 by trial 25 (new withhold
+    semantics). *Relearning (GNG380):* cue-alone ≥ 41.5 by trial 25
+    (new feed semantics).
   - Both metrics reported per cue with across-seed spread; trials-to-θ
     as the speed metric; n=6 seeds development-grade (S22), WP6+
     confirmatory at 10 frozen seeds.
+
+### Two-state gate (registered 2026-10-03, review-directed, BEFORE launch)
+
+V_MAG is potentiative-only: unlearning cannot weaken the old pathway's
+weights, so a cue passing R2 could be in either of two states —
+**genuinely reorganized**, or **masked** (old pathway fully intact,
+suppressed by a stronger competing association). The probe conditions
+that distinguish them ALREADY exist in the 4-probe no-leakage set at
+every point (cue-alone and cosugar for both cues) — zero added
+simulation cost; what this gate adds is the CLAIM structure. Final
+state of each reversed cue is classified (θ = 41.5):
+
+| GNG521 (feed→withhold) | cue-alone | cosugar | claim |
+|---|---|---|---|
+| REVERSED | < θ | < θ | withhold semantics achieved |
+| TWO-ASSOCIATION (masked) | ≥ θ | < θ | old feed intact + new suppression — claim "masked by a second competing association", NOT reversed |
+| NOT REVERSED | ≥ θ | ≥ θ | old intact, no new direction |
+| ERASED/PARTIAL | < θ | ≥ θ | old gone, no new direction |
+
+| GNG380 (withhold→feed) | cosugar | cue-alone | claim |
+|---|---|---|---|
+| REVERSED | ≥ θ | ≥ θ | feed semantics achieved |
+| TWO-ASSOCIATION (masked) | < θ | ≥ θ | old suppression intact + new feed — NOT reversed |
+| NOT REVERSED | < θ | < θ | old intact, no new direction |
+| ERASED/PARTIAL | ≥ θ | < θ | old gone, no new direction |
+
+The discriminator probe for GNG521 is cue-alone (no competing drive);
+for GNG380 it is cosugar (the old readout condition). A cue in the
+TWO-ASSOCIATION cell passes unlearning+relearning as originally
+drafted — which is exactly why the gate must exist before the run:
+"reversed" and "masked by a second, competing association" are
+different findings, and the difference is the kind of thing that
+looked fine under original criteria in every prior case until someone
+checked the condition nobody thought to ask about.
 
 ### Sign note for reversal (registered, because it is not obvious)
 

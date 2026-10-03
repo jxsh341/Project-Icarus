@@ -1508,3 +1508,68 @@ patched by retraining.
 - all pairwise disjoint (verified after TWO collision fixes), above prior max 73193
 - CORRECTION: the 'WP4 addendum' seed line said 'max 81229' - typo;
   verified max is 81129 (t in range(30)) / 81114 (R1's t 0-14).
+
+## R2 criteria fix (2026-10-03, review-directed, duplicate-run reconcile)
+
+**SELF-CAUGHT BUG (exposed by the reviewer's probe):** the drafted R2
+unlearning criteria had the metrics SWAPPED - GNG521 unlearning was
+written as 'cosugar >= theta' (contradicting relearning 'cosugar <
+theta') and GNG380's as 'cue-alone >= theta' (= its relearning
+criterion). CORRECTED: unlearning = OLD response gone WITHOUT the
+competing drive (GNG521: cue-alone < theta - the no-competing-drive
+condition itself; GNG380: cosugar >= theta - the old readout
+condition). The probe the reviewer asked for IS the corrected
+unlearning criterion; the draft would have mis-read the very probes
+that already existed.
+
+**Retention-phase design decision (registered, ambiguity resolved):**
+'retention probes at +0/+5/+10/+15/+20 trials post-acquisition (no
+further training)' is ambiguous about what the intervening trials
+are. RESOLVED: 20 SPONTANEOUS trials (no cue, no drive) with the
+frozen rule ACTIVE (plasticity on - the rule does not turn off in
+quiet periods). Under potentiative-only Hebbian the learned edges
+cannot weaken; retention failure modes are (1) baseline drift from
+spontaneous potentiation (readout spontaneous rate rises, specificity
+blurs), (2) guard fires. Both recorded as genuine retention results,
+never patched. L0-R spontaneous trials run plasticity=None
+(deterministic per seed - 1 sim per type per point; the 2-sim
+variance rule is meaningless for a deterministic control, noted).
+
+**R1 acquisition gate:** after 15 acquisition trials, the direction
+metric must be on the learned side of theta; blocks failing
+acquisition are recorded as acquisition failures and their retention
+result is N/A-with-reason (standing convention).
+
+NOTE (reconcile): an interrupted turn had already registered the masking
+test + seed ranges ('R2 masking probe + R1 interpretation (2026-10-03)') and
+launched R1; the committed design (weights FROZEN during retention,
+distributional-stability interpretation) is authoritative. My
+'spontaneous trials with rule active' variant is WITHDRAWN - it was a
+duplicate of already-registered structure and conflicts with the running
+design. The criteria-swap fix above stands (it corrected the drafted R2
+unlearning parenthetical; the masking-test probes the reviewer asked for
+ARE the corrected unlearning criteria).
+
+## R1 implementation erratum (2026-10-03, pre-analysis): 3 probe points, not 5
+
+**Discrepancy found on first inspection of the artifacts:** the
+registry's R1 design states '5 points x 2 reps x 4 probe types', but
+the running script's loop bound (for t in range(15), with
+PROBE_POINTS=(0,5,10,15,20)) means t=15 and t=20 never fire - the
+data carry **3 probe points (t=0,5,10)**, 39 records/block (15
+training + 3x8 probes).
+
+**Substance preserved, power reduced:** the committed design already
+registers that the +N spacing is decorative and the points are
+REPEATED MEASUREMENTS of the same retained state (weights frozen
+during retention - no decay mechanism exists). 3 points x 2 reps = 6
+repeated measurements per probe type per block, still above the
+>=2-per-point variance rule. What is lost is rep count (6 vs 10 per
+type per block); what is NOT lost is the design's validity - the
+retained-state stability measurement is intact.
+
+**Disposition:** recorded, NOT patched mid-run (the run is ~21/24
+blocks complete; re-running for 2 extra repeated measurements would
+cost hours for no additional design validity). The registry's R1
+design text stands as intent; THIS erratum is the implementation
+record. Any report must state 3 points / 6 reps, never 5/10.
