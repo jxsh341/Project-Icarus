@@ -173,3 +173,31 @@ def test_probe_repeated_leaves_state_identical(tmp_path) -> None:
     for k in range(5):
         run.run_trial(dataclasses.replace(probe_spec, seed=300 + k))
     assert weight_matrix_hash(run.matrix) == h_after_1
+
+
+def test_load_with_plasticity_none_skips_weight_restore(tmp_path) -> None:
+    """PINS THE TRAP: load(..., plasticity=None) does NOT restore the
+    saved weight matrix (it returns the caller's matrix unchanged) -
+    while load(..., plasticity=rule) does, hash-verified. A caller
+    needing a retained state must pass plasticity, even when the
+    resumed run will not apply updates (e.g. an L0 control arm
+    starting from an L1-retained state). Silent pristine-matrix
+    substitution is the failure mode this test exists to stop."""
+    cfg = PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6)
+    nodes = list(range(N_NODES))
+    ckpt = tmp_path / "trap" / "ckpt"
+    run = TrainingRun(_matrix(), nodes, HebbianRule(cfg), _guard(), READOUT, "t", ckpt,
+                      lif_params=dataclasses.replace(LIFParams(), r_poisson_Hz=200.0))
+    run.run_trial(_spec(trial=0, seed=100))
+    run.save()
+    retained_hash = weight_matrix_hash(run.matrix)
+    pristine_hash = weight_matrix_hash(_matrix())
+    assert retained_hash != pristine_hash  # potentiation actually happened
+
+    # plasticity=None: matrix NOT restored -> caller's (pristine) matrix
+    loaded_none = TrainingRun.load(ckpt, _matrix(), nodes, None, _guard(), READOUT)
+    assert weight_matrix_hash(loaded_none.matrix) == pristine_hash
+
+    # plasticity=rule: retained matrix restored, hash-verified
+    loaded_rule = TrainingRun.load(ckpt, _matrix(), nodes, HebbianRule(cfg), _guard(), READOUT)
+    assert weight_matrix_hash(loaded_rule.matrix) == retained_hash
