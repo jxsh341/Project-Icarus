@@ -1573,3 +1573,42 @@ blocks complete; re-running for 2 extra repeated measurements would
 cost hours for no additional design validity). The registry's R1
 design text stands as intent; THIS erratum is the implementation
 record. Any report must state 3 points / 6 reps, never 5/10.
+
+## R1 RESULT + R2 launch (2026-10-03)
+
+**R1 RETENTION: 12/12 blocks PASS** (development-stage, 3 probe points
+x 2 reps per the implementation erratum):
+- GNG521-feed (alone, both reps, t=10): blk0 77/75, blk1 79/78,
+  blk2 78/78, blk3 87/84, blk4 76/68, blk5 80/82 - all >= theta.
+- GNG380-withhold (cosugar, both reps, t=10): blk0 2/3, blk1 1/2,
+  blk2 1/5, blk3 2/4, blk4 1/5, blk5 5/1 - all < theta.
+- L0-R control: cue-alone EXACTLY 0 across every control block
+  (degenerate null as registered); guard 0 fires across all 24 blocks.
+**Retention is clean at the retained state** - no drift, no guard
+activity, both learned directions stable.
+
+**R1 process note:** R1 was externally killed (process.kill) at 21/24
+blocks after ~30h; the resume was free and exact (L1 12/12 skipped;
+the partial L0 block completed to 39 records; L0 is deterministic
+under plasticity=None so partial-block resume reproduces the same
+results). Per-simulation checkpointing validated in production.
+
+**SELF-CAUGHT BUG #2 (same family as the load-traps, caught before any
+R2 data ran):** the R2 retention gate filtered R1 probes by ptype only
+- but the no-leakage set records BOTH cues at every point, so the
+gate mixed the trained cue's values (77/75) with the untrained cue's
+(0/0, by construction) and read EVERY block as retention-FAIL,
+exiting R2 immediately with 12 N/A-with-reason records. Fixed by
+filtering on the trained cue. (The N/A files are superseded artifacts,
+never evidence.) Family lesson, now twice in one stage: any criterion
+reading a multi-subject probe set MUST filter to its subject - the
+same class as the load() plasticity gate.
+
+**R2 launched (retained-state start VERIFIED in production):** first
+block's t=1 probes read GNG521-alone 83/85 Hz (the acquired state) and
+GNG380-alone 0 / cosugar 84-85 (leak-free baseline intact) - the
+retained matrix is loaded, not pristine. Reversal training shows
+plasticity active on the retained state (trial-0 weight_diff: 12 edges
+changed). 24 blocks (12 L1 + 12 L0-R from the same retained states),
+25 trials each, masking-test probes at every point + final set,
+corrected unlearning criteria, guard live, per-simulation checkpoints.

@@ -124,7 +124,12 @@ def r1_retained(cdef, k):
         return False, []
     rows = [json.loads(l) for l in f.read_text(encoding="utf-8").splitlines() if l.strip()]
     ptype = "alone" if cdef["r1_cond"] == "gng521_feed" else "cosugar"
-    vals = [r["readout_hz"] for r in rows if r["trial"] == 10 and r["ptype"] == ptype]
+    # FILTER BY THE TRAINED CUE: the probe set records BOTH cues at every
+    # point (cross-direction leakage by design); mixing the untrained
+    # cue's values (0 by construction) into the criterion made every
+    # block read FAIL. Bug caught 2026-10-03 before any R2 data ran.
+    vals = [r["readout_hz"] for r in rows
+            if r["trial"] == 10 and r["ptype"] == ptype and r["cue"] == cdef["cue"]]
     if not vals:
         return False, []
     if ptype == "alone":
