@@ -71,6 +71,8 @@ def simulate_lif(
     stimulated2: list[int] | None = None,
     r_poisson2_Hz: float | None = None,
     stim2_start_ms: float | None = None,
+    stimulated3: list[int] | None = None,
+    r_poisson3_Hz: float | None = None,
     init_v_mV: float | None = None,
     seed: int = 0,
 ) -> LIFRun:
@@ -98,9 +100,14 @@ def simulate_lif(
         raise ValueError("stimulated2 requires r_poisson2_Hz")
     if stim2_start_ms is not None and not stimulated2:
         raise ValueError("stim2_start_ms requires stimulated2")
+    if stimulated3 and r_poisson3_Hz is None:
+        raise ValueError("stimulated3 requires r_poisson3_Hz")
+    if r_poisson3_Hz and not stimulated3:
+        raise ValueError("r_poisson3_Hz requires stimulated3")
     stimulated = _check_ids(node_ids, stimulated or [], "stimulated")
     silenced = _check_ids(node_ids, silenced or [], "silenced")
     stimulated2 = _check_ids(node_ids, stimulated2 or [], "stimulated2")
+    stimulated3 = _check_ids(node_ids, stimulated3 or [], "stimulated3")
 
     dt = params.dt_ms
     n_steps = int(round(duration_ms / dt))
@@ -109,6 +116,7 @@ def simulate_lif(
     index_of = {node_id: i for i, node_id in enumerate(node_ids)}
     stimulated_idx = [index_of[v] for v in stimulated]
     stimulated2_idx = [index_of[v] for v in stimulated2]
+    stimulated3_idx = [index_of[v] for v in stimulated3]
     silenced_mask = np.zeros(n, dtype=bool)
     for v in silenced:
         silenced_mask[index_of[v]] = True
@@ -142,12 +150,16 @@ def simulate_lif(
 
     stim_set = np.array(stimulated_idx, dtype=int)
     stim2_set = np.array(stimulated2_idx, dtype=int)
+    stim3_set = np.array(stimulated3_idx, dtype=int)
     stim_refractory = np.zeros(n, dtype=bool)
     stim_refractory[stim_set] = True   # Poisson targets: rfc = 0 (reference poi())
     if stim2_set.size:
         stim_refractory[stim2_set] = True  # exc2 targets also get rfc = 0
+    if stim3_set.size:
+        stim_refractory[stim3_set] = True  # third channel: same rfc = 0 semantics
     poisson_p = params.r_poisson_Hz * dt / 1000.0
     poisson2_p = (r_poisson2_Hz or 0.0) * dt / 1000.0
+    poisson3_p = (r_poisson3_Hz or 0.0) * dt / 1000.0
     poisson_kick = params.w_syn_mV * params.f_poisson
 
     rng = np.random.default_rng(seed)
@@ -219,6 +231,15 @@ def simulate_lif(
                 fires2 = rng.random(stim2_set.size) < 0.0
             if fires2.any():
                 v[stim2_set[fires2]] += poisson_kick
+
+        # Third Poisson population (L3 gate-DA drive): identical semantics
+        # to the second - direct v kicks, synapses slot, rfc=0 targets.
+        # Defaults off (empty list = no-op), so existing calls are
+        # bit-identical (pinned by tests/test_lif_stim3.py).
+        if stim3_set.size and n_steps:
+            fires3 = rng.random(stim3_set.size) < poisson3_p
+            if fires3.any():
+                v[stim3_set[fires3]] += poisson_kick
 
         # Reset ('resets' slot): runs AFTER kick delivery, destroying any
         # kick that landed on a spiking neuron this step.

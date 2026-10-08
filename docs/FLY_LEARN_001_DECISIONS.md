@@ -2071,3 +2071,55 @@ stage.** Key registrations:
   verified by computation pre-launch per standing rule).
 - All Task B standing rules inherited; clean-room discipline
   governs the rule (Schultz/Bellec-first design).
+
+## WP-L3a RESULT (2026-10-08): DA sign re-anchored DIRECTIONALLY H(+); gate strength below effect-size at baseline - decisive test moves to WP-L3b
+
+**Implementation bug caught + corrected first (recorded):** the
+original Sweep C never passed the swept rate into the sim (the run
+helper hardcoded 200 Hz) - the sweep degenerated to a 2-point
+contrast, and its apparent suppression (14642 42->32 etc.) was
+SINGLE-REP SEED NOISE. Fix: third Poisson channel (stimulated3)
+added to simulate_lif, TDD (3 tests: default-off bit-identical,
+drives targets, independent rates; suite 106/106), defaults-off so
+no existing behavior changes. Sweeps A and B were valid throughout
+(rates entered via dataclasses.replace correctly).
+
+**Sweep A (VALID, monotone):** gate-DA drive excites hub 10646
+monotonically (0->48 Hz across 0->200 Hz drive; +1-default sign
+produces real excitation at the DA->GABA edge). 10094 nearly silent
+(3 Hz max) - the pair is asymmetric; network inhibition (10646
+itself, or its targets) clamps it even under direct drive.
+
+**Sweep B (valid as hub-recruitment):** direct drive -> 10646 at
+196 Hz @200; intermediates silent - B had NO baseline activity, so
+suppression was unmeasurable by design; its purpose (sign
+verification) is served by the weight check below.
+
+**Sweep C v2 (VALID, 3 reps/rate, corrected channel):** the honest
+null. Intermediates flat across the full rate sweep (deltas +-3 Hz
+on 19-55 Hz baselines), MN9 stable 82-85, while hub 10646 rises
+16->56 Hz with gate drive. NO suppression at baseline.
+
+**Connectivity check (load-bearing, from the frozen matrix):** the
+pathway is REAL and WEIGHTY: 10646 -> 15207 (-21), -> 14642 (-17),
+-> 14793 (-8), -> 63701 (-3), -> 15014/12583/12256 (-2/-2/-1);
+10094 parallel (-12/-15/...). Gate-DA -> hub edges +1..+12 (9
+cells, onto 10646). Structural H(+) circuit COMPLETE.
+
+**Quantitative reconciliation (registered):** hub at 52 Hz (what
+200 Hz gate-DA drive produces) delivers -5.8 mV kicks at ~1/19 ms
+-> ~1.5 mV mean hyperpolarization - insufficient against
+cue+sugar-driven intermediates at 50 Hz in the PRISTINE matrix.
+The mechanism is present, directionally H(+), but its effect size
+at baseline drive is below measurement. NOT a refutation of H(+):
+the decisive test is the TRAINED state (WP-L3b as pre-registered),
+where intermediates climb toward 300 Hz and the readout regression
+occurs - the regime the gate was chosen for.
+
+**Verdict (discharges the re-anchoring obligation as far as frozen
+dynamics allow):** DA-on-GABA sign = H(+) DIRECTIONALLY VALIDATED
+(monotone excitation, real inhibitory pathway). GATE STRENGTH:
+below effect-size at baseline; WP-L3b (gate on the trained,
+regressing circuit) is the decisive consolidation test. The
+obligation's remaining scope (pathway-specific efficacy) transfers
+to WP-L3b - registered, not silently assumed.
