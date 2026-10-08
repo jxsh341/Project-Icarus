@@ -1916,3 +1916,77 @@ consumption), V(s) over a state representation (candidates: MN9
 rate, SEZ population vector, the trained circuit's own activity).
 No fiat reward. All three items scoped from measured constraints,
 per the project's standing method.
+
+## Phase 3 DECISION D-3 (2026-10-08, user-directed): pathway-specific DA gate on the coincidence-waste hub
+
+**Decision:** L3's dopaminergic mechanism anchors on option (a) -
+pathway-specific DA onto the GNG380-class intermediates, gating the
+GABA hub 10646 (AVLP597) - the neuron that carries the
+coincidence-waste regime Task B characterized. NOT broadcast scalar
+(structurally dishonest per WP-D1); NOT the octopamine relay (a
+derivative census can follow later); NOT the MB closure extension
+(only if canonical DAN->MBON structure becomes load-bearing).
+
+**Why this anchor:** it is the one point where Phase 2's sharpest
+measured finding (coincidence waste, 300 Hz boundary, stop-at-crossing
+requirement) and Phase 3's mechanism requirement (eligibility-gated
+weakening) meet a real anatomical substrate with measured DA
+inflow. DA gating of 10646 could implement consolidation
+(suppressing over-driven intermediates = biophysical stop-at-
+crossing) and weakening (gated negative sign onto over-active
+paths) without inventing anatomy.
+
+**Sequencing consequences (registered):** the reward and state
+definitions (open design questions) now scope against THIS pathway:
+the gate's honesty depends on what drives the 13 DA neurons
+themselves - WP-D2 census (inputs to those DA cells: sugar GRNs?
+cue? readout feedback?) determines whether 'r' can be read from the
+substrate or must be supplied. The clean-room rule governs the rule
+design (Schultz/Bellec first; three-factor modified to
+pathway-specific per measured anatomy).
+
+## WP-D2: gate anatomy complete (2026-10-08) - reward pathway EXISTS in substrate; the gate is self-limiting
+
+**The 9 DA neurons gating the hub 10646** (weights +1 to +12;
+dominant: 10898/AVLP476 +12, 12588/PPM1201 +12, 520188/AVLP610 +10,
+10399/PPL202 +9). Small, named, measurable population.
+
+**THE REWARD PATHWAY IS REAL (measured, 4 stages):**
+  sugar GRNs -> OA-VUMa2 relay (11608: SEVEN sugar-GRN inputs;
+  12109: two) and OA-VPM4 (10120, via 2-hop interneurons 10557/
+  11173/12675/12230/12808) -> the gate-DA cells (12109->10399 +4,
+  13068 +4; 11608->10399 +2, 13068 +2, 12588 +1) -> hub 10646.
+**The reviewer's 'r' question has a substrate-honest answer: r =
+sugar-GRN activity, and the substrate already routes it to the gate
+through the octopamine relay.** No fiat reward needed. (Bitter
+reaches 10120/11608 weakly (1 edge each) - an asymmetry to keep.)
+
+**THE GATE IS SELF-LIMITING (closed loop, measured):** the hub
+10646 INHIBITS two of its own gate-DA cells (13068 -1, 520188 -1).
+DA gates the hub; the hub suppresses the gate. As the hub enters the
+high-rate coincidence regime, its own DA gate is withdrawn - **the
+anatomy contains a built-in biophysical stop-at-crossing**,
+precisely the consolidation requirement Task B measured. This is
+the substrate's OWN answer to the over-synchrony problem, not an
+invented mechanism.
+
+**Other input structure of the gate cells (recorded):** octopamine
+drives 6/9 (OA-VPM4 10120, OA-VUMa2 11608/12109); 520146/SIP106m is
+driven almost solely by 3 AN09B017e glutamate neurons (+21/+23/
++17) - a dedicated channel; PPM1201 pair (12588/13068) integrates
+~24 mixed inputs each incl. strong inhibition (SMP604 -18, CL114
+-5/-3); the hub's own feedback appears in both. NO sugar/bitter/
+cue/MN9 input is DIRECT - all modulatory input arrives via OA or
+interneurons. L3's state representation question narrows: the
+gate-DA cells' own activity IS a candidate state estimate (they
+integrate OA relay + hub feedback).
+
+**Design consequence for L3 (registered):** the three-factor rule,
+pathway-specific form (per D-3), can be implemented with measured
+anatomy at every stage: eligibility on cue-incident edges (frozen
+L1 generalization), dopamine = the 9-cell gate population's
+activity (driven by sugar via OA - substrate-honest r), gate
+target = the hub's inhibitory gain (modulating the
+coincidence-waste regime), self-limiting via the measured 10646->
+gate feedback. Clean-room rule governs the rule design (Schultz/
+Bellec first, pathway-specific per measured anatomy).
