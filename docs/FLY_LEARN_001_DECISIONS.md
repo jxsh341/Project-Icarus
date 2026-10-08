@@ -1990,3 +1990,56 @@ target = the hub's inhibitory gain (modulating the
 coincidence-waste regime), self-limiting via the measured 10646->
 gate feedback. Clean-room rule governs the rule design (Schultz/
 Bellec first, pathway-specific per measured anatomy).
+
+## WP-D3: OA-relay convergence census (2026-10-08) - three refinements, one partial walk-back
+
+**(1) The OA relay is a MASSIVE MULTIMODAL INTEGRATOR, not a reward
+line (walks back the optimistic WP-D2 reading).** Measured input
+budgets: OA-VPM4/10120 has 1,655 inputs (|w|=6,904; exc 5,046 /
+inh 1,858) with 0.0% sugar weight; OA-VUMa2/11608: 1,303 inputs,
+sugar |w|=12 of 4,774 = 0.3%; 12109: 1,409 inputs, sugar 0.1%.
+The sugar->OA->gate pathway EXISTS but sugar is a DROP in the
+relay's budget - the relay integrates central-brain state
+(13121, 522734, 523043, 14391, 11785...) overwhelmingly. HONEST
+CONSEQUENCE FOR L3: OA activity is NOT a pure reward signal - it
+is state+reward conflated. Either (a) the model's r must be the
+sugar-GRN component read at the source (GRN population activity),
+with OA treated as the anatomy's own state-conflated carrier, or
+(b) L3 adopts the conflation and tests it empirically. Design
+decision, registered as open - not silently resolved.
+
+**(2) BITTER REACHES THE RELAY TOO, with MIXED SIGNS (valence test
+answered: the channel is not pure).** 2-hop same-sign paths
+measured: excitatory via 11021 (bitter GRNs +39..+58 -> 11021 ->
+10120 +2); inhibitory via 17709/518540 (bitter -> LNs -> relay,
+negative products). So sugar and bitter BOTH arrive at the relay,
+differently signed through different interneurons. The gate channel
+carries VALENCE, not just reward presence. This is richer than the
+'pure r' assumption - and matches feeding circuitry expectations.
+
+**(3) The gate population is HETEROGENEOUS: a specific core + broad
+integrators + a reciprocal DA<->OA loop.** Output specificity onto
+the 8 GNG380 intermediates: 10898=41%, 10914=50%, 520188=39% (the
+hub-gating CORE, all also target 10646 with the top weights +12/
++10/+1... and 10914 -> 12489 gaba); vs broad fan-out cells
+12588 (66 targets), 13068 (52 targets) at 12%/8% specificity.
+MN9_L receives ZERO from all 9 (the gate modulates intermediates
+upstream of the readout - exactly the design's intent). NEW
+STRUCTURE FOUND: (i) gate-DA -> OA relay reciprocal edges
+(10399->11608/12109 +6 each; 10898->10120 +2; 13068->10120 +4;
+520146->10120 +2) - a DA<->OA modulatory loop, the relay's own
+feedback; (ii) 11125/529811 -> 10094 - the SECOND AVLP597 cell
+(the hub's type-sibling; 10094 also appeared as 10898's input).
+The 'AVLP597 gate' is really an AVLP597 PAIR: 10646 (driven) +
+10094 (gated by the other DA cells).
+
+**Net for the L3 design doc (registered):** the three-factor rule
+keeps its pathway-specific form, but the census demands: r defined
+at the sugar-GRN source OR conflation adopted-and-tested (open
+decision); gate target generalized to the AVLP597 PAIR (10646 +
+10094) with per-cell measured weights; the DA<->OA loop recorded as
+part of the circuit (its dynamics are a testable prediction: does
+gate activity feed back to alter relay drive?); bitter's mixed-sign
+arrival means the gate's semantics are VALENCE-carrying, so
+sign-derivation for DA-on-GABA must handle both directions
+(expected-signed potentiation AND suppression contexts).
