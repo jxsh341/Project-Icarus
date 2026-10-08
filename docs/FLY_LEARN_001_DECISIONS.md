@@ -1682,3 +1682,67 @@ fails loudly on layout surprises). Standing rule: a verification must
 FAIL LOUDLY when its scope is empty - a check that verifies nothing
 must not emit a clean verdict. (Same class as the v0 'zero lost
 trials' claim: assertions without coverage.)
+
+## Task B R2 REVERSAL VERDICT (2026-10-08, development-stage, n=6 blocks/condition)
+
+**Both cues: 6/6 NOT REVERSED by the final-state two-state gate.**
+Guard 0 fires across all 24 blocks. No block landed in the
+TWO-ASSOCIATION (masked) cell - masking never occurred; the
+competitive mechanism did not even establish a second association.
+
+**GNG521 (feed->withhold): total negative, seed-stable.** Old feed
+pathway fully intact (alone 80-87, cosugar 84-89, both >> theta);
+no suppression acquired at 25 trials (L0 84-90 unchanged). The WP4
+10-trial negative is now STRUCTURAL at 2.5x dose: bitter co-drive +
+potentiative-only V_MAG cannot suppress an established excitatory
+association. Interpretation step 3: unlearning needs mechanisms
+beyond frozen L1. PUBLISHABLE NEGATIVE.
+
+**GNG380 (withhold->feed): TRANSIENT CROSSING + REGRESSION - the
+finding of the run.** Full trajectories (all 6 blocks, tight +-2 Hz):
+cosugar rises monotonically 2-3 -> 16-17 (t4) -> 31-34 (t9) -> 40-46
+(t14), CROSSES theta=41.5 at trial 15 in 5/6 blocks (both reps; blk5
+at 40 just short), peaks ~trial 15-16 (train readout 49), then
+REGRESSES to 26-27 by trial 25. cue-alone follows the same arc
+delayed (0 -> 43-44 at t14 -> 26-27). Weight evidence: potentiation
+CONTINUES throughout (n_edges_changed 212->300+ per trial, never
+zero) - the rule keeps strengthening cue-incident edges past the
+point where the readout peaked; the regression is over-accumulation
+degrading the readout, not decay (weights never weaken - V_MAG is
+potentiative-only; the rise-fall is a DYNAMICS phenomenon, readout
+nonmonotonicity under monotone weight growth).
+
+**Verdict per registered criteria:** trials-to-criterion (any
+crossing): 5/6 blocks at trial 15 - the old suppression CAN be
+eroded by competitive potentiation. Final state: 6/6 NOT REVERSED -
+the crossing does not CONSOLIDATE; no stable new association forms
+within the registered dose.
+
+**Pre-registered interpretation applied:** reversal under frozen L1
+is NOT BLOCKED but UNSTABLE: the competitive mechanism erodes the
+old association and passes theta transiently, but cannot consolidate
+a new one; continued training degrades the readout back below
+theta. Reversal-relevant mechanism deficits, ranked: (1) no
+consolidation/stabilization mechanism; (2) no weakening mechanism
+(same as GNG521's finding); (3) dose overshoot is real and
+measured - the 25-trial registered dose contains the crossing
+(trial 15) and the regression (trial 25); a reversal protocol
+needs a stopping/consolidation criterion, not more trials.
+
+**Landscape note extension (registered):** this closes the Task B
+question for L1: acquisition YES (WP4), retention YES (R1),
+reversal NO - blocked for GNG521 (cannot suppress), unstable for
+GNG380 (crosses but cannot hold). Reversal thus joins the
+L3/dopamine-class mechanisms as OUT OF SCOPE for frozen L1 - the
+substrate can learn and keep but cannot unlearn. Cross-architecture
+note: Cadence's designers treat two-association coexistence
+(TemporalMemory.protect, interference-managed records) as a core
+operating condition - consistent with our measurement that without
+an explicit weakening mechanism reversal is competition-or-nothing.
+
+**Downstream (registered):** Phase 2 Task B closes as a
+characterized negative + transient finding. The protocol's reversal
+aspiration transfers to Phase 3 with a MECHANISM REQUIREMENT:
+consolidation (stop-condition or stabilization) + weakening
+(direct or competitive) are prerequisites; both are now measured,
+named, and priced in the landscape note, not assumed.
