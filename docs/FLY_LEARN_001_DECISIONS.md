@@ -2043,3 +2043,31 @@ gate activity feed back to alter relay drive?); bitter's mixed-sign
 arrival means the gate's semantics are VALENCE-carrying, so
 sign-derivation for DA-on-GABA must handle both directions
 (expected-signed potentiation AND suppression contexts).
+
+## L3 DESIGN REGISTERED (2026-10-08, docs/L3_DESIGN.md) - pre-implementation
+
+**The L3 design is pre-registered with measured anatomy at every
+stage.** Key registrations:
+- The gate-DA -> AVLP597-pair edges are sign +1 BY DEFAULT (the
+  frozen nt_sign gives all monoamines +1, auditable assumption).
+  The re-anchoring obligation comes due HERE: WP-L3a resolves
+  H(+) vs H(-) empirically BEFORE any L3 plasticity exists, using
+  frozen-dynamics stimulation sweeps (WP6c-style). No default is
+  adopted silently.
+- The OA relay conflation (WP-D3) is handled by reading r at the
+  sugar-GRN SOURCE and treating OA conflation as a TESTABLE
+  PREDICTION measured in WP-L3b - not by fiat.
+- The hub pair are broad gain-control hubs (1,457/1,385 targets,
+  |w| ~9k each) - the gate modulates a gain field, not a dedicated
+  line; this is registered as the design's honest description.
+- WP-L3a (sign re-anchoring, ~30 sims) -> WP-L3b (gate dynamics on
+  the regressing block, ~50 sims, pre-registered criterion: gated
+  suppression arrests the intermediate climb below 300 Hz and the
+  readout holds its crossing) -> WP-L3c (three-factor acquisition
+  on Task A) -> WP-L3d (the weakening test on Task B reversal,
+  criteria in order: weakening / consolidation / masking-cell-empty;
+  a null is a registered negative, never a mechanism change).
+- Seeds: L3 train 150000+, probe 200000+ (disjointness to be
+  verified by computation pre-launch per standing rule).
+- All Task B standing rules inherited; clean-room discipline
+  governs the rule (Schultz/Bellec-first design).
