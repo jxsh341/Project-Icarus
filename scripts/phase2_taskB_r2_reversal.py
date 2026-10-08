@@ -116,9 +116,12 @@ def write_rec(pp, rec):
 
 
 def r1_retained(cdef, k):
-    """True iff the R1 block retained: final-point probes (t=10, last
-    point in R1's 3-point schedule) on the learned side of theta for
-    BOTH reps."""
+    """True iff the R1 block retained: FINAL-point probes (t=25 - the
+    last point that actually fired in R1's as-run 30-trial schedule;
+    0/5/10 are acquisition-phase, 15/20/25 retention-phase) on the
+    learned side of theta for BOTH reps. Pre-launch audit 2026-10-08:
+    was reading trial==10 (acquisition-phase point - wrong). Cue
+    filter was already fixed 2026-10-03 (see inline note)."""
     f = R1DIR / f"l1_{cdef['r1_cond']}_blk{k}.jsonl"
     if not f.exists():
         return False, []
@@ -129,7 +132,7 @@ def r1_retained(cdef, k):
     # cue's values (0 by construction) into the criterion made every
     # block read FAIL. Bug caught 2026-10-03 before any R2 data ran.
     vals = [r["readout_hz"] for r in rows
-            if r["trial"] == 10 and r["ptype"] == ptype and r["cue"] == cdef["cue"]]
+            if r["trial"] == 25 and r["ptype"] == ptype and r["cue"] == cdef["cue"]]
     if not vals:
         return False, []
     if ptype == "alone":

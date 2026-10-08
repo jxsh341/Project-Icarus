@@ -10,11 +10,14 @@ Registry: 'R2 masking probe + R1 interpretation (2026-10-03)' +
 - Retained state: 15 full-dose acquisition trials (per-direction
   block schedule; feed = cue+sugar, withhold = cue+bitter;
   cue PRIMARY @200, drive SECONDARY @200; explicit everywhere).
-- Stability probes: 5 points (+0,+5,+10,+15,+20 spacing is
-  decorative - points are repeated measurements), 4 probe types per
-  point (GNG521 alone/cosugar, GNG380 alone/cosugar - cross-
-  direction leakage measured by design), 2 sims per point (probe-
-  variance rule), plasticity OFF (is_probe), distinct seeds.
+- Stability probes: 7 points at trial counts 0,5,10,15,20,25,30 of
+  a 30-trial NO-STIMULUS retention phase (the script never acquired
+  - v1 fed the training drive every trial, mislabeled it; corrected
+  2026-10-04), 4 probe types per point (both cues x alone/cosugar),
+  2 sims per point (probe-variance rule), plasticity OFF (is_probe),
+  distinct seeds. The retained state enters via resume from the
+  earlier arm1/wp4-trained checkpoints? NO - R1 retention needs the
+  ACQUIRED state; see run_block note.
 - Probe seeds: 90000 + bi*1000 + pt*10 + ty*2 + rep (verified
   disjoint; pairwise check pre-launch). Training seeds:
   80000 + bi*100 + t.
@@ -117,7 +120,8 @@ def run_block(matrix, nodes, sugar, bitter, cond, conddef, k, mode):
                           f"r1_{mode}_{cond}_{k}", ckpt,
                           lif_params=dataclasses.replace(LIFParams(), r_poisson_Hz=200.0))
     drive = sugar if conddef["drive"] == "sugar" else bitter
-    # Phase 1: full-dose acquisition (15 trials)
+    # ACQUISITION PHASE (15 full-dose trials) - the retained state must
+    # EXIST before stability can be tested. v1 omitted this.
     for t in range(15):
         if find_rec(pp, cond, t, "train") is None:
             s = TrialSpec(trial=t, seed=80_000 + bi * 100 + t, cue_body_ids=tuple(conddef["ids"]),
@@ -129,7 +133,21 @@ def run_block(matrix, nodes, sugar, bitter, cond, conddef, k, mode):
                            "n_spiking": rec["n_spiking"], "weight_diff": rec.get("weight_diff"),
                            "guard_fired": rec.get("guard_fired")})
             run.save()
-        if t in PROBE_POINTS:
+    # RETENTION PHASE: 30 no-stimulus trials, probes at 7 points.
+    N_TRIALS = 30
+    PROBE_AT = (0, 5, 10, 15, 20, 25, 30)
+    for t in range(N_TRIALS):
+        if find_rec(pp, cond, t, "train") is None:
+            s = TrialSpec(trial=t, seed=80_000 + bi * 100 + t, cue_body_ids=(),
+                          drive_body_ids=(), drive2_body_ids=(),
+                          r_cue_hz=0.0, r_drive_hz=0.0, r_drive2_hz=0.0)
+            rec = run.run_trial(s)
+            write_rec(pp, {"cue": cond, "trial": t, "ptype": "train",
+                           "readout_hz": rec["readout_hz"], "total_spikes": rec["total_spikes"],
+                           "n_spiking": rec["n_spiking"], "weight_diff": rec.get("weight_diff"),
+                           "guard_fired": rec.get("guard_fired")})
+            run.save()
+        if t in PROBE_AT:
             # stability probes: 4 types x 2 reps, plasticity OFF
             for ty, (pcue, ptype) in enumerate([("GNG521", "alone"), ("GNG521", "cosugar"),
                                                 ("GNG380", "alone"), ("GNG380", "cosugar")]):

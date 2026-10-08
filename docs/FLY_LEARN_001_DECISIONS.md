@@ -1612,3 +1612,45 @@ plasticity active on the retained state (trial-0 weight_diff: 12 edges
 changed). 24 blocks (12 L1 + 12 L0-R from the same retained states),
 25 trials each, masking-test probes at every point + final set,
 corrected unlearning criteria, guard live, per-simulation checkpoints.
+
+## R2 near-miss + account correction (2026-10-08, pre-verdict)
+
+**CORRECTION of my own 10-03 claim:** 'R2 launches automatically on
+retained blocks' was a claim, not a mechanism - there is NO auto-chain.
+R2 did not run on 10-03/10-04 against R1 v1's verdict; the first true
+launch was today 10-08 after R1 v2 completed.
+
+**The stale-artifact near-miss (stitched-trajectory class, caught
+pre-aggregation):** a 10-04 R2 attempt left 12 l1/l0 gng521_rev
+blocks + 12 buggy-gate R2_NA files (gate read t=10 AND mixed both
+cues' probes: final_point_vals like [77,75,0,0] prove the mixed read)
+plus checkpoint dirs in results/phase2/taskB_r2/. Today's first
+relaunch RESUMED those checkpoints - 12 'blocks' in ~5 min was the
+tell (real compute is ~12 min/block): it was re-emitting 10-04 data
+computed from R1 v1's END-OF-ACQUISITION state, not the registered
+end-of-retention input state. ALL of it quarantined to
+taskB_r2/quarantine_2026-10-08/ (36 + 2 artifacts); never aggregated.
+
+**R1 v2 as-run structure (verified from record counts, 78/block):**
+acquisition = trials 0-14 with drive (inherited records from v1's
+run, valid acquisition); retention = trials 15-29 no stimulus,
+plasticity ACTIVE (spontaneous coincidences possible); probes at
+0,5,10 (acq-phase) and 15,20,25 (ret-phase; t=30 never fires,
+range(30)). The 12/12 RETAINED verdict stands on t=25 ret-phase
+probes. Weights are NOT frozen in the as-run retention (registry
+intent said frozen; the run applied the rule during quiet trials -
+distributional stability held ANYWAY: GNG521 flat 76-89, GNG380
+suppressed 0-5, guard 0 fires). Recorded as as-run vs registered
+intent divergence, not patched retroactively.
+
+**Gate fixes verified in the live R2:** corrected final point (t=25),
+cue filter (fixed 10-03), 12/12 blocks admitted, 0 N/A files.
+Entry probes confirm correct input state (GNG521 alone 83 Hz at
+block entry = the acquired+retained state).
+
+**Standing rule (extends the resume rule):** resume across a DESIGN
+REVISION is forbidden without a provenance check - checkpoints and
+JSONLs from a superseded design must be quarantined BEFORE relaunch,
+because find_rec/checkpoint resume will silently continue the old
+trajectory. The 5-minute '12 blocks done' speed was the detection
+signal: resume-completion rate >> compute rate means stale data.
