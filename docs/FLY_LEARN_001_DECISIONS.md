@@ -1654,3 +1654,31 @@ JSONLs from a superseded design must be quarantined BEFORE relaunch,
 because find_rec/checkpoint resume will silently continue the old
 trajectory. The 5-minute '12 blocks done' speed was the detection
 signal: resume-completion rate >> compute rate means stale data.
+
+## R1 retention weight-freeze VERIFIED (2026-10-08, review-directed check)
+
+**The reviewer's inference is now a measurement.** Direct weight-hash
+comparison across the retention phase (checkpoint files are
+trial-keyed: weights_trial_15 = end-of-acquisition train t=14;
+16-30 = the 15 no-stimulus retention trials): ALL 12 L1 BLOCKS
+bit-identical end-acq -> end-retention. The rule was LIVE but had
+nothing to act on (spontaneous activity dead silent - WP8's 0/30,
+now confirmed at the weight level in Task B context). The as-run vs
+registered divergence is therefore MOOT: R1's 12/12 RETAINED verdict
+was measured under an effectively frozen condition, and 'retention
+under frozen weights' may be claimed with evidence, not inference.
+
+**R2 inheritance checked:** R2 has NO retention phase (25 reversal
+trials + probes only), so the unfrozen-retention behavior cannot
+propagate; R2's input state = R1's end-of-retention weights =
+bit-identical to end-of-acquisition - the cleanest possible provenance.
+
+**SELF-CAUGHT VACUOUS-CHECK lesson (my own second attempt):** the
+intermediate hash check used a wrong phase boundary (sim-counted 38)
+against trial-keyed filenames with only 30 files - every block was
+skipped and the check printed 'ALL IDENTICAL' VACUOUSLY. Caught by
+asserting scope (check 3 asserts max(files) >= boundary+15 and
+fails loudly on layout surprises). Standing rule: a verification must
+FAIL LOUDLY when its scope is empty - a check that verifies nothing
+must not emit a clean verdict. (Same class as the v0 'zero lost
+trials' claim: assertions without coverage.)
