@@ -1746,3 +1746,52 @@ aspiration transfers to Phase 3 with a MECHANISM REQUIREMENT:
 consolidation (stop-condition or stabilization) + weakening
 (direct or competitive) are prerequisites; both are now measured,
 named, and priced in the landscape note, not assumed.
+
+## R2 mechanism probe: GNG380 regression = COINCIDENCE WASTE at MN9_L (2026-10-08, review-directed)
+
+The review asked WHY the GNG380 transient regresses before the
+close-out scopes Phase 3 consolidation. Three hypotheses were
+distinguishable from data; two are now EXCLUDED and the mechanism
+pinned, by two probes on the regressing block (replay blk0 from the
+retained state, same seeds - deterministic):
+
+**(1) Refractory saturation of intermediates: EXCLUDED.** Per-neuron
+traces (saturation probe, 8 intermediates x 25 trials): rates rise
+monotonically 183 -> 358 Hz and PLATEAU at ~350-358 Hz = 78% of the
+454.5 Hz refractory ceiling (t_refractory=2.2ms) - never decline,
+never saturate, while MN9 falls 49 -> 27.
+
+**(2) Interference via grown inhibition: EXCLUDED.** Weight diff
+t1->t25: ALL 334 grown edges are POSITIVE (0 negative); zero
+grown-negative targets among MN9's 10 inhibitory inputs.
+
+**(3) Readout-side ceiling: superseded by the sharper finding.**
+MN9's input ARRIVALS rose 3045 -> 4076 (+34%, partners=23) while
+its SPIKES fell 49 -> 27 (-45%): more drive, less output. Arrivals
+cluster at median inter-arrival 0.2 ms with 99.9% < 2 ms at BOTH
+trial 14 and 24 - the inputs are massively coincident (intermediates
+phase-locked to the shared cue Poisson source). With tau_syn=5ms and
+threshold-clipping, coincident kicks on an already-depolarized
+membrane collapse: past threshold, each additional arrival within
+the coincidence window buys less than one spike. THE MECHANISM IS
+COINCIDENCE WASTE: monotone weight growth over-synchronizes the
+intermediates, over-synchronizing MN9's inputs; the readout's
+spike count is NON-MONOTONE in total drive in the coincidence
+regime. Peak output occurs at the drive level where arrival gain
+stops beating coincidence loss - trial 15-16 in this block.
+
+**Phase 3 consolidation requirement, SHARPENED (replaces 'stabilize
+somehow'):** consolidation is NOT a plasticity-rule problem alone -
+it is a DYNAMICS problem. A stopping rule keyed to the readout's own
+derivative (or intermediate-output correlation) is implementable
+now: train until the probe readout crosses theta, THEN STOP - the
+transient's peak IS the consolidated state. Named: STOP-AT-CROSSING.
+The deeper fix (desynchronization or effective-rate readout) is a
+mechanism-design question for Phase 3, now posed sharply.
+
+**blk5 boundary case (review point, registered):** blk5's trial-15
+cosugar readout was 40 Hz vs theta 41.5 - a NEAR-MISS within probe
+noise, explicitly NOT counted as a crossing. The transient-crossing
+phenomenon is therefore 5/6 clean crossings + 1 boundary case; its
+seed-stability is real (all 6 blocks show the rise-peak-regress arc
+within +-2 Hz) but the crossing count is honestly 5/6, not 6/6.
