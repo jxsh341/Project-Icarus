@@ -1873,3 +1873,46 @@ only accumulated over). The audit's bearing: whether Phase 3's
 dopamine-pathway mechanism is built from scratch or informed by a
 structured reference - with the clean-room rule above governing
 any influence. The study remains ALLOWED TO CONCLUDE UNSUITABLE.
+
+## Phase 3 opening: DA census (WP-D1, 2026-10-08) - PATHWAY-SPECIFIC, not broadcast
+
+**The re-anchoring obligation's structural question, answered from the
+frozen snapshot (results/phase3/wp_d1_da_census.json).** 1,449
+consensus-dopamine neurons in run-007's closure (vocabulary note: the
+census's first pass matched 'DA' against a lowercase-'dopamine'
+vocabulary and found 0 - string error, caught by the empty-scope
+guard, re-run correct; the guard did its job).
+
+**The broadcast hypothesis is FALSE for this substrate.** Measured:
+- Only 440/1,449 DA neurons have ANY out-edge in the closure (median
+  out-degree 0; max 66). The closure is SEZ/motor-local; most CNS DA
+  cells project elsewhere (MB etc.) and are pruned out.
+- 796 total DA out-edges onto just 188 distinct targets - and the
+  #1 target (266/796 = 33% of ALL DA weight) is bodyId 10120 =
+  OA-VPM4_L, itself an OCTOPAMINE neuron. DA's heaviest local
+  projection is onto a modulatory peer, not onto the motor circuit.
+- Onto our trained circuits: ZERO DA edges onto MN9_L, onto either
+  cue population, or onto GNG521's intermediates. 13 DA neurons
+  reach GNG380's 8 intermediates (mainly 10646/AVLP597 - a GABA
+  interneuron - and 63701/DNd02), = 5.1% of DA out-weight. The
+  trained circuit is essentially OUT of the local DA field.
+
+**Consequences for the three-factor (RPE x eligibility) rule:** the
+clean broadcast-scalar form (Cadence's class) is NOT structurally
+honest for L3-on-this-closure. Options the census opens, all Phase 3
+design decisions: (a) pathway-specific dopamine: DA modulates the
+GNG380-class intermediates (esp. the GABA hub 10646) - a FAR more
+interesting target: DA->10646 gating could modulate the very
+coincidence-waste regime Task B characterized; (b) broadcast via
+the octopamine relay (DA->OA-VPM4->?) - a two-stage modulatory
+cascade, needs its own census; (c) extend the closure to include MB
+if L3 requires canonical DAN->MBON structure (the freeze
+obligation's named concern; new snapshot cost).
+
+**Reward and state definitions (reviewer's other two scoping items)
+- registered as OPEN design questions, answerable AFTER the DA
+target decision:** r from the substrate (e.g. sugar-GRN activity vs
+consumption), V(s) over a state representation (candidates: MN9
+rate, SEZ population vector, the trained circuit's own activity).
+No fiat reward. All three items scoped from measured constraints,
+per the project's standing method.
