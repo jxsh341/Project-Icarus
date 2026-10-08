@@ -1738,7 +1738,21 @@ substrate can learn and keep but cannot unlearn. Cross-architecture
 note: Cadence's designers treat two-association coexistence
 (TemporalMemory.protect, interference-managed records) as a core
 operating condition - consistent with our measurement that without
-an explicit weakening mechanism reversal is competition-or-nothing.
+an explicit weakening mechanism reversal is competition-or-nothing. [CALIBRATION CORRECTION 2026-10-08, review-directed:
+DOWNGRADED from 'cross-architecture validation' to a SUGGESTIVE
+PARALLEL. The comparison conflates two different kinds of claims:
+Cadence's competitive/interference-based memory is a DOCUMENTED
+DESIGN CHOICE ('we built it this way'); our masking-or-nothing
+result is a MEASURED EMPIRICAL FINDING ('it behaves this way').
+Similar vocabulary ('interference', 'competition', protect()) is
+not evidence the same computational principle operates in both -
+it is two designers, for different reasons, both ending up without
+a weakening mechanism. Possible real convergence (weakening is
+hard, so both route around it) OR coincidental vocabulary overlap;
+the evidence does not distinguish. Carried forward as a parallel
+worth noting, NEVER as validation - the same calibration discipline
+as TOST, applied in reverse: qualitative resemblance must not
+borrow the rhetorical weight of a measured result.]
 
 **Downstream (registered):** Phase 2 Task B closes as a
 characterized negative + transient finding. The protocol's reversal
@@ -1828,3 +1842,34 @@ starts collapsing coincident kicks at the readout.
   into an implementable control policy: monitor intermediate rates;
   probe once for the crossing when they enter the warning regime;
   stop at crossing. Characterized from data both probes produced.
+
+## Cadence clean-room rule (2026-10-08, registered BEFORE the learning-law source audit)
+
+GPL-3.0 derivative-work discipline: any L3/dopamine-class mechanism
+built AFTER reading Cadence's source must be DESIGNED FROM THE
+CITED LITERATURE FIRST (Schultz et al. 1997 RPE; Bellec et al. 2020
+eligibility traces - already in the project's reference list) -
+with Cadence's implementation consulted for UNDERSTANDING ONLY,
+never as a template. No Cadence-derived variable names, control
+flow, or specific formulation choices may carry into
+fly-cognition's implementation. This is the clean-room discipline
+that would be warranted regardless of license; GPL-3 makes it
+explicit rather than assumed. Reading the source for the audit is
+fine (evaluation); copying its structure is not.
+
+## Investigation 01 scope confirmation (2026-10-08)
+
+Per review: the embedding milestone is SKIPPED (the representation
+question is settled by Cadence's own docs - 'Cadence does not
+model spikes' - Level B fails on documented grounds; an embedding
+experiment would be process theater). The learning-law source
+audit proceeds NOW as the only open deliverable, structured
+around the reviewer's four questions: LOCALITY (what information
+does each update use), UPDATE CONDITIONS (what triggers
+plasticity; how observations/rewards/settled states gate it),
+PERSISTENCE (what survives episodes/restarts), REVERSIBILITY (can
+an acquired association be changed when contingency reverses, or
+only accumulated over). The audit's bearing: whether Phase 3's
+dopamine-pathway mechanism is built from scratch or informed by a
+structured reference - with the clean-room rule above governing
+any influence. The study remains ALLOWED TO CONCLUDE UNSUITABLE.
