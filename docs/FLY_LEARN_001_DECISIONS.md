@@ -2176,3 +2176,66 @@ crossing analog) and treat the DA anatomy as the VALUATION/
 credit path only. Option (c) is the current lean: it keeps every
 measured fact load-bearing and moves consolidation into the one
 place the rule was always going to need it anyway.
+
+## L3 fork RESOLVED (2026-10-09, user-directed): (c)+(a); (b) rejected; decay calibration pre-registered
+
+**Decision D-4:** (b) supra-physio rates REJECTED outright - 'biologically
+strained' is the same rescue-vs-evidence flag as every prior one in this
+project's history. (c)+(a) adopted: consolidation re-scoped to the rule
+(eligibility decay as the stop-at-crossing analog) with DA anatomy as the
+valuation/credit path; (a) eligibility-gating registered as an
+INDEPENDENT mechanism requiring its own measurement.
+
+**CRITICAL registration (reviewer-directed): (a) was NOT refuted by
+WP-L3b.** WP-L3b measured the BIOPHYSICAL DRIVE question: can DA->
+intermediate synaptic weight suppress 350+ Hz activity through membrane
+dynamics? Cleanly NO. But eligibility-gating is a LEARNING-RULE-LEVEL
+effect - a multiplicative factor on the eligibility trace keyed to DA
+presence/level, not to DA's synaptic kick strength. The -1..-21 edge
+weights that killed gated-suppression are NOT the relevant number for
+(a). Any future reader must not assume (a) was tested and refuted by
+L3b's numbers. (a) needs its own measurement: what DA signal actually
+REACHES these synapses (even weak/sparse/non-driving contact could
+suffice for a gating role) - a volume-transmission question, separable
+from the suppression question.
+
+**Pre-registered calibration target for (c)'s decay constant (registered
+BEFORE any WP-L3c code exists, reviewer-directed):** the eligibility
+decay time constant must be CALIBRATED AGAINST Task B's own measured
+timing data, not chosen freely. Specific target: decay must produce
+consolidation at or before the point coincidence waste historically
+onsets - the GNG380 regression: crossing at ~trial 15 (5/6 blocks),
+intermediate climb through ~300 Hz at trial ~9-14 (measured: 274 @
+t9, 348 @ t14), peak 49 @ t15-16, regression below theta by t24.
+Verification target: the decay-calibrated rule, run on the SAME
+reversal trajectory, must arrest the readout's fall (or never let it
+rise past the consolidation point) at or before t15 - VERIFIED against
+the existing regression trajectories, not assumed. A decay constant
+chosen independently of that data would be inventing a mechanism to
+fit a hoped-for outcome - the exact trap this project has avoided.
+
+## D-4 calibration DERIVED from Task B's own trajectory (2026-10-09)
+
+**The decay constant is not free - it is measured.** Model: per-trial
+eligibility accumulation with per-trial decay lambda; consolidation
+requires the INCREMENTAL eligibility (lambda^(t-1) * c) to be
+negligible (<5% of per-trial contrast) by the measured
+coincidence-waste onset (t=15). From Task B's measured timing:
+  lambda^14 <= 0.05  =>  lambda <= 0.807  (tau <= 4.67 trials,
+  half-life <= 3.24 trials)
+Calibration band for the rule: **lambda in [0.70, 0.807]** -
+within it, cumulative effective eligibility plateaus at 3.3-5.0x
+per-trial contrast by t9-14 (so acquisition still works: WP4's
+GNG521 crossed theta at t5-10, well within the pre-plateau rise),
+and the increment is <5% by t15 (so potentiation pressure is spent
+by the measured onset). lambda=0.99 (gamma*lam of the
+Cadence-class default) would leave an 87% increment at t15 -
+NOT a consolidation mechanism at this timescale; the derived band
+is what the substrate's own measured dynamics demand.
+
+**Pre-registered verification (binds WP-L3c):** replay the GNG380
+reversal with the decay-eligible rule at lambda = 0.75 (band
+center); criterion: readout holds theta at t24 OR never crosses
+(consolidation engaging pre-crossing is acceptable per the
+registered interpretation), intermediates <= ~300 Hz at t14+.
+Fail = registered negative; no parameter search past the band.
