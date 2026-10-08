@@ -44,8 +44,10 @@ class TrialSpec:
     drive_body_ids: tuple[int, ...]       # innate drive co-present (e.g. sugar)
     drive2_body_ids: tuple[int, ...]      # second innate drive (e.g. bitter), if any
     r_cue_hz: float                       # cue drive rate
-    r_drive_hz: float                     # primary drive rate
+    r_drive_hz: float                      # primary drive rate
     r_drive2_hz: float                    # second drive rate (0 = absent)
+    gate_body_ids: tuple[int, ...] = ()   # L3 gate population (e.g. gate-DA)
+    r_gate_hz: float = 0.0                 # gate drive rate (0 = absent)
     window_hops: int = 1                  # L1 observation window (frozen=1)
     duration_ms: float = 1000.0
     is_probe: bool = False                # probe trials: no plasticity applied
@@ -107,6 +109,8 @@ class TrainingRun:
         # drive (r_poisson_Hz) goes to the cue; the SECOND population
         # (stimulated2 / r_poisson2_Hz) is the innate drive (sugar).
         # r_cue_hz=0 or r_drive_hz=0 disables the respective population.
+        # THIRD population (stimulated3): the L3 gate (e.g. gate-DA),
+        # default-off (empty ids / rate 0 = no-op, bit-identical).
         params = dataclasses.replace(self.lif_params, r_poisson_Hz=spec.r_cue_hz)
         t0 = time.time()
         result = simulate_lif(
@@ -116,6 +120,9 @@ class TrainingRun:
             stimulated2=(list(spec.drive_body_ids) if spec.r_drive_hz > 0
                          and spec.drive_body_ids else None),
             r_poisson2_Hz=spec.r_drive_hz if spec.r_drive_hz > 0 else None,
+            stimulated3=(list(spec.gate_body_ids) if spec.r_gate_hz > 0
+                         and spec.gate_body_ids else None),
+            r_poisson3_Hz=spec.r_gate_hz if spec.r_gate_hz > 0 else None,
             seed=spec.seed,
         )
         readout_hz = len(result.spike_times.get(self.readout_body_id, []))

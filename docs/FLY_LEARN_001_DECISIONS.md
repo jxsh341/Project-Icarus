@@ -2123,3 +2123,56 @@ below effect-size at baseline; WP-L3b (gate on the trained,
 regressing circuit) is the decisive consolidation test. The
 obligation's remaining scope (pathway-specific efficacy) transfers
 to WP-L3b - registered, not silently assumed.
+
+## WP-L3b RESULT (2026-10-09): gate-DA drive does NOT arrest the coincidence-waste climb - consolidation-by-gated-suppression REFUTED at tested rates
+
+**Control-reproduction gate: PASS exactly.** The 0-Hz arm reproduced
+Task B blk0's measured arc to the spike (2->49 peak @ t15, -> 27 @
+t24) - the replay is valid and the arms comparable.
+
+**The decisive sweep, clean negative at every rate:** gate-DA drive
+at 50/100/150/200 Hz INSIDE the training trials (TrialSpec gate
+channel, default-off test-pinned) changed NOTHING: final readout
+25-27 (never held theta) in all arms; intermediates at ~350-360 Hz
+at the final probe in EVERY arm (arrested=False across the board);
+climb trajectories statistically identical (206/274/348/357/359 at
+the 5 probe points, +-2 Hz across arms). The gate's effect size is
+below measurement even in the trained, regressing regime.
+
+**Verdict per the pre-registered interpretation order:** the
+consolidation-by-gated-suppression hypothesis is REFUTED at the
+tested drive rates (50-200 Hz). This is a registered negative
+result, NOT a silent mechanism change. The L3b criterion (arrest
+below 300 Hz + readout holds crossing) failed on both components.
+
+**Why (measured, from WP-L3a's arithmetic + this run):** the hub
+pair's per-kick influence (~1.5 mV mean hyperpolarization at the
+rates gate-DA achieves) is simply too weak against intermediates
+hard-driven at 350+ Hz by 300-400 weight-sum cue edges. The
+AVLP597 pair are broad gain-control hubs for the CENTRAL BRAIN
+targets (|w| 9k across 1,400 targets), but onto THESE SEZ-adjacent
+intermediates their edges are -1..-21 - an order of magnitude
+below what the drive regime requires.
+
+**What survives and what doesn't:**
+- SURVIVES: the H(+) sign anchor (WP-L3a: DA excites the hubs,
+  monotone - validated); the measured anatomy (all censuses stand);
+  the self-limiting loop's EXISTENCE.
+- REFUTED: gated suppression AS THE CONSOLIDATION MECHANISM at
+  physiological drive rates. The DA->AVLP597->SEZ-intermediates
+  pathway exists structurally but is not strong enough to implement
+  stop-at-crossing biophysically in this closure.
+
+**Registered fork for L3c/L3d (decision required before further
+plasticity work):** (a) proceed to the three-factor rule with
+PLASTICITY-based gate action (DA-gated ELIGIBILITY rather than
+DA-gated biophysics - the gate decides WHERE learning applies,
+not WHEN the circuit saturates), which the anatomy supports
+without needing biophysical effect size; (b) test supra-physio
+rates (>200 Hz) - registered as a rate-extension arm, flagged as
+biologically strained; (c) re-scope L3's consolidation component
+to the plasticity rule itself (eligibility decay = stop-at-
+crossing analog) and treat the DA anatomy as the VALUATION/
+credit path only. Option (c) is the current lean: it keeps every
+measured fact load-bearing and moves consolidation into the one
+place the rule was always going to need it anyway.
