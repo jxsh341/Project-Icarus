@@ -2239,3 +2239,42 @@ center); criterion: readout holds theta at t24 OR never crosses
 (consolidation engaging pre-crossing is acceptable per the
 registered interpretation), intermediates <= ~300 Hz at t14+.
 Fail = registered negative; no parameter search past the band.
+
+## D-4 correction (2026-10-09, review-directed): criterion SPLIT; gamma pinned; strangle-risk PREDICTION registered
+
+**CRITERION SPLIT (replaces the flawed equivalence):** 'holds theta
+at t24' and 'never crosses' are OPPOSITE findings, not equivalent
+wins. Registered outcomes for the GNG380 decay replay:
+- PASS (consolidated reversal): crossed theta at some trial, then
+  held theta at t24.
+- NEGATIVE-1 (acquisition strangled): never crossed - decay too
+  aggressive; the aggression needed to spend potentiation by onset
+  prevented the association from forming at all. 'Learns but cannot
+  hold' vs 'cannot learn' are different failure modes.
+- NEGATIVE-2 (crossed but regressed): decay insufficient at the
+  band value; coincidence waste not arrested.
+
+**GAMMA PINNED:** in this trial-based, non-sequential formulation,
+the TD discount gamma = 1 EXPLICITLY. The trace update's decay
+factor is lambda alone (e <- lambda*e + contrast); the calibrated
+band [0.70, 0.807] is lambda, NOT the product gamma*lambda. The
+registry pins this so the two cannot drift independently. (The
+Cadence-class default gamma*lam ~0.99 note referred to their
+sequential-formulation default; irrelevant here with gamma=1.)
+
+**PREDICTION (registered BEFORE the run, first-order arithmetic on
+GNG380's own measured dynamics - not GNG521's fast case):** the
+original calibration's 'acquisition survives' check used GNG521's
+t5-10 crossing. GNG380 is the SLOW, late-crossing cue (t15, rising
+2->49 over the full 15 trials). Under lambda=0.75, cumulative
+weight growth at t15 reaches only ~48/120 = 40% of the no-decay
+value (geometric-sum arithmetic on the measured per-trial contrast),
+and the trace plateaus at 4x per-trial contrast - readout asymptote
+~2 + 0.40*(49-2) = ~21 Hz, BELOW theta. PREDICTED OUTCOME:
+NEGATIVE-1 (acquisition strangled) for GNG380 at the band center.
+If confirmed, the finding is that decay-consolidation at the
+calibrated band is SELF-DEFEATING for slow cues - the decay
+aggression needed to stop potentiation by onset prevents the slow
+cue from ever crossing - and consolidation must be STATE-DEPENDENT
+(gated by crossing/delta), strengthening the (a) eligibility-gating
+path. The run decides; the arithmetic only predicts.
