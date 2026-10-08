@@ -1795,3 +1795,36 @@ noise, explicitly NOT counted as a crossing. The transient-crossing
 phenomenon is therefore 5/6 clean crossings + 1 boundary case; its
 seed-stability is real (all 6 blocks show the rise-peak-regress arc
 within +-2 Hz) but the crossing count is honestly 5/6, not 6/6.
+
+## GNG521 extended-dose replay (2026-10-08, review-directed): NO regression - coincidence waste is CONDITIONAL, not universal
+
+**The reviewer's generality question answered by replay:** GNG521-feed
+continued 40 trials past R1's retained state (total dose 55, 2.75x
+its WP4 crossing dose; fresh seeds 87000+t, disjoint). MN9_L readout
+FLAT at 86-95 Hz across all 40 trials (peak 95 @t35, end 92 - no
+arc). GNG521's clean 6/6 pass is a QUALITATIVELY STABLE outcome,
+not a snapshot before an unobserved peak.
+
+**The discriminator (measured, both cues):** intermediate RATE
+REGIME. GNG521's leg-2 intermediates (12807, 12364, 567143) run
+120-165 Hz = ~33% of the 454.5 Hz refractory ceiling - far from the
+coincidence regime. GNG380's run 350-358 Hz = 78% of ceiling - deep
+in it. The mechanistic boundary: coincidence waste onset when
+convergent intermediates' rates climb toward the ~300+ Hz regime
+(2/3 of ceiling), where their phase-locking to the shared drive
+starts collapsing coincident kicks at the readout.
+
+**Phase 3 requirements, FINAL SHARPENING:**
+- Stop-at-crossing is a CONDITIONAL requirement - needed when a
+  cue's leg-2 intermediates enter the high-rate synchrony regime
+  (GNG380-class: many cue members, strong distributed leg-2, hard-
+  driven intermediates), NOT universal (GNG521-class is stable at
+  2.75x dose).
+- ONLINE peak detection (the reviewer's practical gap): the
+  early-warning signal is the INTERMEDIATES' OWN RATES, recordable
+  during training trials WITHOUT probing MN9_L - when leg-2
+  intermediates approach ~300 Hz, coincidence-waste onset is
+  imminent. This converts stop-at-crossing from a hindsight label
+  into an implementable control policy: monitor intermediate rates;
+  probe once for the crossing when they enter the warning regime;
+  stop at crossing. Characterized from data both probes produced.
