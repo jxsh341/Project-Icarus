@@ -2765,3 +2765,20 @@ GNG380-unlearning is registered as OPEN: the L4b PASS covers one
 cue under one protocol, and the mechanism's key ingredient
 (a drive that re-opens the carriers' coincidence) has no measured
 GNG380-side analog for 45/73 partners.
+
+## STANDING RULE (2026-10-09, review-promoted): programmatic claim audit before any close-out goes final
+
+The close-out audit instrument (scripts/phase4_closeout_claim_audit.py)
+is standing practice, joining the resume-rate check and the
+empty-scope guard. Before any close-out/report document is called
+final, its numeric claims are RE-DERIVED FROM RAW RECORDS
+programmatically - not re-read as prose. The audit's two catches
+are the pattern it exists for: (1) a number migrating between
+superficially similar contexts (334-vs-25 footprint; 92-vs-88
+cosugar range); (2) a summary sentence quietly widening from the
+claim earned ('carriers identical') to a stronger one that wasn't
+('all edges identical') - prose generalizing past what the
+measurement supports, a failure mode DISTINCT from wrong
+measurements. The fix is re-separation of the claims, not number
+adjustment. Logged with the origin story like every standing
+rule.
