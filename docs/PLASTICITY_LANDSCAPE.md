@@ -101,3 +101,45 @@ Every probe, screen, and rejection is checkpointed and committed:
 (`docs/FLY_LEARN_001_DECISIONS.md`) which records each candidate's
 death with its criterion, evidence, and the reasoning for every
 criterion amendment made along the way.
+
+---
+
+## Addendum (2026-10-09, Phases 3-4): learn, keep, unlearn - and where each boundary sits
+
+**The landscape's original claim is extended by measurement.**
+Under the frozen substrate:
+
+- **Learn** (WP4): yes - in the narrow, leg-2-convergent
+  anatomical regime this note originally characterized.
+- **Keep** (R1): yes - retention is bit-identical weight stability
+  under dead-silent spontaneous activity.
+- **Unlearn (Phase 2 frozen L1): no - now located at three
+  measured levels.** Coincidence-reachability (the carriers of an
+  association are co-active only with the drive that recruited
+  them - removing that drive removes access), protocol scope
+  (extinction-by-bitter reaches 60-64% of carriers, a fixed set),
+  and rate (1-2% of acquired mass per 25 trials at frozen eta).
+- **Unlearn (Phase 4 eligibility-then-sign): yes, for GNG521's
+  association - with the mechanism stated exactly.** Re-present
+  the recruiting drive (sugar: it opens the carriers' coincidence)
+  to accumulate eligibility; supply the valence sign from the
+  aversive pathway (the PPL trio); the erosion reaches 100% of
+  carriers and drives the association to literal-zero
+  (spike-count-verified extinction). The substrate's own dual
+  pathways, not an invented mechanism.
+- **The generality boundary is structural, not rhetorical:** the
+  GNG380 withhold association (158 edges, 73 partners, 45 with
+  zero input from the drive that built it) lacks the recruitment
+  structure the mechanism depends on. Whether ANY protocol can
+  reach those carriers is the open question - the same
+  reachability framing this note's original census used for
+  acquisition, now applied to removal.
+
+**The cross-cutting principle the arc adds to the landscape:**
+associations live where their recruiting coincidences live.
+Anything that wants to change them - strengthen, suppress, or
+erase - must open those same coincidences; drive removal is not
+erasure but access surrender. This is the sentence the whole
+Phase 3->4 negative-result ladder (biophysical gating, fixed
+decay, single-gate, conflation, bitter-extinction) was climbing
+toward.

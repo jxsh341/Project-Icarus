@@ -2730,3 +2730,38 @@ arithmetic suggests more cycles may be needed there; whether
 graded (non-extinction) weakening is achievable by protocol
 shaping is open. Both are registered as the honest boundary of
 this PASS.
+
+## Close-out preconditions (2026-10-09, review-directed): literal-zero VERIFIED; GNG380 generality is a GENUINELY OPEN mechanism question
+
+**Literal-zero verification (the 'extinguished not diminished' claim
+earned at spike-count level):** all 18 cue-alone probes at cycles
+15-25 read mn9_hz = 0, and that field IS len(spike_times) - the
+integer spike count over the full 1000 ms window. Literal zero,
+the same standard as Task B's WP6c verification; not a rounded
+display, not below-threshold-residue. The close-out may state
+'zero spikes at probe resolution' with the evidence cited.
+
+**GNG380 generality check (structural census, no sims):** the
+L4b mechanism does NOT obviously extend - three measured grounds:
+1. FOOTPRINT SCALE AND SHAPE: GNG380's withhold acquisition is
+   158 edges over 73 partners (vs GNG521's 25/9) - larger AND far
+   more diffuse (includes the hub 10646, broad interneurons at
+   1000+ inputs). Erosion cost scales with both.
+2. RECRUITMENT-DRIVE GAP: only 28/73 partners have ANY bitter-GRN
+   input; the strongest recruiters of GNG521's untouched set were
+   sugar-driven at 8-20 units - here the bitter-driven subset tops
+   out at 779 (11021) and 619 (11896) but 45/73 partners have
+   ZERO bitter input. An L4b-analogous erosion protocol (cue+bitter
+   eligibility, then... what sign?) has no mirror of the
+   sugar-recruited-coincidence structure that made L4b work. The
+   drive that built the association does not reach 62% of its
+   carriers' partners.
+3. THE SIGN PROBLEM IS NOT MIRRORED: eroding a SUPPRESSIVE
+   (withhold) association means restoring excitatory readout tone
+   - POSITIVE deltas on the same edges - but under what gate? The
+   L4b sign came from the aversive phase; the mirror would need an
+   appetitive-phase-then-?? arrangement with no measured analog.
+GNG380-unlearning is registered as OPEN: the L4b PASS covers one
+cue under one protocol, and the mechanism's key ingredient
+(a drive that re-opens the carriers' coincidence) has no measured
+GNG380-side analog for 45/73 partners.
