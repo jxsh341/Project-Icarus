@@ -2666,3 +2666,67 @@ from the acquired state; criteria split pre-registered: PASS iff
 cue-alone < theta by trial 25 AND cosugar intact; NEGATIVE-A iff
 untouched-edge coverage still fails (coincidence did not open
 under sugar phase); NEGATIVE-B iff unselective collapse.
+
+## WP-L4b RESULT (2026-10-09): PASS - the association is genuinely weakened through the substrate's own dual pathways; full-footprint coverage measured at the edge level
+
+**The decisive run completed (3 reps; the verdict-aggregation code
+crashed post-run on a missing-key - training rows lack 'ptype';
+data fully intact, verdict computed from checkpoints).**
+
+**Probe trajectories (cue-alone | cosugar, 2 reps per point):**
+- cue-ALONE: c5: 68-84 -> c10: 26-72 -> c15: **0,0** -> c20/c25:
+  0,0. COLLAPSED TO EXACTLY ZERO by cycle 15, in all 3 reps.
+- cue+COSUGAR: 78-92 at every probe point, all reps. INTACT.
+- Guard: 0 fires. NEGATIVE-B excluded.
+
+**Edge-level forensics (final-vs-initial, from checkpoints):**
+- Footprint: 25/25 acquisition edges WEAKENED in every rep.
+- The 9 previously-UNTOUCHED edges: 9/9 WEAKENED - 8 to exactly
+  0.0 (29.6->0, 36.0->0, 25.2->0, 17.7->0, 15.4->0, 6.8->0, 6.0->0,
+  5.8->0) and the 1.0-weight edge to 0.9 (at floor trajectory).
+  The scope problem is solved at its measured root: the
+  sugar-eligibility phase opened the coincidence bitter could not.
+- Selectivity: 27 total edges changed = 25 footprint + 2
+  collateral (bitter-phase-reachable, non-footprint cue edges);
+  the sugar->MN9 innate pathway untouched (cosugar probes
+  explain); structure preserved (nnz 336245 -> 336245, stored
+  zeros intact).
+- Seed-stable: all 3 reps byte-identical edge outcomes.
+
+**Verdict per the pre-registered split criteria: PASS.** Cue-alone
+0 < theta=41.5 by cycle 25 (in fact by cycle 15) AND cosugar
+intact. NEGATIVE-A excluded by direct edge measurement (not
+inferred from the readout). NEGATIVE-B excluded by cosugar +
+guard.
+
+**ERRATA (honest, registered):**
+1. The JSONL field 'pending_after_sugar' is MISLABELED - it is
+   recorded after the bitter phase's flush, so it measures
+   post-CYCLE pending (=0 always), not post-sugar-phase
+   accumulation. Harmless to the verdict (the weight_diff and
+   edge forensics carry the evidence); field name corrected in
+   any successor script.
+2. The cue-alone collapse to exactly 0 (not just <theta) reflects
+   FULL footprint erosion: with all 25 carrier edges at their V_CLIP
+   floors, the cue-alone probe has no residual pathway. 'Weakened'
+   here means ERASED on its carriers. Noted for interpretive
+   precision: the protocol did not produce graded weakening, it
+   produced extinction.
+
+**WHAT THIS COMPLETES (the Phase 2->4 arc):** the substrate can
+learn (WP4), keep (R1), and - via the eligibility-then-sign dual-
+pathway protocol - UNLEARN (L4b). The mechanism is the three-
+factor structure with substrate-honest sources at every factor:
+eligibility from sugar-recruited coincidence (the census's Q-B
+finding, confirmed firing at launch), sign from the aversive
+pathway (the PPL trio, measured), persistence with no decay
+(pinned), V_CLIP floors (pinned). Nothing invented; every component
+measured before use.
+
+**Scope caveats (standing):** development-stage n=3 (S22); the
+GNG380-class stronger footprint (~740-weight edges) has NOT been
+tested for erosion rate under this protocol - the L3d rate
+arithmetic suggests more cycles may be needed there; whether
+graded (non-extinction) weakening is achievable by protocol
+shaping is open. Both are registered as the honest boundary of
+this PASS.
