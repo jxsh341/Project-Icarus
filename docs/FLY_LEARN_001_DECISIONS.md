@@ -2376,3 +2376,52 @@ gate-DA population is RETIRED as the gate signal (retained in the
 anatomy record; their role, if any, is volume-transmission
 modulation below spiking threshold - out of modeling scope for
 frozen dynamics, recorded as an explicit scope boundary).
+
+## WP-L3d contract guards (2026-10-09, review-directed): NEVER-BOTH enforced; V_MAG weakening hazard CAUGHT BY TEST
+
+**Guard 1 - NEVER-BOTH:** static scan of every Phase 2/3 script's
+TrialSpec constructions: NO trial combines sugar and bitter drives
+(the scanner's one flag was a false positive across an if/else
+branch - verified by reading; sugar-only and bitter-only trials in
+separate branches). Enforced going forward by a runtime assertion
+in the WP-L3d trial builder + a standing test
+(tests/test_l3d_contract_guards.py) that scans all scripts for the
+pattern and fails loudly on any violation. The binary either/or
+gate model's precondition is now verified, not trusted.
+
+**Guard 2 - THE V_MAG WEAKENING HAZARD (caught RED, before any
+run):** driving V_MAG with delta=-50 on w=+10 produces w=-40, NOT
+w=0. The existing V_MAG branch (sign(w0) * min(abs(w0)+delta,
+w_max)) adds negative deltas to the magnitude, which FLIPS THE
+EDGE'S SIGN when |delta| > |w0| - exactly what V_MAG exists to
+forbid, undiscovered since WP1 because Phase 2 never applied a
+negative delta larger than the weight (all potentiation was
+positive; V_MAG's negative-delta path was never exercised).
+WP-L3d's weakening pathway would have hit it on the first aversive
+trial.
+
+**REGISTERED: the L3d weakening semantics is V_CLIP-FLOOR, not
+V_MAG and not V_SIGNED.** Rationale (per D3's variants rule):
+- V_MAG: REFUTED for weakening (the caught hazard - silent sign
+  flip past zero);
+- V_SIGNED: registered-arm only, 'biologically aggressive' per D3 -
+  allows an inhibitory synapse to turn excitatory; NOT the default
+  for the weakening pathway;
+- V_CLIP: floors at the zero crossing (w0>0, new<0 -> 0.0), and
+  its zeroed-edge-stays-dead branch (w0==0 -> 0.0) preserves the
+  stored-zero contract. The weakening pathway uses V_CLIP
+  semantics: magnitude DECREASE floored at zero, sign NEVER flips,
+  w=0.0 remains structural (verified by test: driven to exactly
+  0.0, the edge survives in the sparse structure).
+The zero-vs-absent hazard from WP1 is therefore covered for the
+new context BY TEST, not by assumed generalization of the earlier
+fix.
+
+**Registry note (reviewer's third point, recorded):** the gate-tied
+fixed-sign delta is a SIMPLIFIED binary rule, NOT a full RPE - no
+value estimate, no shrinking-as-predicted brake. The self-limiting
+protection in WP-L3d relies on the EMPIRICAL characterization
+(GNG521-class stability at 2.75x dose; coincidence waste
+conditional on intermediate regime), NOT on any built-in rule
+brake. A future reader must not assume more self-regulation than
+the two registered facts supply.
