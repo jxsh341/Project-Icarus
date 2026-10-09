@@ -51,19 +51,33 @@ def test_v_signed_zero_cross_keeps_structure():
     assert out[0, 2] == 0.0
 
 
-def test_v_mag_weakening_floors_at_zero():
-    """The weakening pathway under V_MAG: magnitude decrease cannot
-    cross zero (sign is a validated per-presynaptic property; LTP
-    must not silently override it). Driving delta more negative than
-    the weight magnitude FLOORS at 0.0, never flips sign - and 0.0
-    remains structural."""
-    rule = HebbianRule(PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6))
+def test_v_clip_weakening_floors_at_zero():
+    """THE L3d WEAKENING SEMANTICS (registered): V_CLIP floors at the
+    zero crossing - magnitude decrease, sign NEVER flips, w=0.0
+    remains structural, zeroed edge stays dead. Driving delta far
+    more negative than the weight magnitude lands at 0.0, not -40."""
+    rule = HebbianRule(PlasticityConfig(eta=0.5, semantics=Semantics.V_CLIP, w_max=1e6))
     m = _matrix()
     rule._pending[(0, 2)] = -50.0  # far more negative than |w|=10
     out = rule.apply(m)
     out_coo = out.tocoo()
     assert (0, 2) in {(int(r), int(c)) for r, c in zip(out_coo.row, out_coo.col)}
     assert out[0, 2] == 0.0  # floored at zero, NOT -40 (no sign flip)
+
+
+def test_v_mag_negative_delta_sign_flip_documented_hazard():
+    """PINNED HAZARDOUS BEHAVIOR (caught RED 2026-10-09, registry):
+    V_MAG with |delta| > |w0| FLIPS THE EDGE'S SIGN (w=+10,
+    delta=-50 -> w=-40). This is why V_MAG is REFUTED for the
+    weakening pathway - the test pins the behavior so any future
+    change to V_MAG semantics that would silently 'fix' this fails
+    here and forces a registry update. V_MAG remains correct for
+    POSITIVE-delta potentiation (Phase 2's usage)."""
+    rule = HebbianRule(PlasticityConfig(eta=0.5, semantics=Semantics.V_MAG, w_max=1e6))
+    m = _matrix()
+    rule._pending[(0, 2)] = -50.0
+    out = rule.apply(m)
+    assert out[0, 2] == -40.0  # the documented sign flip (the hazard)
 
 
 def test_never_both_guard_in_l3d_protocol():
