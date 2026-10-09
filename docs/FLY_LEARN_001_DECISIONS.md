@@ -2536,3 +2536,83 @@ measured. The Phase 2/3 joint conclusion STANDS and sharpens:
 under frozen-rate learning and fixed-protocol extinction, this
 substrate's associations are irreversible in BOTH senses - the
 channel exists but its reach and rate are both bounded.
+
+## Reachability census - QUESTION SCOPE registered before the run (reviewer-directed)
+
+The census answers TWO distinct questions, and the registry states
+explicitly which result licenses which claim:
+- Q-A (PROTOCOL-FAMILY reachability): can cue+bitter-style
+  presentations (the registered extinction family: cue PRIMARY,
+  one innate drive, any timing/pattern variation) drive the
+  untouched partners to coincide with the cue? A NO here licenses
+  only: 'this protocol family cannot reach them'.
+- Q-B (CLOSURE-WIDE reachability): do the untouched partners
+  receive input from ANY identifiable population in run-007's
+  closure (any NT, any type - not just PPL/sugar/bitter GRNs)
+  that a differently-designed protocol could recruit? A NO here -
+  and only here - licenses the strong claim: 'irreversibility is
+  a property of the substrate's reachable coincidence structure'.
+The census reports BOTH, separately. A Q-A-negative + Q-B-positive
+result means Phase 4's mechanism question becomes 'WHICH
+population, and can it be driven honestly?' - a design question.
+A Q-A+QB double-negative makes the joint finding final in the
+strong form.
+
+## Reachability census RESULT (2026-10-09): Q-A NO, Q-B YES - the untouched 40% is SUGAR-DRIVEN; extinction's protocol family is structurally mis-designed
+
+**Q-A (protocol-family): NO.** The 9 untouched edges' partners
+(GNG029, GNG132, DNge080, GNG211, GNG128, GNG370, GNG368, SLP471,
+DNge077) receive essentially nothing from the extinction protocol's
+populations: bitter-GRN input 0-2, PPL-trio input 0, cue-only
+input 1-5. Under cue+bitter presentations these partners CANNOT
+co-fire with the cue - the coincidence never opens, which is
+exactly why the L3d touched set was fixed at 15-18 edges. The
+registered claim licensed: THIS protocol family cannot reach the
+untouched 40%.
+
+**Q-B (closure-wide): YES - and the reaching population is
+SUGAR.** The untouched partners are richly connected within the
+closure (119-496 inputs each): GNG029 has +20 sugar-GRN input,
+GNG128 +15, GNG132 +8, DNge077 +5, GNG370 +2; SLP471/DNge080/
+GNG211/GNG368 are driven by other SEZ/central populations
+(GNG171, GNG483, DNge069, AN01B018...). The strong claim
+('irreversibility is a property of the substrate's reachable
+coincidence structure') is NOT licensed: a differently-designed
+protocol CAN in principle recruit these partners - and the most
+direct recruiter of three of them is the SUGAR pathway itself.
+
+**THE STRUCTURAL IRONY (the finding's punchline):** the untouched
+40% of the association's carriers are the edges whose partners are
+SUGAR-CO-ACTIVE ones - they were recruited during ACQUISITION
+precisely because cue+sugar co-presentation drove them (the
+coincidence that built them), and they are unreachable during
+EXTINCTION precisely because extinction removes the sugar that
+drove them. Cue+bitter does not reach them because SUGAR does.
+Extinction-with-bitter is structurally mis-designed for this
+footprint: it removes the very drive that recruited - and now
+maintains access to - the association's carriers. The correct
+extinction protocol is counterintuitive: CUE + SUGAR + AVERSIVE
+GATE (PPL) - re-present sugar (holding the partners reachable and
+coincident) while the aversive gate supplies the negative delta.
+But that violates the registered NEVER-BOTH precondition for the
+BINARY gate model... unless the gates are PROTOCOL-SEQUENCED
+rather than trial-internal: sugar-recruited coincidence within
+the trial, aversive delta applied at a different time or by a
+third factor modulating the same trial's delta sign.
+
+**Phase 4 fork, now measured:** the design question is no longer
+'can anything reach the 40%' (sugar can) but 'how is the
+aversive delta applied to sugar-maintained coincidences without
+violating the gate model's preconditions'. Candidate designs,
+all testable: (1) interleaved trials (sugar-coincidence trials
+alternating with aversive-delta trials - eligibility persists
+across the inter-trial gap per the L3d binary-gate semantics);
+(2) within-trial sequencing (sugar phase then bitter phase in one
+trial - requires re-deriving the NEVER-BOTH as never-simultaneous,
+which the binary model permits: gates are per-trial PRESENT/ABSENT
+but a trial may have two phases); (3) a third modulatory factor
+(PPL onto the eligibility gate itself - LTD-gating rather than
+delta-sign-flipping; anatomically checkable: do the PPL trio
+project onto the touched partners or the hub?). All three are
+registered as Phase 4 design candidates with the census as their
+measured foundation.
