@@ -2324,3 +2324,55 @@ from the measured reward pathway, not a free parameter.
 surviving consolidation mechanism hypothesis, now the load-bearing
 one. The D-4 prediction did its job: the run was worth running
 BECAUSE the outcome was pinned in advance.**
+
+## WP-L3d pre-launch census (2026-10-09, review-directed): bitter routes through a DIFFERENT DA population; sugar drives NONE of them; the gate-population hypothesis is REFUTED in its drive form
+
+**Q2 answered - and it kills the single-gate design for both
+conditions:** traced frozen-dynamics sims (3 reps each, >5 Hz in
+>=2/3):
+- BITTER-only drive activates 4 DA neurons: 11618/PPL102 (130 Hz),
+  11900/PPL101 (132), 529516/PPL106 (47), 138585/PAM12 (9). Three
+  PPL-class + one PAM - CONSISTENT with the PPL-aversive
+  literature.
+- SUGAR-only drive activates ZERO DA neurons in this closure. Not
+  'few' - zero, at 200 Hz GRN drive, 3 seeds. Sugar's DA influence
+  in run-007's SEZ-local closure is INDIRECT ONLY (via the OA
+  relay, too weak at one remove to fire DA on its own).
+- Overlap sugar^bitter: ZERO. Two disjoint populations.
+The reviewer's concern was exactly right: reusing one gate node
+with a sign flip would have imported an assumption the connectome
+contradicts. Bitter-weakening gates through PPL101/102/106 (+
+PAM12), NOT through the 9 gate-DA cells.
+
+**Q1 answered - gate-on cannot be defined as DA-rate activity in
+this closure:** the 9-cell 'gate population' fires at 0 Hz under
+baseline, sugar, AND bitter. Their DA identity was never a
+firing-pathway membership in these conditions - they are
+modulators that act (if at all) at sub-threshold/volume-transmission
+strength. A rate threshold on them is not derivable because they
+have no measurable rate response. THE GATE-ON SIGNAL CANNOT BE
+THEIR SPIKING. This refutes the WP-D2 'gate population activity as
+V(s)/gate' design in its spiking form.
+
+**Q3 consequence + what SURVIVES:** the DA-gated eligibility design
+survives ONLY if the gate reads a non-spiking variable. The
+substrate-honest candidates, in order of measured support:
+(1) OA-RELAY ACTIVITY as the appetitive gate (WP-D2: 11608/12109
+receive 7/2 direct sugar-GRN inputs; they ARE driven by sugar -
+the relay fires under sugar, the DA cells do not);
+(2) the PPL trio (11618/11900/529516) as the AVERSIVE gate -
+bitter DOES fire them, robustly (130+ Hz), and they are the
+population whose spiking actually tracks aversive presence;
+(3) eligibility semantics: with per-trial binary conditions (sugar
+  present or bitter present), the gate is per-trial PRESENT/ABSENT
+  - no threshold needed; freeze-vs-decay is moot at the binary
+  level (eligibility persists across the trial boundary under
+  gate=1 and does not accumulate under gate=0).
+REGISTERED for WP-L3d: appetitive trials gate eligibility ON via
+the OA relay's sugar response; aversive trials gate the WEAKENING
+term via the PPL trio's bitter response (sign-symmetric delta
+requires the aversive gate for negative updates); the 9-cell
+gate-DA population is RETIRED as the gate signal (retained in the
+anatomy record; their role, if any, is volume-transmission
+modulation below spiking threshold - out of modeling scope for
+frozen dynamics, recorded as an explicit scope boundary).
