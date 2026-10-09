@@ -2616,3 +2616,53 @@ delta-sign-flipping; anatomically checkable: do the PPL trio
 project onto the touched partners or the hub?). All three are
 registered as Phase 4 design candidates with the census as their
 measured foundation.
+
+## Phase 4 design decision (2026-10-09, review-directed): (3) DROPPED; (2) adopted in ELIGIBILITY-THEN-SIGN form; conflation CONFIRMED and resolvable without redesign
+
+**(3) dropped on the reviewer's evidence:** the census measured
+PPL-trio input to the 9 untouched partners at ZERO - there is no
+eligibility there for an LTD-gate to act on. (3) changes behavior
+only on the already-touched 15-18 edges = rate dimension, the one
+the census showed matters less than scope. Not the bottleneck.
+
+**Conflation check (code-read, fly-l3d rule as committed):**
+CONFIRMED and worse than framed - the gate_on flag controls (a)
+eligibility accumulation (observe_rate_pair returns early when
+off), (b) whether ANY update applies (apply returns early), and
+(c) the sign (_negate hard-wired to gate-on). One binary variable
+does all three jobs; 'opens coincidence' and 'sets sign' are the
+same signal in the implementation, exactly as the reviewer
+suspected. Naive interleaving/sequencing under this code = more
+acquisition on the untouched subset (sugar opens coincidence AND
+positive sign).
+
+**Resolvable WITHOUT redesign:** the decoupling machinery already
+exists - observe/apply are separate calls; _pending persists
+across them; TrainingRun flushes per trial. The eligibility-then-
+sign design needs only: (i) eligibility accumulation driven by
+whichever population actually opens coincidence (sugar for the
+untouched partners - Q-B), gated OFF from sign; (ii) a separate
+per-trial SIGN source (bitter/PPL phase or trial) applied at
+apply-time to whatever eligibility is live; (iii) NEVER-BOTH
+renegotiated from never-co-present to never-SIMULTANEOUS -
+within-trial phases or alternating trials, both of which the
+binary per-trial gate model permits with explicit re-registration.
+This is the three-factor structure the Cadence audit identified,
+now with substrate-honest sources: eligibility from coincidence
+(sugar-recruited), valence from the aversive phase (PPL), combined
+via persistence - the trace machinery L3c built and L3d exercised.
+
+**Phase 4 WP-L4a (registered, pre-implementation):** implement
+the decoupled rule (eligibility source, sign source, persistence
+across phase/trial boundary); unit tests pin: (1) eligibility
+accumulates under sugar-phase with sign-source absent; (2) a
+subsequent bitter-phase applies NEGATIVE delta to the live
+eligibility (full 25-edge footprint reachable - the untouched 9
+partners co-fire under cue+sugar); (3) never-simultaneous holds
+(sugar phase and bitter phase never overlap in one simulation
+step); (4) V_CLIP floors preserved. Then WP-L4b: the decisive
+run - cue+sugar eligibility phase + bitter sign phase, cycled,
+from the acquired state; criteria split pre-registered: PASS iff
+cue-alone < theta by trial 25 AND cosugar intact; NEGATIVE-A iff
+untouched-edge coverage still fails (coincidence did not open
+under sugar phase); NEGATIVE-B iff unselective collapse.
