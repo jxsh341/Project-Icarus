@@ -2278,3 +2278,49 @@ aggression needed to stop potentiation by onset prevents the slow
 cue from ever crossing - and consolidation must be STATE-DEPENDENT
 (gated by crossing/delta), strengthening the (a) eligibility-gating
 path. The run decides; the arithmetic only predicts.
+
+## WP-L3c RESULT (2026-10-09): decay-consolidation REFUTED for slow cues - the no-free-lunch is MEASURED
+
+**The decisive replay, all arms, control verified first:** L1
+control reproduced Task B's regression arc exactly (2->49 @ t15,
+->27 @ t24 - third independent reproduction). Then the calibrated
+band, every value:
+- lam=0.70: arc plateaus 4-10, peak 10, final 7 - never crossed.
+- lam=0.75: arc plateaus 7-13, peak 13, final 7 - never crossed.
+- lam=0.807 (band edge): arc plateaus 2-19, peak 19, final 15 -
+  never crossed.
+**VERDICT per the SPLIT criteria: NEGATIVE-1 (acquisition
+strangled) at ALL THREE band values.** The registered prediction
+(asymptote ~21 Hz, sub-theta) was confirmed and slightly
+over-optimistic - real growth is weaker still.
+
+**The measured no-free-lunch:** consolidation at Task B's own
+timing requires lam <= 0.807 (increment <5% by t15). GNG380's own
+acquisition requires enough cumulative potentiation by t15 to
+cross theta - which lam=0.807's discounting denies (the geometric
+series reaches only ~1/3 of L1's linear sum by t15, and the
+readout tracks proportionally: 19 vs 49). **The two requirements
+are incompatible in a single constant: lam <= 0.807 strangles;
+lam ~1 regresses. Decay-based consolidation is SELF-DEFEATING for
+slow-acquiring cues.** This closes the (c)-only path: a fixed
+decay constant cannot serve both acquisition and consolidation on
+this substrate's measured dynamics.
+
+**Registered consequence (strengthens (a)):** consolidation must
+be STATE-DEPENDENT, not rate-constant-dependent. The (a)
+eligibility-gating mechanism - DA presence/level as a
+multiplicative factor on the trace, keyed to the substrate's own
+reward timing (sugar via OA relay) - naturally provides this:
+eligibility accumulates freely during acquisition (DA active while
+sugar is delivered), and the DISENGAGEMENT of potentiation happens
+via the DA signal's own dynamics rather than a pre-set decay.
+This is not a rescue - it is the anatomy the censuses measured
+doing the work the fixed constant cannot. WP-L3d as pre-registered
+(tests weakening) proceeds with the three-factor rule in its
+DA-GATED form: e in (gate) * contrast; the gate's timing comes
+from the measured reward pathway, not a free parameter.
+
+**Standing: (c) alone = measured negative (this WP). (a) = the
+surviving consolidation mechanism hypothesis, now the load-bearing
+one. The D-4 prediction did its job: the run was worth running
+BECAUSE the outcome was pinned in advance.**
