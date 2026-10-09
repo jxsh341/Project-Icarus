@@ -2425,3 +2425,66 @@ protection in WP-L3d relies on the EMPIRICAL characterization
 conditional on intermediate regime), NOT on any built-in rule
 brake. A future reader must not assume more self-regulation than
 the two registered facts supply.
+
+## WP-L3d RESULT (2026-10-09): NEGATIVE-A - the aversive gate's weakening is REAL but ~100x TOO WEAK to touch the acquired association
+
+**The decisive weakening test, 3 seed reps, guard 0 fires, sanity
+gate passed at launch (PPL trio 132/132/48 Hz under bitter in
+protocol context).**
+
+**Trajectories (all reps, both probe types, 5 points - the shape
+matters, not just endpoints):**
+- cue-ALONE: flat 70-85 Hz across t5-t25 in every rep. The
+  acquired association never moved. NOT a slow-fall-that-needs-
+  more-trials shape - flat.
+- cue+COSUGAR: flat 84-92 throughout. The innate program is
+  untouched. NEGATIVE-B excluded cleanly.
+
+**Mechanism forensics (from per-trial weight_diff):** the gate
+DID act - negative deltas applied EVERY trial (11-13 edges
+changed, total_delta -5.0 to -13.0, shrinking toward floors as
+weights approach zero). But magnitudes: max_abs_delta 0.9-1.9
+against potentiated edge weights in the HUNDREDS (GNG521's
+acquired leg-1 edges grew to ~740 of 766 w_max in R1). At
+eta=1e-4 and x*y <= 200*200, one trial's delta is ~1-4 weight
+units. Weakening an edge holding ~740 units needs ~200-700
+trials. 25 extinction trials remove ~1-2% of the acquired
+potentiation. **The mechanism is structurally sound and
+quantitatively ~2 orders of magnitude too weak at the frozen
+eta.** Training-trial readouts read 0 Hz (bitter co-drive
+suppresses MN9_L during training - the known broad suppression;
+probes are the valid measurement, and they are flat).
+
+**Per the pre-registered split criteria: NEGATIVE-A (no
+weakening).** Registered as-is. The honest decomposition:
+- What worked: the aversive gate opened (measured); V_CLIP
+  weakening applied with correct sign and floors (weight_diff
+  proves it); selectivity held (cosugar intact, guard silent).
+- What failed: effect size at the frozen learning rate. The
+  substrate HAS an aversive-to-DA weakening channel; at eta=1e-4
+  it cannot erode an association built at the same eta over 15
+  trials - SYMMETRY BREAK: acquisition accumulates in one
+  direction only (potentiation), while weakening must remove
+  what acquisition built, at the same rate. Over equal trial
+  counts the best it can do is a draw - and the association was
+  built over 15 trials, then RETAINED (R1 verified bit-identical
+  weights), so 25 extinction trials at the same eta cannot
+  remove it (needs ~equal accumulated magnitude, which means
+  ~equal trials at equal eta - but the coincidence-waste
+  regime caps useful acquisition at ~t15 anyway).
+
+**Phase 3 ledger closes with this finding:** the substrate's own
+aversive pathway provides a REAL but WEAK weakening channel -
+real in sign/floor/selectivity, weak in rate. The remaining
+design space for genuine reversal (registered, for Phase 4):
+(1) eta asymmetry (weakening rate > acquisition rate -
+  biologically motivated: LTD/LTP ratio literature, but a NEW
+  parameter requiring its own calibration vs Task B data);
+  (2) prolonged extinction (the ~200-700 trial estimate - test
+  durations this substrate has not run; unbounded-scale
+  question);
+  (3) accept the Phase 2/3 joint conclusion as the finding: on
+  this closure, under frozen-rate learning, associations are
+  effectively irreversible - 'can learn, can keep, cannot
+  unlearn' now extends to 'even with the substrate's own
+  aversive pathway engaged'.
