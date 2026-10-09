@@ -89,11 +89,29 @@ str_checks = [
      "Position relative to prior work" in report),
 ]
 
+# --- claim-inventory sweep (reviewer 2026-10-09: coverage must be an
+# explicit list, not what the audit author remembered to check) ---
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location("claim_inventory",
+                                    root/"scripts/claim_inventory.py")
+_ci = _ilu.module_from_spec(_spec)
+try:
+    _spec.loader.exec_module(_ci)
+    _inv_fails = [c["claim_id"] for c in _ci.INVENTORY if not c["check"]()]
+    if not (root/"docs/CLAIM_INVENTORY.json").exists():
+        _inv_fails.append("CLAIM_INVENTORY.json missing")
+    print("== claim inventory ==")
+    print(f"  {len(_ci.INVENTORY)} claims inventoried, {len(_inv_fails)} failures"
+          + (f": {_inv_fails}" if _inv_fails else ""))
+except Exception as _e:
+    _inv_fails = [f"inventory import failed: {_e}"]
+    print(f"== claim inventory ==  FAIL: {_e}")
+
 print("== claim audit: numeric ==")
 for claim, ok in checks:
     print(f"  {'OK ' if ok else 'FAIL'} {claim}")
 print("\n== claim audit: strings/scoping ==")
 for claim, ok in str_checks:
     print(f"  {'OK ' if ok else 'FAIL'} {claim}")
-n_fail = sum(1 for _, ok in checks + str_checks if not ok)
-print(f"\n{len(checks)+len(str_checks)} checks, {n_fail} failures")
+n_fail = sum(1 for _, ok in checks + str_checks if not ok) + len(_inv_fails)
+print(f"\n{len(checks)+len(str_checks)} doc checks + {len(_ci.INVENTORY)} inventory claims, {n_fail} failures")

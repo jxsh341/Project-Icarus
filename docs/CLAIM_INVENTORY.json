@@ -1,0 +1,110 @@
+[
+  {
+    "claim_id": "SUB-1",
+    "statement": "Closure: 40,290 neurons / 336,245 signed synapses",
+    "source": "run-007 connectivity_matrix_signed.npz + connectivity_nodes.npy",
+    "reported_in": "TECHNICAL_REPORT \u00a71, \u00a78; FUNDING_SUMMARY"
+  },
+  {
+    "claim_id": "SUB-2",
+    "statement": "WP9 grid: sugar x bitter, 11x11, 0-200 Hz / 20 Hz steps, 121 cells",
+    "source": "results/phase1 wp9 grid + registry (121/121)",
+    "reported_in": "TECHNICAL_REPORT \u00a71"
+  },
+  {
+    "claim_id": "ACQ-1",
+    "statement": "GNG521 acquisition: 0 -> 69-86 Hz, seed-stable",
+    "source": "WP4 acquisition JSONL checkpoints (results/phase2/wp4)",
+    "reported_in": "TECHNICAL_REPORT \u00a72; FUNDING_SUMMARY"
+  },
+  {
+    "claim_id": "ACQ-2 (REGRESSION: 334-edges-on-GNG521, corrected 2026-10-09)",
+    "statement": "GNG521 reversal-training footprint = 25 cue-incident carrier edges (334 was GNG380's count, carried across contexts)",
+    "source": "Task B edge-level forensics; correction logged in registry 2026-10-09",
+    "reported_in": "TECHNICAL_REPORT \u00a73 erratum note"
+  },
+  {
+    "claim_id": "RET-1",
+    "statement": "Retention: 12 blocks bit-identical end-of-acquisition to end-of-retention",
+    "source": "Task B R1 weight-hash checks (results/phase2)",
+    "reported_in": "TECHNICAL_REPORT \u00a73"
+  },
+  {
+    "claim_id": "REV-1",
+    "statement": "GNG380 transient crossing at trial 15, 5/6 seeds, regression to 27 Hz by trial 25",
+    "source": "Task B R2 saturation probe + traced replay (results/phase2)",
+    "reported_in": "TECHNICAL_REPORT \u00a73"
+  },
+  {
+    "claim_id": "REV-2",
+    "statement": "Coincidence waste: arrivals +34% while readout spikes -45%; onsets above ~300 Hz (2/3 refractory ceiling)",
+    "source": "coincidence probe + traced replay (results/phase2)",
+    "reported_in": "TECHNICAL_REPORT \u00a73"
+  },
+  {
+    "claim_id": "DA-1",
+    "statement": "1,449 consensusNt-dopamine neurons; 1,444 predictedNt (different fields, both real)",
+    "source": "run-007 neurons_batch_*.json: consensusNt vs predictedNt censuses (re-verified 2026-10-09)",
+    "reported_in": "TECHNICAL_REPORT \u00a74"
+  },
+  {
+    "claim_id": "DA-2",
+    "statement": "DA out-edges: 796 local edges onto 188 targets; 33% of DA weight onto one octopamine neuron",
+    "source": "WP-D1 census (results/phase3/wp_d1_da_census.json)",
+    "reported_in": "TECHNICAL_REPORT \u00a74"
+  },
+  {
+    "claim_id": "DA-3",
+    "statement": "DA->hub weights: full range -1 to -21; strongest -21 onto 15207, -17 onto 14642 (the -21..-17 subset was drift, corrected 2026-10-09)",
+    "source": "WP-D2 gate anatomy (results/phase3/wp_d2_gate_anatomy)",
+    "reported_in": "TECHNICAL_REPORT \u00a74"
+  },
+  {
+    "claim_id": "EXT-1",
+    "statement": "Bitter-only extinction reaches 15-18 of 25 carriers (60-64%), erodes 1.1-1.45% acquired mass / 25 trials",
+    "source": "scope check (results/phase3/..  L3d/L4 pre-work)",
+    "reported_in": "TECHNICAL_REPORT \u00a75"
+  },
+  {
+    "claim_id": "EXT-2 (REGRESSION: cosugar-92, corrected 2026-10-09)",
+    "statement": "Cosugar probes span 78-88 Hz (92 was the table per-rep max + memory of L3d numbers)",
+    "source": "L4b probe JSONLs",
+    "reported_in": "TECHNICAL_REPORT \u00a75"
+  },
+  {
+    "claim_id": "EXT-3",
+    "statement": "GNG380 association: 158 edges / 73 partners; 45 partners with zero drive-input (62% unreachable)",
+    "source": "GNG380 reachability census (results/phase3/phase4)",
+    "reported_in": "TECHNICAL_REPORT \u00a75, \u00a77"
+  },
+  {
+    "claim_id": "EXT-3b",
+    "statement": "8/9 previously-unreachable partners fire under cue+sugar at launch sanity",
+    "source": "L4b launch sanity check (results/phase4/wp_l4b)",
+    "reported_in": "TECHNICAL_REPORT \u00a75"
+  },
+  {
+    "claim_id": "EXT-4",
+    "statement": "L4b result: cue-alone 68-84 Hz at cycle 5 -> exactly 0 spikes by cycle 15, held through 25, all 3 reps; cosugar 78-88 intact; guard silent",
+    "source": "results/phase4/wp_l4b ckpt_r0/r1/r2 + probe JSONLs",
+    "reported_in": "TECHNICAL_REPORT \u00a75; FUNDING_SUMMARY"
+  },
+  {
+    "claim_id": "EXT-5",
+    "statement": "All 25 carriers + all 9 untouched partners eroded to identical floors, every rep; six collateral mid-trajectory edges vary 0.02-0.7 units across seeds",
+    "source": "L4b weight forensics + audit",
+    "reported_in": "TECHNICAL_REPORT \u00a75"
+  },
+  {
+    "claim_id": "INFRA-1",
+    "statement": "121 contract tests pass",
+    "source": "uv run pytest (121 passed, re-verified at a4c0e6b)",
+    "reported_in": "TECHNICAL_REPORT \u00a78"
+  },
+  {
+    "claim_id": "INFRA-2",
+    "statement": "The L4b harness constants are frozen: ETA=1e-4, THETA=41.5, W_MAX=766.0, CUE=[15957,16327], PPL_TRIO=[11618,11900,529516], UNTOUCHED=9 partners, N_CYCLES=25, PROBE_AT=(5,10,15,20,25), REPS=3, TRAIN_SEED_BASE=160000, PROBE_SEED_BASE=162000",
+    "source": "scripts/phase4_wp_l4b_extinction.py lines 53-67",
+    "reported_in": "PHASE_5_CONFIRMATORY_PREREG.md"
+  }
+]
