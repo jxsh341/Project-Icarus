@@ -2488,3 +2488,51 @@ design space for genuine reversal (registered, for Phase 4):
   effectively irreversible - 'can learn, can keep, cannot
   unlearn' now extends to 'even with the substrate's own
   aversive pathway engaged'.
+
+## WP-L3d scope-vs-rate check (2026-10-09, review-directed): SCOPE-CAPPED at ~60-64% coverage; eta-asymmetry alone CANNOT reverse
+
+**The reviewer's alternative was right, and it changes the fork.
+From per-trial checkpoints (no new sims):**
+
+1. **Extinction touches a SMALL FIXED SET: 15-18 edges per rep**
+   (11-13 per trial, stable across 25 trials; 0-4 new edges
+   recruited in the second half - NOT growing coverage). Not a
+   slow version of acquisition; a narrow slice of it.
+
+2. **Coverage vs acquisition footprint: 60-64%.** GNG521's
+   acquisition footprint is 25 cue-incident edges (correcting the
+   earlier 334 figure - that was GNG380's count; registered
+   correction). Extinction reaches 15-16 of them. ~40% of the
+   association's edges are NEVER TOUCHED by this protocol.
+
+3. **Mass: 1.1-1.45% removed** (4.9-6.4 units vs 443.4 acquired
+   mass).
+
+**FORK DECISION, revised per the measured answer:**
+- Fork (1) eta-asymmetry ALONE: INSUFFICIENT BY MEASUREMENT.
+  Raising eta erodes the same 15-16 edges faster but never touches
+  the remaining ~9-10; the association's readout is carried by
+  the full 25-edge set (R1: cue-alone 76-89 Hz from their joint
+  mass). Even eta-infty on 64% of the footprint leaves the
+  association's remaining carriers intact - at best partial
+  weakening to a plateau, never reversal. REGISTERED.
+- The REAL Phase 4 question is the reviewer's fourth option: can
+  ANY extinction protocol reach the untouched 40%? The touched
+  set is coincidence-gated (cue+bitter timing lines up for those
+  edges' postsynaptic partners; the untouched 9-10 edges' partners
+  stay silent under this protocol). Varying presentation patterns
+  to recruit different coincidences is the candidate mechanism;
+  whether it CAN recruit them is a testable structural question.
+- Fork (2) prolonged extinction: also scope-limited - more trials
+  at the same protocol erode the same 15-16 edges toward their
+  floors and stop. ~200-700-trial arithmetic was rate-framing;
+  scope-framing says it converges to partial. REGISTERED.
+
+**L3d final characterization (both negatives combined):**
+extinction under this protocol is DOUBLY limited - scope (60-64%
+coverage, fixed set) and rate (1-2% mass per 25 trials on the
+covered subset). Either alone would prevent reversal; both are
+measured. The Phase 2/3 joint conclusion STANDS and sharpens:
+under frozen-rate learning and fixed-protocol extinction, this
+substrate's associations are irreversible in BOTH senses - the
+channel exists but its reach and rate are both bounded.
