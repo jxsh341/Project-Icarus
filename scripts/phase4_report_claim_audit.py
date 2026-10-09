@@ -45,6 +45,9 @@ checks.append(("121 tests / 69 commits", True))
 
 report = (root/"docs/TECHNICAL_REPORT.md").read_text(encoding="utf-8")
 funding = (root/"docs/FUNDING_SUMMARY.md").read_text(encoding="utf-8")
+# bracketed correction-notes legitimately mention both sides of a prior
+# error; strip them before scanning so an erratum can't trip its own guard
+_r_clean = re.sub(r"\[[^\]]*\]", "", report)
 
 # cross-check strings present in the docs match the audited values
 str_checks = [
@@ -58,6 +61,32 @@ str_checks = [
     ("funding: dev-stage disclosed", "development-stage" in funding),
     ("report: dev-stage disclosed", "development-stage" in report),
     ("report: MB/Kenyon absence scoped", "Kenyon" in report),
+    # --- RE-INTRODUCTION CHECKS (the 2026-10-09 review catches) ---
+    # FIX 1: 334 must NOT appear attached to GNG521 anywhere.
+    # _r_clean (defined above) strips bracketed correction-notes so the
+    # erratum text can't trip its own guard.
+    ("report: no '334' on GNG521 (reintroduction check)",
+     not re.search(r"GNG521[^.]*334|334[^.]*GNG521", _r_clean)),
+    ("report: 334 absent from report entirely unless GNG380-labeled",
+     "334" not in _r_clean or "GNG380's reversal-training edge count" in report),
+    ("report: WP9 grid described as sugar x bitter (no water axis)",
+     "sugar × bitter" in report and "sugar/bitter/water" not in report),
+    # FIX 3: no unsafe 'first demonstration' claim remains
+    ("funding: no 'to our knowledge, the first' claim",
+     "to our knowledge, the first" not in funding),
+    ("report: no 'to our knowledge' priority claim",
+     "to our knowledge" not in report),
+    # FIX 4: DA count states its census basis
+    ("report: DA count names consensus census basis",
+     "consensus-dopamine neurons (consensusNt census" in report),
+    # FIX 5: weight range is the full range with strongest named
+    ("report: DA->hub weights full range -1 to -21",
+     "−1 to −21" in report and "−21 to −17" not in report),
+    # prior-art positioning present in both
+    ("funding: prior-work positioning present",
+     "Others have shown that plasticity rules" in funding),
+    ("report: prior-work section present",
+     "Position relative to prior work" in report),
 ]
 
 print("== claim audit: numeric ==")

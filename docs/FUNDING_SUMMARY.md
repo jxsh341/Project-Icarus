@@ -26,7 +26,7 @@ One microcircuit, one task pair, one association taken through learn → retain 
 
 ## Why it matters
 
-This is, to our knowledge, the first demonstration of the full learn–retain–**unlearn** cycle on a biologically-reconstructed connectome at single-neuron, single-synapse resolution — with every mechanism claim traced to named neurons and measured weights, and every failure located rather than shrugged at. The discipline is the product as much as the result: every negative in the arc was converted into a measured boundary, and the central principle — *memories live where their forming coincidences live* — is the kind of structural law that transfers to any substrate with wiring, not just this fly.
+Others have shown that plasticity rules *can be added* to connectome data and produce learning and reversal (dopamine-gated conditioning on FlyWire mushroom-body circuitry; larval-connectome memory models). This work answers the questions those demonstrations leave open: *where in the substrate* learning can occur (a mapped, rare anatomical regime — itself a measurable property of the connectome), *why* each conventional removal mechanism fails (every failure located to a specific measured cause), and *which of the substrate's own pathways* accomplish removal, under a protocol derived from that anatomy rather than imposed on it. Every mechanism claim traces to named neurons, measured weights, and spike-count-verified outcomes; every summary is programmatically audited against raw records. The central principle — *memories live where their forming coincidences live* — is a structural law about wiring, not parameters, and it transfers to any substrate that has some.
 
 ## Artifacts
 
