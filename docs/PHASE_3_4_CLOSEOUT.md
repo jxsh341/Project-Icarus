@@ -23,7 +23,7 @@
 
 ## 2. The unlearning result, stated at its exact strength
 
-Cue-alone response of the acquired GNG521 feed association: 68–84 Hz at cycle 5 → **exactly zero spikes by cycle 15, held through cycle 25, all 3 reps** — verified at the spike-count level (`mn9_hz = len(spike_times)`, integer counts over the full 1000 ms window; the Task B/WP6c literal-zero standard), not a rounded display value. Cosugar probes never left 78–92 Hz; the innate sugar→MN9 pathway is untouched (27 edges changed = 25 carriers + 2 collateral; structure preserved, nnz 336,245 unchanged, stored zeros intact).
+Cue-alone response of the acquired GNG521 feed association: 68–84 Hz at cycle 5 → **exactly zero spikes by cycle 15, held through cycle 25, all 3 reps** — verified at the spike-count level (`mn9_hz = len(spike_times)`, integer counts over the full 1000 ms window; the Task B/WP6c literal-zero standard), not a rounded display value. Cosugar probes never left 78–88 Hz (programmatic audit of all 30 records); the innate sugar→MN9 pathway is untouched (27 edges changed = 25 carriers + 2 collateral; structure preserved, nnz 336,245 unchanged, stored zeros intact). **Carrier outcomes are float-exact across reps** (all 25 carriers + all 9 previously-untouched edges land at identical V_CLIP floor values in every rep); six collateral mid-trajectory edges differ at the 0.02–0.7 level across seeds (partial erosion positions, seed-sensitive) — reported per the audit, not smoothed.
 
 **"Extinguished, not diminished"** — with all 25 carrier edges at their V_CLIP floors, this is extinction, not graded weakening. The protocol as run had no dial; that graded weakening exists as a protocol-shaping question is open.
 
@@ -49,3 +49,13 @@ Standing rules added along the way: runtime guards on every launch script (twice
 ## 5. Provenance
 
 Registry: `docs/FLY_LEARN_001_DECISIONS.md` (§ L3 design → L4b result, every deviation and erratum inline). Data: `results/phase3/` (wp_l3a/b/c, l3d + checks), `results/phase4/wp_l4b/` (training, probes, verdict forensics). Rules: `scripts/phase3_decay_rule.py`, `phase4_eligibility_sign_rule.py` (tested, default-off contracts pinned). Tests: 121 passing, including the V_MAG hazard trip-wire, never-both scan, decay-timebase pin, and V_CLIP floor contracts.
+
+---
+
+## 6. Document claim audit (2026-10-09)
+
+Per review, this document was audited programmatically against the raw records before being treated as final. Two over-claims found and corrected in place:
+1. **Cosugar range** was stated as 78–92; the records support 78–88 (the 92 was a carry-over from the L3d table, a context error of the same shape as the 334-vs-25 footprint slip).
+2. **"Byte-identical edge outcomes across reps"** was stated; float-exact comparison of the three final matrices shows 6 of 336,245 entries differing — all collateral edges mid-erosion-trajectory (0.02–0.7 units, seed-sensitive). The carrier claims (25/25 at identical floors, 9/9 previously-untouched reached) survive the audit exactly; the summary sentence had quietly widened "carriers identical" into "all edges identical."
+
+The audit method is itself on record (`scripts/phase4_closeout_claim_audit.py`): re-derive every numeric claim from raw JSONL and checkpoints rather than re-reading the prose. The two corrections are the kind the method exists to catch: plausible, directionally-harmless, and wrong.

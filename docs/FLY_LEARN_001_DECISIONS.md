@@ -2691,7 +2691,7 @@ data fully intact, verdict computed from checkpoints).**
   the sugar->MN9 innate pathway untouched (cosugar probes
   explain); structure preserved (nnz 336245 -> 336245, stored
   zeros intact).
-- Seed-stable: all 3 reps byte-identical edge outcomes.
+- Seed-stable: CARRIER outcomes float-exact across reps (25/25 + 9/9 at identical floors); 6 collateral mid-trajectory edges differ 0.02-0.7 across seeds (partial-erosion positions). [Corrected 2026-10-09 by the document-claim audit - the original 'byte-identical edge outcomes' over-claimed; cosugar range corrected 78-92 -> 78-88 in the close-out.]
 
 **Verdict per the pre-registered split criteria: PASS.** Cue-alone
 0 < theta=41.5 by cycle 25 (in fact by cycle 15) AND cosugar
