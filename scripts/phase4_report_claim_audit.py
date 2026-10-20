@@ -87,6 +87,22 @@ str_checks = [
      "Others have shown that plasticity rules" in funding),
     ("report: prior-work section present",
      "Position relative to prior work" in report),
+    # --- verification-status section (2026-10-09 standing report shape) ---
+    ("report: verification-status table present",
+     "Results and their verification status" in report),
+    ("report: dev-stage label on unlearning result",
+     "DEVELOPMENT-STAGE" in report and "3 dev reps" in report),
+    ("report: NOT TESTED items stated explicitly",
+     "NOT TESTED" in report and "has not been vigorously checked" in report),
+    ("report: confirmatory not-yet-run stated",
+     "runs have not been executed" in report),
+    ("report: next-steps section present with Experiment A first",
+     "## 9. Next steps" in report and "Experiment A" in report),
+    ("report: section numbering monotonic 1-10",
+     all(f"## {i}." in report for i in range(1, 11))
+     and "## 11." not in report),
+    ("report: no duplicated section numbers",
+     all(report.count(f"## {i}. ") == 1 for i in range(1, 11))),
 ]
 
 # --- claim-inventory sweep (reviewer 2026-10-09: coverage must be an
