@@ -153,3 +153,50 @@ against the principle's prediction (they should be reachable only via sugar).
 - Dev seed blocks: INFRA-2 (frozen harness record)
 - The three-way split is exhaustive; MIXED is its own verdict, and a MIXED
   outturn cannot be aggregated into PASS.
+
+## Amendment A1 (registered BEFORE any confirmatory run - 2026-10-09)
+
+Two discrepancies between this registration's seed section and the frozen
+harness's consumption mechanics were found during launcher construction,
+BEFORE any confirmatory simulation ran (verifiable: no
+`results/phase4/wp_l4b_confirm/` artifacts exist at amendment time; git
+history shows this amendment committed in the same commit as the analysis
+and launcher, which precede the first run). They are documented here
+rather than silently repaired, per the standing discrepancy rule.
+
+**D1 - seed-mechanism granularity.** The registration froze 8 train + 15
+probe anchor VALUES, but the frozen harness derives per-trial seeds from
+per-rep BASE constants via fixed offset schemes (train:
+base + cycle*2 [+1]; probe: base + cycle*100 + rep2*10 + offset; sanity:
+base + 999). Literal per-value injection of 23 anchors is impossible
+without modifying the frozen file, which the freeze forbids.
+
+Resolution (Option A, registered): the launcher invokes the frozen harness
+ONCE PER REP (8 invocations, REPS=1 injected in memory) with
+TRAIN_SEED_BASE = CONF_TRAIN_SEEDS[r] and PROBE_SEED_BASE =
+CONF_PROBE_SEEDS[r] for r = 0..7. This consumes all 8 train anchors 1:1
+(one per rep - the "train-family" reading) and the FIRST 8 probe anchors
+in doc order; the remaining 7 probe anchors are RESERVED-UNUSED and
+recorded in the launcher manifest. REPS=1 and OUT (fresh per-rep dir
+`results/phase4/wp_l4b_confirm/rep_r{r}/`) are likewise injected in
+memory; the harness FILE stays byte-identical (sha256 verified before and
+after every invocation). Global seed-space distinctness (568 seeds) and
+disjointness from the dev space are asserted programmatically at launch.
+
+Verification levels (documented, not hidden): TRAIN seeds are
+artifact-backed - the analysis verifies every rep's 50 history.jsonl
+seeds against the prereg-derived set. PROBE seeds are NOT recorded per-sim
+by the frozen harness; they are verified by derivation from the manifest's
+injected bases plus the sha-pinned harness source.
+
+**D2 - draw-order nuance.** The registration records CONF_TRAIN_SEEDS in
+SORTED order; the documented generator (Random(20261009)) emits them
+unsorted (raw order: 860684, 860954, 860801, 860205, 860858, 860473,
+860143, 860343). The freeze is the VALUE SET - set-level reproduction is
+verified exactly; per-rep assignment follows the DOC's listed (sorted)
+order. The probe list was sorted at draw time and reproduces in exact
+order. The reproduction check enforces set-equality for train, exact
+order for probe.
+
+No other registration term changes. Criteria, MIXED handling, output
+fields, and sample-size rationale are untouched.
