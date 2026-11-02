@@ -93,24 +93,85 @@ def test_g3_catches_dev_overlap():
         L.guard_seed_space(contaminated, PROBE, 8)
 
 
-# ---------- G4: fresh output root ----------
+# ---------- G4 (A2): known-artifacts-only output root ----------
 
 def test_g4_allows_missing_root(tmp_path):
-    L.guard_fresh_out(tmp_path / "does_not_exist")  # must not raise
+    L.guard_output_root(tmp_path / "does_not_exist")  # must not raise
 
 
-def test_g4_allows_empty_root(tmp_path):
-    d = tmp_path / "empty"
-    d.mkdir()
-    L.guard_fresh_out(d)  # must not raise
-
-
-def test_g4_refuses_stale_root(tmp_path):
-    d = tmp_path / "stale"
+def test_g4_allows_known_artifacts(tmp_path):
+    d = tmp_path / "conf"
     (d / "rep_r0").mkdir(parents=True)
-    (d / "rep_r0" / "l4b_extinction.jsonl").write_text("", encoding="utf-8")
-    with pytest.raises(L.GuardViolation, match="G4"):
-        L.guard_fresh_out(d)
+    (d / "launcher_manifest.json").write_text("{}", encoding="utf-8")
+    L.guard_output_root(d)  # manifest + rep dirs are known - must not raise
+
+
+def test_g4_refuses_unknown_file(tmp_path):
+    d = tmp_path / "conf"
+    d.mkdir()
+    (d / "stranger.txt").write_text("?", encoding="utf-8")
+    with pytest.raises(L.GuardViolation, match="G4 unknown artifacts"):
+        L.guard_output_root(d)
+
+
+def test_g4_refuses_unknown_subdir(tmp_path):
+    d = tmp_path / "conf"
+    (d / "old_attempt").mkdir(parents=True)
+    with pytest.raises(L.GuardViolation, match="G4 unknown artifacts"):
+        L.guard_output_root(d)
+
+
+# ---------- A2: artifact-level completion criterion ----------
+
+def _complete_rep_dir(tmp_path, base: int) -> Path:
+    import json as _json
+    from scipy import sparse
+    from fly.training import weight_matrix_hash
+    d = tmp_path / "rep_x"
+    (d / "ckpt_r0").mkdir(parents=True)
+    hist = [{"run_id": "l4b_r0", "trial": c * 2 + ph, "seed": base + c * 2 + ph,
+             "readout_hz": 80, "total_spikes": 1200, "n_spiking": 40,
+             "wall_s": 4.0, "weight_hash": "wh", "is_probe": False,
+             "weight_diff": {}} for c in range(1, 26) for ph in (0, 1)]
+    (d / "ckpt_r0" / "history.jsonl").write_text(
+        "\n".join(_json.dumps(x) for x in hist) + "\n", encoding="utf-8")
+    rows = [{"rep": 0, "cycle": c, "sugar_readout": 80, "bitter_readout": 0,
+             "pending_after_sugar": 0, "guard_fired": None} for c in range(1, 26)]
+    for c in (5, 10, 15, 20, 25):
+        for pt in ("alone", "cosugar"):
+            for r2 in (0, 1):
+                rows.append({"rep": 0, "cycle": c, "ptype": pt, "rep2": r2,
+                             "mn9_hz": 0})
+    (d / "l4b_extinction.jsonl").write_text(
+        "\n".join(_json.dumps(x) for x in rows) + "\n", encoding="utf-8")
+    mat = sparse.eye(3, format="csr")
+    sparse.save_npz(d / "ckpt_r0" / "weights_trial_0052.npz", mat)
+    (d / "ckpt_r0" / "run_state.json").write_text(_json.dumps(
+        {"run_id": "l4b_r0", "trial_index": 52, "n_history": 50,
+         "config_hash": "x", "weight_hash": weight_matrix_hash(mat),
+         "stopped_reason": None}))
+    return d
+
+
+def test_a2_complete_rep_accepted(tmp_path):
+    d = _complete_rep_dir(tmp_path, TRAIN[0])
+    ok, why = L.rep_artifacts_complete(d, TRAIN[0])
+    assert ok and why == "complete"
+
+
+def test_a2_truncated_history_rejected(tmp_path):
+    d = _complete_rep_dir(tmp_path, TRAIN[0])
+    hp = d / "ckpt_r0" / "history.jsonl"
+    hp.write_text("\n".join(hp.read_text(encoding="utf-8").splitlines()[:-5])
+                  + "\n", encoding="utf-8")
+    ok, why = L.rep_artifacts_complete(d, TRAIN[0])
+    assert not ok and "history rows" in why
+
+
+def test_a2_wrong_base_seeds_rejected(tmp_path):
+    d = _complete_rep_dir(tmp_path, TRAIN[0])
+    ok, why = L.rep_artifacts_complete(d, TRAIN[1])  # seeds belong to rep 0's base
+    assert not ok and "seeds" in why
 
 
 # ---------- G5/G7 wiring ----------

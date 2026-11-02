@@ -200,3 +200,49 @@ order for probe.
 
 No other registration term changes. Criteria, MIXED handling, output
 fields, and sample-size rationale are untouched.
+
+## Amendment A2 (registered BEFORE any confirmatory RESULT exists - 2026-10-31)
+
+**D3 - frozen harness's post-run reporting section crashes on its own
+output.** During the first confirmatory launch, rep 0 completed all 50
+training trials and its full probe set, then the harness's internal
+dev-style verdict printout (lines 176-220 of
+`scripts/phase4_wp_l4b_extinction.py`) raised `KeyError: 'ptype'`: it
+reads every JSONL row with `r["ptype"]`, but cycle rows legitimately lack
+that key. This is a PRE-EXISTING harness bug, not confirm-run damage -
+demonstrated directly on the DEV artifacts
+(`results/phase4/wp_l4b/l4b_extinction.jsonl`), where the identical code
+path raises the identical KeyError. The dev close-out's trajectories were
+therefore always produced by artifact-level analysis, never by this
+printout. The crash is strictly POST-data-collection: rep 0's artifacts
+were verified complete and seed-correct immediately after the crash (50/50
+history rows matching the prereg-derived seed set, 25 cycle + 20 probe
+JSONL rows, weight snapshot hash == run_state hash).
+
+**Resolution.** The harness FILE stays frozen and untouched (sha-pinned;
+verified before and after every invocation). The LAUNCHER (non-frozen,
+this project's own file) now applies the criterion the analysis script
+already applies: a rep is COMPLETE iff its artifacts verify - 50 history
+rows with seeds equal to the prereg-derived set for that rep's base, 45
+JSONL rows (25 cycle + 20 probe), weight snapshot hash matching
+run_state, n_history == 50. Consequences, all registered here:
+1. `mod.main()` raising AFTER artifact-complete data collection is
+   accepted with the exception logged; a failure with INCOMPLETE
+   artifacts halts the run loudly (no partial-result interpretation).
+2. Relaunches are IDEMPOTENT: artifact-complete reps are skipped
+   (recorded in the manifest), artifact-incomplete rep dirs are
+   QUARANTINED (moved under `results/phase4/quarantine/`, never deleted)
+   and re-run from scratch. G4 now refuses any UNKNOWN artifact in the
+   confirmatory root; known artifacts (manifest, rep dirs) pass.
+3. Rep 0 of this confirmatory run - completed under the original launch -
+   is ACCEPTED under this criterion (its artifacts verified as above);
+   the relaunch skips it and runs reps 1-7.
+
+Also recorded: the FIRST launch attempt was refused by the launcher's own
+G4 guard because the console-log redirect created a file inside the
+guarded root before Python started (guard-catches-its-own-launcher, third
+instance). The log is quarantined at
+`results/phase4/quarantine/expA_refused_launch_1.log`; the console log now
+lives outside the guarded root. No criteria, seeds, or sample sizes
+changed. The verdict authority remains the frozen analysis script,
+`scripts/phase5_expA_analysis.py`.

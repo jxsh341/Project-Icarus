@@ -15,7 +15,8 @@ Runtime guards (raise, never warn - standing rule):
   G1 harness sha256 == frozen value, before and after every invocation
   G2 only the four injection keys differ after injection
   G3 confirmatory seed space collision-free AND disjoint from dev space
-  G4 confirmatory output root is fresh (missing or empty)
+  G4 confirmatory root holds only known artifacts (A2 idempotent
+     relaunch: complete rep dirs skipped, incomplete quarantined)
   G5 injected OUT is never the dev OUT
   G6 prereg anchors reproduce from the documented generator
   G7 cwd is the repo root (harness paths are repo-relative)
@@ -94,11 +95,47 @@ def guard_seed_space(train_anchors: list[int], probe_anchors: list[int], n_reps:
     return union
 
 
-def guard_fresh_out(root: Path) -> None:
-    if root.exists() and any(root.iterdir()):
+G4_KNOWN = {"launcher_manifest.json"} | {f"rep_r{r}" for r in range(N_REPS)}
+
+
+def guard_output_root(root: Path) -> None:
+    """G4 (Amendment A2): the root may hold the manifest and rep_r* dirs
+    (idempotent relaunch); ANY other artifact is refused - stale data is
+    quarantined, never silently resumed, never deleted."""
+    if not root.exists():
+        return
+    unknown = [q.name for q in root.iterdir() if q.name not in G4_KNOWN]
+    if unknown:
         raise GuardViolation(
-            f"G4 confirmatory output root is not fresh: {root} is non-empty - "
+            f"G4 unknown artifacts in confirmatory root {root}: {unknown} - "
             "quarantine superseded artifacts before relaunching (never resume stale)")
+
+
+def rep_artifacts_complete(out_dir: Path, train_base: int) -> tuple[bool, str]:
+    """Amendment A2 completion criterion: ARTIFACT-level, not return-code.
+
+    A rep is complete iff: 50 history rows whose seeds equal the
+    prereg-derived set for this rep's base; 45 JSONL rows (25 cycle + 20
+    probe); a weight snapshot whose hash matches run_state; run_state
+    n_history == 50. Any artifact problem -> (False, reason)."""
+    try:
+        hist = an.read_jsonl(out_dir / "ckpt_r0" / "history.jsonl", "history")
+        if len(hist) != 50:
+            return False, f"history rows {len(hist)} != 50"
+        want = sorted(an.expected_train_seeds(train_base))
+        if sorted(int(x["seed"]) for x in hist) != want:
+            return False, "history seeds != prereg-derived set"
+        rows = an.read_jsonl(out_dir / "l4b_extinction.jsonl", "results JSONL")
+        cyc = [x for x in rows if "ptype" not in x]
+        probe = [x for x in rows if "ptype" in x]
+        if len(cyc) != 25 or len(probe) != 20:
+            return False, f"JSONL {len(cyc)} cycle / {len(probe)} probe rows"
+        _mat, state = an.load_final_matrix(out_dir / "ckpt_r0", "final")
+        if state.get("n_history") != 50:
+            return False, f"run_state n_history {state.get('n_history')}"
+        return True, "complete"
+    except Exception as e:  # any artifact problem = incomplete, with reason
+        return False, f"{type(e).__name__}: {e}"
 
 
 def guard_cwd() -> None:
@@ -143,7 +180,7 @@ def main() -> int:
           f"{len(probe_anchors)} probe", flush=True)
     guard_harness_sha(HARNESS, an.FROZEN_HARNESS_SHA)         # G1
     print(f"G1 harness sha256 == frozen {an.FROZEN_HARNESS_SHA[:12]}", flush=True)
-    guard_fresh_out(CONF_ROOT)                                 # G4
+    guard_output_root(CONF_ROOT)                               # G4 (A2)
     union = guard_seed_space(train_anchors, probe_anchors, N_REPS)  # G3
     print(f"G3 seed space clean: {len(union)} distinct seeds, all above "
           f"dev space", flush=True)
@@ -157,8 +194,30 @@ def main() -> int:
     reps_meta: list[dict] = []
     _write_manifest(train_anchors, probe_anchors, reps_meta, "launched")
 
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     for r in range(N_REPS):
         out_dir = CONF_ROOT / f"rep_r{r}"
+        base_meta = {
+            "rep": r, "out_dir": str(out_dir),
+            "train_base": train_anchors[r], "probe_base": probe_anchors[r],
+            "expected_train_seeds": sorted(an.expected_train_seeds(train_anchors[r])),
+            "expected_probe_seeds": sorted(an.expected_probe_seeds(probe_anchors[r])),
+            "sanity_seed": an.sanity_seed(probe_anchors[r]),
+        }
+        if out_dir.exists():  # A2: idempotent relaunch
+            ok, why = rep_artifacts_complete(out_dir, train_anchors[r])
+            if ok:
+                print(f"\n=== rep {r}: pre-existing COMPLETE artifacts - "
+                      f"skipping simulation (idempotent relaunch) ===", flush=True)
+                reps_meta.append({**base_meta, "wall_s": None,
+                                  "note": "pre-existing complete (A2)"})
+                _write_manifest(train_anchors, probe_anchors, reps_meta, "running")
+                continue
+            qdir = CONF_ROOT.parent / "quarantine" / f"expA_rep{r}_{ts}"
+            qdir.mkdir(parents=True, exist_ok=True)
+            out_dir.rename(qdir / f"rep_r{r}")
+            print(f"rep {r}: INCOMPLETE ({why}) - quarantined to {qdir}, re-running",
+                  flush=True)
         out_dir.mkdir(parents=True, exist_ok=True)
         before = dict(vars(mod))
         mod.TRAIN_SEED_BASE = train_anchors[r]
@@ -174,19 +233,27 @@ def main() -> int:
         print(f"\n=== rep {r}/{N_REPS - 1}: train_base={train_anchors[r]} "
               f"probe_base={probe_anchors[r]} out={out_dir.name} ===", flush=True)
         t0 = time.time()
-        rc = mod.main()
+        try:
+            rc = mod.main()
+            if rc != 0:
+                raise RuntimeError(f"harness main() returned {rc}")
+        except Exception as e:
+            # Amendment A2: the frozen harness's post-run verdict printout
+            # raises KeyError('ptype') on its own mixed JSONL - strictly
+            # AFTER data collection (demonstrated on the dev artifacts too,
+            # so this is a pre-existing harness bug, not confirm-run damage).
+            # Artifact completeness is the completion criterion.
+            ok, why = rep_artifacts_complete(out_dir, train_anchors[r])
+            if not ok:
+                raise RuntimeError(
+                    f"rep {r}: harness failed AND artifacts incomplete ({why})") from e
+            print(f"rep {r}: harness post-run report raised "
+                  f"({type(e).__name__}) - artifacts COMPLETE, accepted per A2",
+                  flush=True)
         wall = time.time() - t0
-        if rc != 0:
-            raise RuntimeError(f"rep {r}: harness main() returned {rc}")
         guard_harness_sha(HARNESS, an.FROZEN_HARNESS_SHA)             # G1 after
 
-        reps_meta.append({
-            "rep": r, "out_dir": str(out_dir), "wall_s": round(wall, 1),
-            "train_base": train_anchors[r], "probe_base": probe_anchors[r],
-            "expected_train_seeds": sorted(an.expected_train_seeds(train_anchors[r])),
-            "expected_probe_seeds": sorted(an.expected_probe_seeds(probe_anchors[r])),
-            "sanity_seed": an.sanity_seed(probe_anchors[r]),
-        })
+        reps_meta.append({**base_meta, "wall_s": round(wall, 1)})
         _write_manifest(train_anchors, probe_anchors, reps_meta, "running")
         print(f"rep {r} complete in {wall / 60:.1f} min", flush=True)
 
