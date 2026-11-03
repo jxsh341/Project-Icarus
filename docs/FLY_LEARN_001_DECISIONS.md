@@ -2855,3 +2855,24 @@ programmatically at draw time: 365 train + 315 probe seeds, 0 collisions,
 0 overlap with dev (211) and confirmatory (697) spaces. Criteria three-way
 and frozen; MIXED non-aggregable; analysis scripts committed before
 unblinding. Execution order and falsification conditions in the prereg doc.
+
+## WP-L6a outcome (2026-11-03): forgetting-rate certification - PASS
+
+Oracle per prereg Amendment A2 (l0 ckpts carry no weight snapshots; their
+run_state hash == pristine hash, so pristine IS the never-learned substrate):
+24 member rows (6x ckpt_l1_gng521_feed x 4 shadow seeds) vs 8 non-member
+rows (pristine x 8 shadow seeds). Validity gate passed: LOO accuracy 1.000,
+in-sample member recall 1.000.
+
+RESULT: FR = 11/11 - all unlearned reps (3 dev + 8 confirmatory) classified
+non-member, i.e. indistinguishable from never-learned. Ablation (oracle
+refit without the 4 residual-edge features 16327->15649, 15957->15649,
+16327->20178, 16327->516493): FR unchanged at 11/11 (LOO 1.000).
+
+ANSWER TO EXPERIMENT A's REGISTERED DOSE-TAIL QUESTION: the 4 residual
+synaptic edges carry NO inferable membership information at white-box +
+black-box feature resolution. The certified claim is "behavioral extinction
++ located residual synapses"; no longer/higher-dose protocol is needed to
+close an information leak. Artifact: results/phase6/wp_l6a/oracle_report.json
+(analysis: scripts/phase6_l6a_oracle.py, committed pre-result at b498c83;
+amendments A1/A2 registered in docs/PHASE_6_PREREG.md before any run).
