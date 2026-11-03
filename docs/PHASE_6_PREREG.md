@@ -198,6 +198,21 @@ anchors redrawn from `Random(20261103)` over the widened blocks
 values above exactly). Shadow block unchanged. No criteria, sample sizes,
 mechanisms, or RANK_SET hashes changed.
 
+**Amendment A2 (registered 2026-11-03, BEFORE any WP-L6a result exists —
+the first oracle run crashed with no report written).** The frozen design
+instantiated the non-member class as the 6 `ckpt_l0_gng521_feed_*` checkpoints.
+Artifact inspection shows those ckpts carry NO `weights_trial_*.npz` snapshots
+(only `history.jsonl` + `run_state.json`; the wp4 v0 save defect). Their
+`run_state.weight_hash` equals the pristine matrix hash (`384406e9278ae0c0`),
+i.e. the never-learned substrate is unique by construction and equals pristine.
+Resolution: non-member class = the pristine matrix, instantiated as
+(pristine, seed) rows at the 8 shadow seeds (behavioral variance); member
+class = 6 `ckpt_l1_gng521_feed_*` matrices × 4 shadow seeds (24 rows).
+Oracle = class-balanced logistic regression over (matrix, seed) rows;
+validity gate re-frozen as LOO accuracy ≥ 0.80 AND in-sample member-row
+recall = 1.0. Test population, FR definition, ablation, and the three-way
+verdict are unchanged.
+
 None other at freeze (2026-11-03). Amendment policy identical to Phase 5: any
 discrepancy found before results exist is registered here as an amendment with
 the verifiable no-artifacts-exist evidence; after results exist, no term of
