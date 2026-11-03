@@ -2904,3 +2904,34 @@ partners) into the previously unreachable set.
 Artifacts: results/phase6/wp_l6b/EXP_B_VERDICT.json, rep_r0..r7/,
 results/phase6/wp_l6b_g380/rep_r0..r1/; frozen analysis
 scripts/phase6_expB_analysis.py (committed b498c83 pre-run).
+
+## External review 2026-11-03 (pasted by user) — logged; next programme PROPOSED, not started
+
+Reviewer verdict: "a meaningful research advance"; transition from
+demonstrations to memory-system research. Agreed methodological caveats
+(endorsed, with notes):
+1. WP-L6a oracle is bounded by classifier, feature set, and test population
+   (already stated in the L6a entry). If extended: held-out
+   checkpoint-level splits and alternative classifiers, preregistered.
+2. WP-L6b rank-targeted decay uses the KNOWN acquisition footprint — a
+   legitimate intervention, but not yet evidence a biological circuit could
+   self-identify the targets. Biological-plausibility claim stays out of scope.
+3. GNG380 probe n=2 meets the registered exploratory criterion only; robust
+   generality needs a larger confirmatory run WITH a behavioral readout
+   (current probe is weight-level + guard only).
+
+Proposed next programme (priority order from the review; none preregistered
+yet, awaiting user direction):
+P1 Experiment B — predictive structural accessibility on held-out circuits
+   (does footprint accessibility predict unlearnability, preregistered?).
+P2 GNG380 confirmatory unlearning (larger n, behavioral readout, innate-
+   pathway preservation under targeted decay).
+P3 Experiment C — graded unlearning (vary decay duration / aversive timing /
+   eligibility persistence one at a time; measure weight+behavior dose curve).
+P4 (reviewer's addition) multi-memory coexistence, interference, and selective
+   removal of one association without damaging another.
+
+Repo fixes applied from the review: README brought current (Phase 5/6 status,
+results table, 154 tests, extinction-vs-forgetting-vs-erasure distinction);
+verdict JSONs (CONFIRMATORY_VERDICT / oracle_report / EXP_B_VERDICT) are now
+tracked in git so repo viewers can read them (results/ stays ignored otherwise).

@@ -1,0 +1,116 @@
+{
+  "wp": "L6a",
+  "prereg": "docs/PHASE_6_PREREG.md",
+  "prereg_sha256": "a414650f4ab78c02e40d8e9b4960088e846cb64e979a15eef7e1b2a4a578cf5e",
+  "amendment": "A2 (pristine = never-learned substrate; l0 ckpts have no weight snapshots)",
+  "rank_set_sha256": "43313db60de5c3faad5ed932a5c0fe31649a21628fbfbf7444a230acdf9f2589",
+  "pristine_hash": "384406e9278ae0c0",
+  "shadow_seeds": [
+    1400487,
+    1401210,
+    1401922,
+    1403359,
+    1403570,
+    1403976,
+    1405103,
+    1408656
+  ],
+  "oracle": {
+    "n_rows": 32,
+    "n_member_rows": 24,
+    "loo_accuracy": 1.0,
+    "in_sample_member_recall": 1.0,
+    "gate_ok": true,
+    "ablation_loo_accuracy": 1.0
+  },
+  "training_rows": [
+    "l1_0_s1400487",
+    "l1_0_s1401210",
+    "l1_0_s1401922",
+    "l1_0_s1403359",
+    "l1_1_s1400487",
+    "l1_1_s1401210",
+    "l1_1_s1401922",
+    "l1_1_s1403359",
+    "l1_2_s1400487",
+    "l1_2_s1401210",
+    "l1_2_s1401922",
+    "l1_2_s1403359",
+    "l1_3_s1400487",
+    "l1_3_s1401210",
+    "l1_3_s1401922",
+    "l1_3_s1403359",
+    "l1_4_s1400487",
+    "l1_4_s1401210",
+    "l1_4_s1401922",
+    "l1_4_s1403359",
+    "l1_5_s1400487",
+    "l1_5_s1401210",
+    "l1_5_s1401922",
+    "l1_5_s1403359",
+    "pristine_s1400487",
+    "pristine_s1401210",
+    "pristine_s1401922",
+    "pristine_s1403359",
+    "pristine_s1403570",
+    "pristine_s1403976",
+    "pristine_s1405103",
+    "pristine_s1408656"
+  ],
+  "test_reps": [
+    {
+      "name": "dev_r0",
+      "predicted": "non-member"
+    },
+    {
+      "name": "dev_r1",
+      "predicted": "non-member"
+    },
+    {
+      "name": "dev_r2",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r0",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r1",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r2",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r3",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r4",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r5",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r6",
+      "predicted": "non-member"
+    },
+    {
+      "name": "conf_r7",
+      "predicted": "non-member"
+    }
+  ],
+  "forgetting_rate": 1.0,
+  "forgetting_rate_ablated": 1.0,
+  "residual_edge_feature_indices": [
+    15,
+    2,
+    18,
+    20
+  ],
+  "verdict": "PASS",
+  "verdict_reason": "FR = 11/11 with valid oracle: all unlearned substrates indistinguishable from never-learned"
+}

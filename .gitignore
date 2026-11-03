@@ -26,7 +26,7 @@ Thumbs.db
 # Project outputs
 data/raw/
 data/processed/
-results/
+results/*
 
 # Keep directory structure with sentinels
 !data/raw/.gitkeep
@@ -34,4 +34,19 @@ results/
 !data/checksums/.gitkeep
 !data/processed/.gitkeep
 !results/.gitkeep
+# Verdict artifacts are the reviewable record of each preregistered experiment;
+# every level is re-ignored so ONLY these files are trackable under results/
+!results/phase4/
+results/phase4/*
+!results/phase4/wp_l4b_confirm/
+results/phase4/wp_l4b_confirm/*
+!results/phase4/wp_l4b_confirm/CONFIRMATORY_VERDICT.json
+!results/phase6/
+results/phase6/*
+!results/phase6/wp_l6a/
+results/phase6/wp_l6a/*
+!results/phase6/wp_l6a/oracle_report.json
+!results/phase6/wp_l6b/
+results/phase6/wp_l6b/*
+!results/phase6/wp_l6b/EXP_B_VERDICT.json
 .neuprint_token
