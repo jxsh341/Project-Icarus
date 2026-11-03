@@ -2876,3 +2876,31 @@ black-box feature resolution. The certified claim is "behavioral extinction
 close an information leak. Artifact: results/phase6/wp_l6a/oracle_report.json
 (analysis: scripts/phase6_l6a_oracle.py, committed pre-result at b498c83;
 amendments A1/A2 registered in docs/PHASE_6_PREREG.md before any run).
+
+## Experiment B (WP-L6b rank-targeted forgetting) outcome (2026-11-03): GNG521 MIXED (7 PASS + 1 NEGATIVE-B); GNG380 POSITIVE-BOUNDARY
+
+Executed per docs/PHASE_6_PREREG.md (amendments A1 seed redraw, A2 oracle pool)
+at HEAD 9f9a3fa; launcher guards G1-G7 passed on every invocation (harness
+sha256 08110ddf... pinned, RANK_SET sha256 pinned 43313db6.../27517364...,
+seed spaces disjoint, no stale artifacts). 8/8 GNG521 reps + 2/2 GNG380 reps,
+118.9 min total. Seeds used = frozen P6_TRAIN/P6_PROBE lists (verified in
+EXP_B_VERDICT.json).
+
+GNG521 (8 reps): behavioral extinction by cycle 5 in ALL reps (alone probes 0
+from c5 onward, persistent to c25); guard silent (0 fires); no sign flips, no
+structural-zero gains; weight floors 25/25 carriers + 9/9 untouched partners
+AT FLOOR IN ALL 8 REPS - the rank-targeted multiplicative decay cleared the 4
+dose-tail residual edges that survived 25 cue+sugar cycles in Experiment A.
+This is the exact criterion Experiment A failed (21/25 + 8/9). Branch:
+7x PASS; rep 5 NEGATIVE-B (cosugar [77, 89], min 77 below the >=78 band -
+marginal, same band-violation class as ExpA reps 1/3 at 89/92 on the top side).
+Aggregate GNG521: MIXED (non-aggregating; per-rep branches preserved).
+
+GNG380 probe (n=2): 77/96 zero-input edges at floor and 136/158 footprint
+edges at floor in BOTH reps, guard silent -> POSITIVE-BOUNDARY per the frozen
+criteria: the mechanism reaches past the Phase-4 boundary (45/73 zero-input
+partners) into the previously unreachable set.
+
+Artifacts: results/phase6/wp_l6b/EXP_B_VERDICT.json, rep_r0..r7/,
+results/phase6/wp_l6b_g380/rep_r0..r1/; frozen analysis
+scripts/phase6_expB_analysis.py (committed b498c83 pre-run).
