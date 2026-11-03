@@ -77,7 +77,7 @@ def draw_p7():
             sp = fn(b)
             if len(sp) != expect or (sp & used) or (sp & prior):
                 continue
-            used |= sp
+            used.update(sp)
             out.append(b)
         return out
 
