@@ -2960,3 +2960,16 @@ simulate_lif (same seed); contingency PASS (sugar present + retracted ->
 (action required - the open-loop free lunch is gone); 5/5 tests pass.
 Artifact: results/phase7_embodiment/verify_embodiment.json (raw, untracked).
 NOT established: closed-loop learning/retention/unlearning (needs prereg).
+
+## Phase 7 WP-P2 preregistered 2026-11-03 (P2 first, per user's adopted order P2 > P1 > E1 > P3 > P4)
+
+GNG380 confirmatory unlearning with rank-targeted decay: n=8 fresh frozen
+seeds (Random(20261104) draw; 200 train + 315 probe + 8 shadow, disjoint from
+all 1,431 prior seeds), harness byte-frozen (sha256 08110ddf...), RANK_SET g380
+sha256 27517364... Frozen criteria c1-c6 (behavioral recovery cosugar>=41.5 at
+c15-25; band [78,88] at c25; innate sugar-alone in band + cue+bitter suppressed;
+guard silent; floors >=75/96 zi and >=130/158 footprint; no sign flips/new
+structure), branches PASS / NEGATIVE-A / NEGATIVE-B, MIXED non-aggregating.
+Baselines on R1 g380 ckpt (seed 3999999): cue_alone 0, cue+sugar 1, sugar 81,
+cue+bitter 0. Docs: docs/PHASE_7_PREREG.md; analysis scripts/phase7_p2_analysis.py
+(committed pre-run); launcher scripts/phase7_p2_launcher.py (G1-G7).
