@@ -2935,3 +2935,28 @@ Repo fixes applied from the review: README brought current (Phase 5/6 status,
 results table, 154 tests, extinction-vs-forgetting-vs-erasure distinction);
 verdict JSONs (CONFIRMATORY_VERDICT / oracle_report / EXP_B_VERDICT) are now
 tracked in git so repo viewers can read them (results/ stays ignored otherwise).
+
+## Embodiment plan 2026-11-03 (pasted by user) - MVP scaffold BUILT and verified; learning experiment NOT yet run
+
+Plan: close the sensorimotor loop with a body graph (sensors/actuators) so
+motor output changes sensory input. Assessment against this repo:
+- GROUNDED: MN9_L (bodyId 10331) is a traced motor neuron, so the readout
+  maps to a proboscis-extension actuator; sugar/bitter GRN populations exist
+  (wp6c_grn_seeds.json: 17 sugar_R, 19 bitter_R). The frozen simulate_lif
+  already has per-port rates (stimulated/2/3), so the loop needs NO harness
+  change.
+- NOT GROUNDED: leg-stepping/head-yaw actuators have no counterpart in the
+  SEZ-local closure -> out of scope. The plan's section 9 (ALS/SIR
+  integration) references systems not in this repo -> out of scope.
+- The plan's "learning occurs in closed loop" is a hypothesis, not a result
+  -> any closed-loop learning experiment must be preregistered first.
+
+Built: fly/embodiment/ (BodyGraph + SensorimotorLoop, discrete body state,
+contingency: no transduction unless proboscis extension >= 0.5),
+tests/test_embodiment.py (5 contract tests), scripts/verify_embodiment.py.
+Verified 2026-11-03: open-loop equivalence bit-identical to direct
+simulate_lif (same seed); contingency PASS (sugar present + retracted ->
+0 Hz MN9; extended -> 79-83 Hz, detected); no-help episode never detects
+(action required - the open-loop free lunch is gone); 5/5 tests pass.
+Artifact: results/phase7_embodiment/verify_embodiment.json (raw, untracked).
+NOT established: closed-loop learning/retention/unlearning (needs prereg).
