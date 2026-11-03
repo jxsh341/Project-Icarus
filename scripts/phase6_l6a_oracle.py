@@ -157,16 +157,20 @@ def main() -> int:
     gate_ok = loo_acc >= 0.80 and member_recall == 1.0
 
     # ---- test population: 11 unlearned reps (behavior from cycle-25 JSONL) ----
+    # dev JSONL is shared across reps (rep field 0..2); confirm rep files are
+    # per-rep with internal rep=0 - hence the shared flag.
     test_rows = [(f"dev_r{r}", ROOT / "results/phase4/wp_l4b" / f"ckpt_r{r}",
-                  ROOT / "results/phase4/wp_l4b" / "l4b_extinction.jsonl")
+                  ROOT / "results/phase4/wp_l4b" / "l4b_extinction.jsonl", r, True)
                  for r in range(3)]
     test_rows += [(f"conf_r{r}", ROOT / "results/phase4/wp_l4b_confirm" / f"rep_r{r}" / "ckpt_r0",
-                   ROOT / "results/phase4/wp_l4b_confirm" / f"rep_r{r}" / "l4b_extinction.jsonl")
+                   ROOT / "results/phase4/wp_l4b_confirm" / f"rep_r{r}" / "l4b_extinction.jsonl", r, False)
                   for r in range(8)]
     test_X, test_names = [], []
-    for name, ckpt, jsonl in test_rows:
+    for name, ckpt, jsonl, r, shared in test_rows:
         m, _ = an.load_final_matrix(ckpt, name)
         rows = an.read_jsonl(jsonl, f"{name} jsonl")
+        if shared:
+            rows = [x for x in rows if x.get("rep") == r]
         alone25 = [x["mn9_hz"] for x in rows if x.get("cycle") == 25 and x.get("ptype") == "alone"]
         cosg25 = [x["mn9_hz"] for x in rows if x.get("cycle") == 25 and x.get("ptype") == "cosugar"]
         if len(alone25) != 2 or len(cosg25) != 2:
