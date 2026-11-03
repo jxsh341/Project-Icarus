@@ -52,7 +52,7 @@ _r_clean = re.sub(r"\[[^\]]*\]", "", report)
 # cross-check strings present in the docs match the audited values
 str_checks = [
     ("report: '78–88 Hz' (not 92)", "78–88 Hz" in report),
-    ("report: 'six collateral' disclosed", "six collateral" in report),
+    ("report: 'six collateral' disclosed", "six collateral" in report.lower()),
     ("report: '45 of those partners have zero'", "45 of those partners have zero" in report),
     ("report: 'exactly zero spikes by cycle 15'", "exactly zero spikes by cycle 15" in report),
     ("funding: 'literally zero spikes'", "literally zero spikes" in funding),
@@ -94,12 +94,13 @@ str_checks = [
     # --- verification-status section (2026-10-09 standing report shape) ---
     ("report: verification-status table present",
      "Results and their verification status" in report),
-    ("report: dev-stage label on unlearning result",
-     "DEVELOPMENT-STAGE" in report and "3 dev reps" in report),
+    ("report: dev-stage label on unlearning result (MIXED => no promotion)",
+     "development-stage" in report.lower() and "3 dev + 8 confirm reps" in report),
     ("report: NOT TESTED items stated explicitly",
      "NOT TESTED" in report and "has not been vigorously checked" in report),
-    ("report: confirmatory not-yet-run stated",
-     "runs have not been executed" in report),
+    # post-Experiment-A state (2026-11-02): confirmatory HAS run; verdict MIXED
+    ("report: confirmatory outcome stated (MIXED; behavioral 8/8, floors 21/25+8/9)",
+     "verdict MIXED" in report and "replicated 8/8" in report and "21/25" in report),
     ("report: next-steps section present with Experiment A first",
      "## 9. Next steps" in report and "Experiment A" in report),
     ("report: section numbering monotonic 1-10",
