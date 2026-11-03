@@ -2973,3 +2973,23 @@ structure), branches PASS / NEGATIVE-A / NEGATIVE-B, MIXED non-aggregating.
 Baselines on R1 g380 ckpt (seed 3999999): cue_alone 0, cue+sugar 1, sugar 81,
 cue+bitter 0. Docs: docs/PHASE_7_PREREG.md; analysis scripts/phase7_p2_analysis.py
 (committed pre-run); launcher scripts/phase7_p2_launcher.py (G1-G7).
+
+## WP-P2 outcome (2026-11-03): GNG380 confirmatory unlearning - PASS 8/8
+
+Executed per docs/PHASE_7_PREREG.md at HEAD ef2d3ed; launcher proc
+59.3 min, guards G1-G7 passed on every rep (harness sha256 08110ddf...,
+RANK_SET g380 sha256 27517364..., seeds = frozen P7 lists, verified in
+P2_VERDICT.json). ALL 8 REPS: c1 behavioral recovery (cosugar >= 41.5 Hz at
+cycles 15/20/25), c2 innate band [78,88] at cycle 25, c3 innate pathways
+intact (sugar-alone in band, cue+bitter < 41.5), c4 guard silent,
+c5 floors 77/96 zero-input + 136/158 footprint at floor (identical to the
+Phase-6 n=2 probe), c6 no sign flips / no structural-new edges.
+Aggregate: PASS (8/8 PASS, non-aggregating rule held trivially).
+
+Interpretation: the Phase-6 POSITIVE-BOUNDARY probe is now CONFIRMED at n=8
+with behavioral readout - drive-independent rank-targeted decay unlearns the
+GNG380 withhold association (cue+sugar 1 Hz -> innate band) while the innate
+sugar and bitter pathways are preserved. The Phase-4 reachability boundary
+(45/73 zero-input partners) is crossed by weight-targeted decay, not by
+coincidence-gated erosion. Artifact: results/phase7/p2_g380/P2_VERDICT.json
+(now tracked in git).
