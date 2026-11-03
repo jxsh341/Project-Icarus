@@ -1,5 +1,12 @@
 """Phase 7 WP-P2 analysis: frozen verdict-logic contract tests (synthetic reps)."""
-import phase7_p2_analysis as p7
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
+
+import phase7_p2_analysis as p7  # noqa: E402
 
 
 def _crit(c1=True, c2=True, c3=True, c4=True, c5=True, c6=True):
