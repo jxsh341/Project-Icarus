@@ -2833,3 +2833,25 @@ synaptic floors on low-coincidence edges. Options to decide explicitly:
 (dose-tail characterized), or (b) a longer/higher-dose protocol to push
 residuals to floor. Either way the choice must be registered BEFORE any
 further run, per the no-silent-repair rule.
+
+## Phase 6 pre-registered (2026-11-03, HEAD 93c18ed)
+
+docs/PHASE_6_PREREG.md frozen before any Phase 6 run. Two work packages,
+both adopted from the 2026-11-03 prior-art pass (arXiv:2410.22374 FNN,
+arXiv:2003.10933 Forsaken — ML-unlearning papers, not neuroscience competitors):
+
+- WP-L6a: retrospective forgetting-rate certification (membership-oracle
+  analog over existing artifacts: 6 l1 member vs 6 l0 non-member ckpts;
+  test = the 11 unlearned reps). Answers Experiment A's registered dose-tail
+  question: are the 4 residual edges (16327->15649, 15957->15649,
+  16327->20178, 16327->516493) an inferable leak or behaviorally inert?
+- WP-L6b: rank-targeted multiplicative forgetting (FNN top-N port) from R1CK,
+  cue-alone unlearning trials (drive-independent), TAU0=1.0, W_EPS=1e-9,
+  RANK_SET = 25 footprint edges (sha256-pinned). GNG521 n=8 + GNG380 probe
+  n=2 (does drive-independent decay reach the 45 zero-input partners?).
+
+Seeds drawn from random.Random(20261103), blocks 1.2M/1.3M/1.4M, verified
+programmatically at draw time: 365 train + 315 probe seeds, 0 collisions,
+0 overlap with dev (211) and confirmatory (697) spaces. Criteria three-way
+and frozen; MIXED non-aggregable; analysis scripts committed before
+unblinding. Execution order and falsification conditions in the prereg doc.
