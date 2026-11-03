@@ -114,19 +114,22 @@ NEGATIVE-BOUNDARY otherwise.
 ## 4. Frozen Phase 6 seed set (drawn and verified HERE, before any run)
 
 ```
-P6_TRAIN_SEEDS  = [1200895, 1201465, 1202188, 1202352, 1202656, 1202671, 1203181, 1208663]
-P6_PROBE_SEEDS  = [1301874, 1302921, 1302935, 1303101, 1304160, 1305120, 1305257,
-                   1305324, 1305567, 1307418, 1307430, 1307452, 1308209, 1308328, 1308678]
+P6_TRAIN_SEEDS  = [1211723, 1217510, 1218820, 1221250, 1221372, 1225450, 1280661, 1281236]
+P6_PROBE_SEEDS  = [1407167, 1414999, 1423372, 1424809, 1433282, 1442593,
+                   1459348, 1466626, 1469306, 1469429, 1484366, 1489242,
+                   1492128, 1496950, 1499659]
 P6_SHADOW_SEEDS = [1400487, 1401210, 1401922, 1403359, 1403570, 1403976, 1405103, 1408656]  # RESERVED: WP-L6a oracle probes / fresh-shadow pass only
 ```
 
-**Derivation:** `random.Random(20261103)`, drawn from blocks [1,200,000–1,210,000)
-(train), [1,300,000–1,310,000) (probe), [1,400,000–1,410,000) (shadow),
-sorted, excluding all previously used seeds. **Verified programmatically at
+**Derivation:** `random.Random(20261103)` — see Amendment A1: train anchors
+drawn from [1,200,000–1,300,000), probe anchors from [1,400,000–1,500,000),
+each anchor's FULL expanded seed space checked collision-free at draw time;
+shadow anchors (block [1,400,000–1,410,000), raw probe seeds, no space
+expansion) are fixed from the original draw. **Verified programmatically at
 draw time (2026-11-03):** dev space 211 seeds, confirmatory 697 (400 train +
-297 probe/sanity); Phase 6 expands to 365 train + 315 probe seeds, 0 internal
-collisions, 0 overlap with dev or confirmatory spaces. The launcher re-verifies
-all of this at launch (guard G3 semantics).
+297 probe/sanity); Phase 6 expands to 200 train + 315 probe seeds, 0 internal
+collisions, 0 overlap with dev, confirmatory, or shadow seeds. The launcher
+re-verifies all of this at launch (guard G3 semantics).
 
 ## 5. Execution order (frozen)
 
@@ -181,7 +184,21 @@ stop and document the discrepancy — never silently repair mid-experiment.
 
 ## 9. Amendments
 
-None at freeze (2026-11-03). Amendment policy identical to Phase 5: any
+**Amendment A1 (registered 2026-11-03, BEFORE any Phase 6 run — no
+`results/phase6/` training artifacts exist at amendment time; the WP-L6a
+oracle is the only Phase 6 process running and consumes only the shadow
+block, which is unchanged).** The original seed draw verified expanded seed
+spaces with the Phase 5 two-trials-per-cycle expansion, but the L6b harness
+runs ONE unlearning trial per cycle (25 train seeds per anchor) and each
+probe anchor spans ~2.5k seeds — under the correct L6b formulas the original
+10k-wide blocks allowed cross-anchor collisions. Resolution: train/probe
+anchors redrawn from `Random(20261103)` over the widened blocks
+[1.2M–1.3M) / [1.4M–1.5M) with whole-space collision checks (algorithm in
+`scripts/phase6_expB_analysis.py::reproduce_draw`, which must reproduce the
+values above exactly). Shadow block unchanged. No criteria, sample sizes,
+mechanisms, or RANK_SET hashes changed.
+
+None other at freeze (2026-11-03). Amendment policy identical to Phase 5: any
 discrepancy found before results exist is registered here as an amendment with
 the verifiable no-artifacts-exist evidence; after results exist, no term of
 this registration changes — deviations are reported as deviations.

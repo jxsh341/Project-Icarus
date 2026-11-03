@@ -4,10 +4,12 @@ Frozen by docs/PHASE_6_PREREG.md section 3 BEFORE any L6b run. Emits
 results/phase6/wp_l6b/EXP_B_VERDICT.json only from complete artifacts;
 missing/malformed artifacts -> loud failure, no verdict.
 
-L6b seed scheme (harness writes the seed into every cycle row):
-  train seed rep r, cycle c   = P6_TRAIN_SEEDS[r]  + r*1000 + c        (c=1..25)
-  probe seed rep r, cycle cyc, rep2, off
-                              = P6_PROBE_SEEDS[r]  + r*10000 + cyc*100 + rep2*10 + off
+L6b seed scheme (harness writes the seed into every cycle row; the
+launcher injects TRAIN_SEED_BASE=P6_TRAIN_SEEDS[r], PROBE_SEED_BASE=
+P6_PROBE_SEEDS[r] with REPS=1, so the in-harness rep index is always 0):
+  train seed, cycle c         = P6_TRAIN_SEEDS[r] + c                  (c=1..25)
+  probe seed, cycle cyc, rep2, off
+                              = P6_PROBE_SEEDS[r] + cyc*100 + rep2*10 + off
   sanity seed                 = P6_PROBE_SEEDS[r] + 999
 """
 from __future__ import annotations
@@ -55,41 +57,46 @@ def grab(doc_text: str, name: str) -> list[int]:
 
 
 def reproduce_draw(train: list[int], probe: list[int], shadow: list[int]) -> None:
-    """Re-run the documented draw (Random(20261103), blocks 1.2M/1.3M/1.4M,
-    sorted, excluding all dev+confirm seeds) and require exact equality."""
+    """Re-run the Amendment-A1 draw: Random(20261103), train anchors from
+    [1.2M,1.3M), probe anchors from [1.4M,1.5M), each anchor's FULL L6b
+    seed space required collision-free; shadow anchors are a fixed list."""
     dev = an.dev_seed_space()
     ct, cp = an.parse_prereg_seeds()
     used = set(dev)
     for b in ct:
-        used |= an.expected_train_seeds(b)
+        used = used.union(an.expected_train_seeds(b))
     for b in cp:
-        used |= an.expected_probe_seeds(b)
+        used = used.union(an.expected_probe_seeds(b))
         used.add(an.sanity_seed(b))
     rng = random.Random(DRAW_SEED)
 
-    def draw(lo: int, hi: int, n: int) -> list[int]:
+    def draw(lo, hi, n, spacefn):
         out, seen = [], set()
         while len(out) < n:
             v = rng.randrange(lo, hi)
-            if v not in seen and v not in used:
-                seen.add(v)
-                out.append(v)
+            if v in seen or v in used:
+                continue
+            sp = spacefn(v)
+            if sp.intersection(used) or sp.intersection(seen):
+                continue
+            seen = seen.union(sp)
+            out.append(v)
         return sorted(out)
 
-    if draw(1_200_000, 1_210_000, 8) != train:
-        raise an.ScopeError("P6 train anchors do not reproduce from Random(20261103)")
-    if draw(1_300_000, 1_310_000, 15) != probe:
-        raise an.ScopeError("P6 probe anchors do not reproduce from Random(20261103)")
-    if draw(1_400_000, 1_410_000, 8) != shadow:
-        raise an.ScopeError("P6 shadow anchors do not reproduce from Random(20261103)")
+    if draw(1_200_000, 1_300_000, 8, exp_train_seeds) != train:
+        raise an.ScopeError("P6 train anchors do not reproduce (Amendment A1 algorithm)")
+    if draw(1_400_000, 1_500_000, 15, exp_probe_seeds) != probe:
+        raise an.ScopeError("P6 probe anchors do not reproduce (Amendment A1 algorithm)")
+    if shadow != [1400487, 1401210, 1401922, 1403359, 1403570, 1403976, 1405103, 1408656]:
+        raise an.ScopeError("P6 shadow anchors changed from the fixed original draw")
 
 
-def exp_train_seeds(base: int, rep: int) -> set[int]:
-    return {base + rep * 1000 + c for c in range(1, N_CYCLES + 1)}
+def exp_train_seeds(base: int) -> set[int]:
+    return {base + c for c in range(1, N_CYCLES + 1)}
 
 
-def exp_probe_seeds(base: int, rep: int) -> set[int]:
-    s = {base + rep * 10000 + c * 100 + r2 * 10 + off
+def exp_probe_seeds(base: int) -> set[int]:
+    s = {base + c * 100 + r2 * 10 + off
          for c in PROBE_AT for r2 in (0, 1) for off in (0, 5000)}
     s.add(base + 999)
     return s
@@ -97,11 +104,11 @@ def exp_probe_seeds(base: int, rep: int) -> set[int]:
 
 def seed_spaces(train: list[int], probe: list[int]) -> tuple[set[int], set[int]]:
     tr: set[int] = set()
-    for r in range(N_REPS):
-        tr |= exp_train_seeds(train[r], r)
+    for b in train:
+        tr = tr.union(exp_train_seeds(b))
     pr: set[int] = set()
-    for r in range(N_REPS):
-        pr |= exp_probe_seeds(probe[r], r)
+    for b in probe:
+        pr = pr.union(exp_probe_seeds(b))
     return tr, pr
 
 
@@ -117,7 +124,7 @@ def evaluate_rep(r: int, train_base: int, probe_base: int,
     if len(probe_rows) != 20:
         raise an.IncompleteArtifacts(f"rep {r}: {len(probe_rows)} probe rows, expected 20")
     got_seeds = sorted(int(x["seed"]) for x in cyc_rows)
-    if got_seeds != sorted(exp_train_seeds(train_base, r)):
+    if got_seeds != sorted(exp_train_seeds(train_base)):
         raise an.IncompleteArtifacts(f"rep {r}: cycle-row seeds != prereg-derived set")
     want_probes = {(c, pt, r2) for c in PROBE_AT for pt in ("alone", "cosugar") for r2 in (0, 1)}
     if {(x["cycle"], x["ptype"], x["rep2"]) for x in probe_rows} != want_probes:
@@ -226,11 +233,13 @@ def main() -> int:
     for b in cp:
         conf |= an.expected_probe_seeds(b)
         conf.add(an.sanity_seed(b))
-    all6 = tr_space | pr_space
+    all6 = tr_space.union(pr_space)
     if len(all6) != len(tr_space) + len(pr_space):
         raise an.ScopeError("P6 seed space has internal collisions")
-    if all6 & (dev | conf):
+    if all6.intersection(dev.union(conf)):
         raise an.ScopeError("P6 seed space overlaps dev/confirm spaces")
+    if set(shadow).intersection(all6.union(used_check := dev.union(conf))):
+        raise an.ScopeError("P6 shadow seeds overlap train/probe/dev/confirm spaces")
 
     matrix = sparse.load_npz(BASE / "connectivity_matrix_signed.npz").tocsr()
     nodes = np.load(BASE / "connectivity_nodes.npy").tolist()
