@@ -116,9 +116,11 @@ claim("EXT-4", "L4b result: cue-alone 68-84 Hz at cycle 5 -> exactly 0 spikes by
       "TECHNICAL_REPORT §5; FUNDING_SUMMARY",
       lambda: True)
 
-claim("EXT-5", "All 25 carriers + all 9 untouched partners eroded to identical floors, every rep; six collateral mid-trajectory edges vary 0.02-0.7 units across seeds",
-      "L4b weight forensics + audit",
-      "TECHNICAL_REPORT §5",
+claim("EXT-5 (CORRECTED 2026-11-02 by Experiment A: originally overclaimed as 25/25+9/9)",
+      "Carriers at V_CLIP floor: 21/25 + untouched 8/9 in ALL 11 reps (dev 3 + confirm 8); same 4 residual edges every rep "
+      "(16327->15649, 15957->15649, 16327->20178, 16327->516493); six collateral edges vary 0.02-0.7 across seeds",
+      "edge-level forensics re-run on results/phase4/wp_l4b/ckpt_r* and results/phase4/wp_l4b_confirm/rep_r*/ckpt_r0 (2026-11-02)",
+      "TECHNICAL_REPORT §5 erratum; registry Experiment A entry",
       lambda: True)
 
 # --- test infrastructure ---

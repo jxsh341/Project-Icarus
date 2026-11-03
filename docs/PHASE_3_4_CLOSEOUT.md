@@ -59,3 +59,25 @@ Per review, this document was audited programmatically against the raw records b
 2. **"Byte-identical edge outcomes across reps"** was stated; float-exact comparison of the three final matrices shows 6 of 336,245 entries differing — all collateral edges mid-erosion-trajectory (0.02–0.7 units, seed-sensitive). The carrier claims (25/25 at identical floors, 9/9 previously-untouched reached) survive the audit exactly; the summary sentence had quietly widened "carriers identical" into "all edges identical."
 
 The audit method is itself on record (`scripts/phase4_closeout_claim_audit.py`): re-derive every numeric claim from raw JSONL and checkpoints rather than re-reading the prose. The two corrections are the kind the method exists to catch: plausible, directionally-harmless, and wrong.
+
+## ERRATUM 2026-11-02 (Experiment A confirmatory replication)
+
+The L4b close-out claimed all 25 carriers and all 9 previously-unreachable
+partners eroded to identical floors in every rep. Edge-level forensics
+re-run on 2026-11-02 show this was an OVERCLAIM: 21/25 carriers and 8/9
+untouched partners reach the V_CLIP floor in every rep (all 3 dev reps and
+all 8 confirmatory reps alike). The same four edges retain residual weight
+in all 11 reps: 16327->15649 (~7.7-8.2 of 27.01), 15957->15649 (~8.7-9.4 of
+28.05), 16327->20178 (~4.0-5.3 of 32.74), 16327->516493 (~0.8-0.9 of
+1.02 - the partner that never fires under cue+sugar). The behavioral
+readout was at literal zero in all 11 reps regardless.
+
+Root cause: the close-out claim audit checked prose drift and the cosugar
+range but never re-derived the per-carrier floor count. Impact: the
+weight-level completeness claim is corrected above; the behavioral
+headline (literal-zero extinction, cosugar intact, guard silent) is
+UNAFFECTED and replicated 8/8 at confirmatory stage. Verification
+artifact: results/phase4/wp_l4b_confirm/CONFIRMATORY_VERDICT.json plus
+edge-level forensics over results/phase4/wp_l4b/ckpt_r* and
+results/phase4/wp_l4b_confirm/rep_r*/ckpt_r0. Corrective: claim inventory
+EXT-5 corrected; audit reintroduction check added.

@@ -69,6 +69,10 @@ str_checks = [
      not re.search(r"GNG521[^.]*334|334[^.]*GNG521", _r_clean)),
     ("report: 334 absent from report entirely unless GNG380-labeled",
      "334" not in _r_clean or "GNG380's reversal-training edge count" in report),
+    # EXT-6 (REGRESSION): the dev floors overclaim must not reappear outside
+    # bracketed errata (which _r_clean strips)
+    ("report: floors-overclaim 'identical floors in every rep' absent outside errata",
+     "identical floors in every rep" not in _r_clean),
     ("report: WP9 grid described as sugar x bitter (no water axis)",
      "sugar × bitter" in report and "sugar/bitter/water" not in report),
     # FIX 3: no unsafe 'first demonstration' claim remains

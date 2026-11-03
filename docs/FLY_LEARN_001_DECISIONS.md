@@ -2782,3 +2782,54 @@ measurement supports, a failure mode DISTINCT from wrong
 measurements. The fix is re-separation of the claims, not number
 adjustment. Logged with the origin story like every standing
 rule.
+
+## Experiment A outcome (2026-11-02) — confirmatory replication of WP-L4b unlearning: verdict MIXED
+
+Executed per PHASE_5_CONFIRMATORY_PREREG.md (Amendments A1, A2) at HEAD
+`104d326`, launcher session `proc_639e3083533f`: 8/8 reps complete
+(142.7 min), frozen analysis `scripts/phase5_expA_analysis.py` (committed
+pre-run) emitted `results/phase4/wp_l4b_confirm/CONFIRMATORY_VERDICT.json`.
+
+Per-rep branches: 6x NEGATIVE-A, 2x NEGATIVE-A+NEGATIVE-B -> aggregate
+MIXED. Per the preregistration, MIXED is its own non-aggregating verdict:
+the dev result does NOT promote to confirmed; development-stage label
+stands. No re-tuning performed; the protocol question is registered
+below, not silently repaired.
+
+REPLICATED 8/8: c1 literal-zero cue-alone by cycle 15 (trials-to-zero
+distribution {15: 8}); c2 persistence through c25; c4 guard silent on all
+400 trials and no spike-threshold violations; no sign flips; no
+structural-zero gains; cosugar never below 79 (band floor intact).
+
+NOT REPLICATED - c5 floors: 21/25 carriers + 8/9 untouched partners at the
+V_CLIP floor in ALL 8 confirm reps. Edge-level forensics (dev AND confirm
+alike, 11 reps total) show the SAME four residual edges every rep:
+16327->15649 (~7.7-8.2 of 27.01), 15957->15649 (~8.7-9.4 of 28.05),
+16327->20178 (~4.0-5.3 of 32.74), 16327->516493 (~0.78-0.92 of 1.02).
+516493 is the partner that never fires under cue+sugar (the 8/9 launch-
+sanity gap, in every rep) - the structural principle predicting its own
+boundary again, now visible inside the confirmatory data. Erosion is
+coincidence-availability-weighted: these edges eroded substantially
+(~60-85%) but not to floor in 25 cycles while the readout is at literal
+zero.
+
+COSUGAR BAND: reps 1 and 3 exceeded the dev envelope top (89, 92) -
+recorded as band violations per the frozen text (both bounds enforced);
+directionally harmless (above, never below; innate pathway intact).
+
+DEV ERRATUM: the dev close-out's "all 25 carriers and all 9 partners at
+identical floors" was an overclaim - the dev reps carry the same 4
+residuals. Root cause: the close-out claim audit checked prose drift and
+the cosugar range but never re-derived the per-carrier floor count.
+Corrective: EXT-5 corrected in the claim inventory; reintroduction check
+added to the audit script (the old phrasing is forbidden outside
+bracketed errata); erratum blocks appended to PHASE_3_4_CLOSEOUT.md and
+TECHNICAL_REPORT.md (in place, per standing rule).
+
+REGISTERED PROTOCOL QUESTION (not decided here): extinction has an
+edge-dependent dose-tail - 25 cycles reach literal-zero behavior but not
+synaptic floors on low-coincidence edges. Options to decide explicitly:
+(a) the honest claim is behavioral extinction + located residual synapses
+(dose-tail characterized), or (b) a longer/higher-dose protocol to push
+residuals to floor. Either way the choice must be registered BEFORE any
+further run, per the no-silent-repair rule.
