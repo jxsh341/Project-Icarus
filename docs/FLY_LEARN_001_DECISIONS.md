@@ -3030,3 +3030,16 @@ screen-passing training circuits), L6b rank-decay erasure is robust across
 all footprints tested, and the L4b accessibility prediction holds for
 acquired/partial footprints with z>=0.19 but broke on the tiny z=0.125
 footprint. Verdict: results/phase7b/P1_VERDICT.json (tracked). Commit follows.
+
+## Phase 7 E1 preregistered 2026-11-04 (third in adopted order, after P1)
+
+Closed-loop conditioning on the verified embodiment scaffold (64c1aa3).
+Paired arms learn/control, 4 reps, identical seeds (Random(20261107), 144
+seeds disjoint from all 3,023 prior). Taste = 8 episodes x 3 steps with
+proboscis extended (cue+sugar transduced), window-1 leg-1 Hebbian applied
+per step in learn arm only; probes: alone (cue, no sugar), closed (cue +
+sugar present, retracted - loop-closure readout), sugonly. Frozen criteria
+c0 taste sanity, c1 alone step-1 mn9 >= 41.5 in >=3/4 learn and <41.5 in
+4/4 control, c2 closed-probe sugar_detected by step <=2 in >=3/4 learn and
+0/4 control, c3 control bit-pristine + learn footprint within cue 1-hop.
+Harness sha256 pinned; guards G1-G7. Docs: docs/PHASE_7E1_PREREG.md.
