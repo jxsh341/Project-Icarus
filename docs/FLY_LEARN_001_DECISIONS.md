@@ -3121,3 +3121,16 @@ B response 38-74 Hz vs A's 0) - selective removal works when footprints are
 disjoint. The MIXED is driven by weak combined acquisition of B (8 trials),
 not by removal collateral. Registered as the boundary of the current
 acquisition protocol, not repaired post hoc.
+
+## Erratum 2026-11-04 — DA predictedNt count corrected (audit-driven)
+
+The registry's 2026-09-25 census line "1,444 dopamine-NT" was carried as a
+predictedNt field count. Re-derivation from the FROZEN snapshot metadata
+(run-007 neurons_batch_*.json) on 2026-11-04: consensusNt=='dopamine' =
+1,449 exactly; predictedNt=='dopamine' = 2 at any confidence, 0 at
+>=0.75. The 1,444 figure is NOT reproducible from the frozen artifacts
+(possibly counted on the full neuPrint instance, not the snapshot). Corrected
+in TECHNICAL_REPORT §4/§7 and claim DA-1; the audit check for 1,449 now
+re-derives the count from raw metadata instead of a hardcoded True, and a
+new check pins predictedNt=2. Standing rule worked as intended: the claim
+inventory's DA-1 check had been a vacuous lambda: True - now a real check.

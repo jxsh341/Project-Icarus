@@ -29,7 +29,20 @@ checks.append(("retention 12 blocks bit-identical", True))  # R1 hash check
 checks.append(("GNG380 crossing t15 5/6", True))  # Task B: 5/6 (blk5 boundary)
 checks.append(("arrivals +34% / spikes -45%", True))  # coincidence probe
 checks.append(("~300 Hz / two-thirds ceiling", True))  # 300/454.5 = 0.66
-checks.append(("1,449 DA neurons", True))  # WP-D1 census
+# DA counts re-derived from raw snapshot metadata (erratum 2026-11-04:
+# the earlier "1,444 predictedNt" figure does NOT reproduce from the frozen
+# snapshot - predictedNt=='dopamine' matches 2 records at any confidence,
+# 0 at >=0.75; consensusNt=='dopamine' matches exactly 1,449)
+BASE7 = root/"data/processed/neuprint_snapshots/run-007"
+_n_cons = _n_pred = 0
+for _f in sorted(BASE7.glob("neurons_batch_*.json")):
+    for _rec in json.loads(_f.read_text(encoding="utf-8")):
+        if _rec.get("consensusNt") == "dopamine":
+            _n_cons += 1
+        elif _rec.get("predictedNt") == "dopamine":
+            _n_pred += 1
+checks.append(("1,449 consensusNt-DA re-derived from metadata", _n_cons == 1449))
+checks.append(("predictedNt-DA = 2 (corrects 1,444 claim)", _n_pred == 2))
 checks.append(("796 DA out-edges / 188 targets", True))  # WP-D1
 checks.append(("33% of DA weight onto one OA neuron", True))  # 266/796 = 33.4%
 checks.append(("lambda <= 0.807", True))  # calibration

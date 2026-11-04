@@ -43,8 +43,8 @@
   },
   {
     "claim_id": "DA-1",
-    "statement": "1,449 consensusNt-dopamine neurons; 1,444 predictedNt (different fields, both real)",
-    "source": "run-007 neurons_batch_*.json: consensusNt vs predictedNt censuses (re-verified 2026-10-09)",
+    "statement": "1,449 consensusNt-dopamine neurons (re-derived from frozen metadata); predictedNt adds only 2 (erratum: earlier 1,444 figure not reproducible from the snapshot)",
+    "source": "run-007 neurons_batch_*.json consensusNt/predictedNt census (re-derived 2026-11-04)",
     "reported_in": "TECHNICAL_REPORT \u00a74"
   },
   {
@@ -90,10 +90,10 @@
     "reported_in": "TECHNICAL_REPORT \u00a75; FUNDING_SUMMARY"
   },
   {
-    "claim_id": "EXT-5",
-    "statement": "All 25 carriers + all 9 untouched partners eroded to identical floors, every rep; six collateral mid-trajectory edges vary 0.02-0.7 units across seeds",
-    "source": "L4b weight forensics + audit",
-    "reported_in": "TECHNICAL_REPORT \u00a75"
+    "claim_id": "EXT-5 (CORRECTED 2026-11-02 by Experiment A: originally overclaimed as 25/25+9/9)",
+    "statement": "Carriers at V_CLIP floor: 21/25 + untouched 8/9 in ALL 11 reps (dev 3 + confirm 8); same 4 residual edges every rep (16327->15649, 15957->15649, 16327->20178, 16327->516493); six collateral edges vary 0.02-0.7 across seeds",
+    "source": "edge-level forensics re-run on results/phase4/wp_l4b/ckpt_r* and results/phase4/wp_l4b_confirm/rep_r*/ckpt_r0 (2026-11-02)",
+    "reported_in": "TECHNICAL_REPORT \u00a75 erratum; registry Experiment A entry"
   },
   {
     "claim_id": "INFRA-1",

@@ -89,9 +89,34 @@ Not comparable on: region (MB), readout resolution, located failures.
    conventional removal mechanism fails (each failure located to a measured
    structural cause), and **which of the substrate's own pathways** accomplish
    removal under a protocol derived from the measured anatomy.
-3. What is NOT claimed: priority on the cycle; graded unlearning; GNG380
-   unlearning (45/73 partners unreachable — measured, open); generality beyond
-   this closure; confirmatory-stage robustness (dev-stage n=3; Experiment A
-   pre-registered to address exactly this).
-4. The provisional qualifier stays until the full texts of the papers behind the
-   repos are read; the repos themselves have now been read directly.
+3. What is NOT claimed: priority on the cycle; generality beyond this closure;
+   anything about MB/Kenyon-cell learning (absent from the closure). Updated
+   2026-11-04: GNG380 unlearning is CLOSED (WP-L6b + P2 PASS 8/8), graded
+   unlearning EXISTS and is quantitative (P3 PASS 16/16), Experiment A ran
+   (MIXED, non-aggregating) and its dose-tail question is answered by WP-L6a
+   (PASS: residuals not an inferable leak).
+4. **Paper-level reading done 2026-11-04** (closes the provisional qualifier
+   for the two repos that have one):
+   - **mb-dual-dan** has a bioRxiv preprint (v0.1.1, Zenodo DOI
+     10.5281/zenodo.20326853): "A dual-pathway dopaminergic code for reward
+     prediction and epistemic surprise in the larval Drosophila mushroom
+     body" — four-ingredient necessity ablations (signed RPE, Bayesian
+     surprisal, surprisal-modulated lr, parallel valence traces) on the
+     Winding 2023 LARVAL MB connectome, plus a falsifiable DAN-c1 habituation
+     prediction. Region: larval MB; the learning machinery is added in silico
+     (RPE/surprisal agents), not measured from the substrate's own resources.
+     It does not address located removal failures, accessibility prediction,
+     certified forgetting, or selective erasure.
+   - **PGCN** is repo-only as of 2026-11-04 — no peer-reviewed paper or
+     preprint DOI located; its README itself documents a caught 1000x
+     KC->MBON weight bug and the mitigations. FlyWire adult MB
+     (PN->KC->MBON + DAN), veto gates, microsurgery, Shapley causal analysis.
+     Region: adult MB; readouts are index-level. Same non-coverage of our
+     four questions.
+   - **snuri00/fruit-fly-connectome** (whole-brain FlyWire): conditioning,
+     reversal, decay — MB-based, behavior-level, no located synaptic failures.
+   - ML-privacy prior art (arXiv:2410.22374 FNN, arXiv:2003.10933 Forsaken):
+     read directly earlier; mapped to WP-L6a/L6b; port, not replication.
+   Conclusion: positioning items 1-3 above STAND, now paper-grounded. The
+   remaining honest qualifier is narrower: PGCN has no paper to read, so its
+   claims are judged from its repo README/tests only.

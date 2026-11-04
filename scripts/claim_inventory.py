@@ -74,10 +74,23 @@ claim("REV-2", "Coincidence waste: arrivals +34% while readout spikes -45%; onse
       lambda: (300 / 454.5) < 0.67)  # boundary ratio consistent with registry
 
 # --- dopamine anatomy ---
-claim("DA-1", "1,449 consensusNt-dopamine neurons; 1,444 predictedNt (different fields, both real)",
-      "run-007 neurons_batch_*.json: consensusNt vs predictedNt censuses (re-verified 2026-10-09)",
+def _da_counts():
+    from pathlib import Path as _P
+    import json as _j
+    base = _P("data/processed/neuprint_snapshots/run-007")
+    c = pr = 0
+    for f in sorted(base.glob("neurons_batch_*.json")):
+        for rec in _j.loads(f.read_text(encoding="utf-8")):
+            if rec.get("consensusNt") == "dopamine":
+                c += 1
+            elif rec.get("predictedNt") == "dopamine":
+                pr += 1
+    return c, pr
+
+claim("DA-1", "1,449 consensusNt-dopamine neurons (re-derived from frozen metadata); predictedNt adds only 2 (erratum: earlier 1,444 figure not reproducible from the snapshot)",
+      "run-007 neurons_batch_*.json consensusNt/predictedNt census (re-derived 2026-11-04)",
       "TECHNICAL_REPORT §4",
-      lambda: True)
+      lambda: _da_counts() == (1449, 2))
 
 claim("DA-2", "DA out-edges: 796 local edges onto 188 targets; 33% of DA weight onto one octopamine neuron",
       "WP-D1 census (results/phase3/wp_d1_da_census.json)",
