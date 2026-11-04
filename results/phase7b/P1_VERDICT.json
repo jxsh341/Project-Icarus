@@ -1,0 +1,523 @@
+{
+  "pairs": {
+    "GNG491": [
+      {
+        "acq": {
+          "rep": 0,
+          "cue_alone_t20": [
+            72,
+            77
+          ],
+          "guard_ok": true,
+          "acquired": true
+        },
+        "footprint": 37,
+        "footprint_sha256": "d27905a168750fc47ce37b78f184e633fa2c655e3bcfa0d94b8a296e32515878",
+        "partners": 37,
+        "zero_input_edges": 7,
+        "z_edges": 0.1892,
+        "l6b": {
+          "f_floor": 0.973,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              0,
+              0
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            81,
+            80
+          ]
+        },
+        "l4b": {
+          "f_floor": 0.7838,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              76,
+              77
+            ],
+            "10": [
+              68,
+              68
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            83,
+            82
+          ]
+        },
+        "p1a_dev": 0.027
+      },
+      {
+        "acq": {
+          "rep": 1,
+          "cue_alone_t20": [
+            72,
+            67
+          ],
+          "guard_ok": true,
+          "acquired": true
+        },
+        "footprint": 37,
+        "footprint_sha256": "d27905a168750fc47ce37b78f184e633fa2c655e3bcfa0d94b8a296e32515878",
+        "partners": 37,
+        "zero_input_edges": 7,
+        "z_edges": 0.1892,
+        "l6b": {
+          "f_floor": 0.973,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              0,
+              0
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            79,
+            84
+          ]
+        },
+        "l4b": {
+          "f_floor": 0.8108,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              78,
+              75
+            ],
+            "10": [
+              64,
+              70
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            81,
+            80
+          ]
+        },
+        "p1a_dev": 0.0
+      }
+    ],
+    "GNG491_acquired": true,
+    "GNG557": [
+      {
+        "acq": {
+          "rep": 0,
+          "cue_alone_t20": [
+            8,
+            9
+          ],
+          "guard_ok": true,
+          "acquired": false
+        },
+        "footprint": 8,
+        "footprint_sha256": "6d8cc4627ae7caea8b8ca70e855b70e8a85f570535b6ced1b900244d296ab0cb",
+        "partners": 8,
+        "zero_input_edges": 1,
+        "z_edges": 0.125,
+        "l6b": {
+          "f_floor": 1.0,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              0,
+              0
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            86,
+            84
+          ]
+        },
+        "l4b": {
+          "f_floor": 0.625,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              1,
+              2
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            83,
+            84
+          ]
+        },
+        "p1a_dev": 0.25
+      },
+      {
+        "acq": {
+          "rep": 1,
+          "cue_alone_t20": [
+            3,
+            6
+          ],
+          "guard_ok": true,
+          "acquired": false
+        },
+        "footprint": 8,
+        "footprint_sha256": "6d8cc4627ae7caea8b8ca70e855b70e8a85f570535b6ced1b900244d296ab0cb",
+        "partners": 8,
+        "zero_input_edges": 1,
+        "z_edges": 0.125,
+        "l6b": {
+          "f_floor": 1.0,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              0,
+              0
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            84,
+            86
+          ]
+        },
+        "l4b": {
+          "f_floor": 0.625,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              1,
+              1
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            84,
+            81
+          ]
+        },
+        "p1a_dev": 0.25
+      }
+    ],
+    "GNG557_acquired": false,
+    "GNG610": [
+      {
+        "acq": {
+          "rep": 0,
+          "cue_alone_t20": [
+            33,
+            22
+          ],
+          "guard_ok": true,
+          "acquired": false
+        },
+        "footprint": 37,
+        "footprint_sha256": "c5dde7d3102030d4c8df6f63bc80278efc9a73c6e770c2d91c0c62aa69e3bd00",
+        "partners": 37,
+        "zero_input_edges": 15,
+        "z_edges": 0.4054,
+        "l6b": {
+          "f_floor": 0.973,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              0,
+              0
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            84,
+            85
+          ]
+        },
+        "l4b": {
+          "f_floor": 0.6757,
+          "c1_zero_by_15": false,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              48,
+              55
+            ],
+            "10": [
+              68,
+              51
+            ],
+            "15": [
+              38,
+              1
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            84,
+            85
+          ]
+        },
+        "p1a_dev": 0.0811
+      },
+      {
+        "acq": {
+          "rep": 1,
+          "cue_alone_t20": [
+            14,
+            25
+          ],
+          "guard_ok": true,
+          "acquired": false
+        },
+        "footprint": 38,
+        "footprint_sha256": "5ef05af553e6af443a86a48613a8739729c0c5e276b2370e8500448f630e5392",
+        "partners": 38,
+        "zero_input_edges": 15,
+        "z_edges": 0.3947,
+        "l6b": {
+          "f_floor": 0.9737,
+          "c1_zero_by_15": true,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              0,
+              0
+            ],
+            "10": [
+              0,
+              0
+            ],
+            "15": [
+              0,
+              0
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            85,
+            83
+          ]
+        },
+        "l4b": {
+          "f_floor": 0.7105,
+          "c1_zero_by_15": false,
+          "c2_band_c25": true,
+          "c3_guard_silent": true,
+          "alone": {
+            "5": [
+              47,
+              42
+            ],
+            "10": [
+              57,
+              70
+            ],
+            "15": [
+              35,
+              18
+            ],
+            "20": [
+              0,
+              0
+            ],
+            "25": [
+              0,
+              0
+            ]
+          },
+          "cosugar_c25": [
+            80,
+            84
+          ]
+        },
+        "p1a_dev": 0.1053
+      }
+    ],
+    "GNG610_acquired": false
+  },
+  "predictions": {
+    "P1a_l4b_accessibility": {
+      "ok_reps": 4,
+      "of": 6,
+      "tol": 0.15,
+      "pass": false
+    },
+    "P1b_l6b_universal": {
+      "ok_reps": 6,
+      "of": 6,
+      "f_min": 0.9,
+      "pass": true
+    },
+    "behavioral_c1_c3": {
+      "ok_reps": 10,
+      "of": 12,
+      "pass": false
+    },
+    "pairs_acquired": {
+      "n": 1,
+      "of": 3
+    }
+  },
+  "aggregate": "NEGATIVE-ACQUISITION"
+}
