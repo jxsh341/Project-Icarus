@@ -213,6 +213,26 @@ validity gate re-frozen as LOO accuracy ≥ 0.80 AND in-sample member-row
 recall = 1.0. Test population, FR definition, ablation, and the three-way
 verdict are unchanged.
 
+**Amendment A3 (registered 2026-11-04, BEFORE the wide-oracle run — answers the
+open item "oracle bounded by its feature set"; no new training sims, no gate or
+threshold changes; script scripts/phase6_l6a_oracle_wide.py, report
+results/phase6/wp_l6a/oracle_report_wide_A3.json):**
+WP-L6a-A3 reruns the membership oracle with a WIDENED feature set on the same
+frozen artifacts (A2 training pool: 6 l1 ckpts x shadow[:4] + 8 pristine rows;
+test: 11 unlearned reps x shadow[:4] = 44 rows):
+- F1 rank-set edge weights (25, as A2)
+- F2 changed-edge stats vs pristine: n, L1, L2, std, max|dw|, frac_positive (6)
+- F3 top-8 |dw| over all changed edges, sorted desc (8)
+- F4 acquisition/unlearning trajectory: L1(dw) at trial quantiles
+  [0.05, 0.2, 0.4, 0.6, 0.8, 1.0] of each ckpt's weights_trial_*.npz, normalized
+  by the final L1 (6); pristine/l0 rows (no snapshots) get all-zero F4
+- F5 behavior: per-row seed alone/cosugar mn9 (2) + held-out mean over
+  shadow[4:] alone/cosugar (2) = 4
+Gates and verdict logic identical to A2 (LOO >= 0.80, member recall == 1.0,
+row-level FR; per-rep majority also reported). Ablation: drop the 4
+residual-edge features as in A2. A3 PASS (FR = 44/44) narrows the oracle
+bound to the widened feature set; any FR < 1 is reported as NEGATIVE-A.
+
 None other at freeze (2026-11-03). Amendment policy identical to Phase 5: any
 discrepancy found before results exist is registered here as an amendment with
 the verifiable no-artifacts-exist evidence; after results exist, no term of

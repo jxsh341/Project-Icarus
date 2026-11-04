@@ -45,3 +45,24 @@ Aggregate PASS iff c0-c5; otherwise MIXED (non-aggregating; per-rep table is
 the result). Discrepancy -> stop and amend.
 
 Amendments: none at freeze (2026-11-04).
+
+## 4. Amendment B1 (registered 2026-11-04, BEFORE any P4b run)
+
+P4's MIXED outcome traced to weak combined acquisition of memory B (8 trials
+on top of R1CK -> aloneB 0-78 Hz at c25, c2 failed while c1/c3/c4/c5 passed:
+erasure of A exact, B-edges bit-unchanged). B1 reruns the identical protocol
+with a Phase-2-matched acquisition dose of 20 cueB+sugar trials.
+New harness copy scripts/phase7p4b_harness.py (P4 harness untouched),
+HARNESS_B1_SHA256 = "cbee0070b5e2fb6cfd0fdee616d11278735389f01d6a1c1b4ea21e33448a6612":
+- acq: load R1CK, 20 trials cueB+sugar (seeds ACQ_BASE+1..20), probes
+  aloneA/aloneB at ACQ_BASE+100+s (s in 0,1); same footprint/overlap dumps.
+- unlearn: identical to P4 (fast analytic rank-decay of A's 25 solo edges,
+  tau=1.0, 25 cycles, W_EPS=1e-9; probes (5,15,25) x 4 ptypes x 2 seeds).
+Seeds (Random(20261110); disjoint from all prior incl. P4 spaces):
+P4B_ACQ_BASES = [3209803, 3205704, 3218556, 3215441]
+P4B_UNL_BASES = [3212226, 3210457, 3205898, 3218339]
+acq space {b+1..20} u {b+100, b+101}; unl space as section 2.
+Frozen criteria identical to section 3 (c0 at 20 trials, c1, c2 >= 3/4, c3,
+c4, c5); aggregate PASS iff all; MIXED non-aggregating otherwise.
+Verdict -> results/phase7p4b/P4B_VERDICT.json. If B1 passes c2, P4 promotes
+from MIXED to a clean selective-removal PASS at matched acquisition dose.
