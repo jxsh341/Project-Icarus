@@ -118,9 +118,12 @@ In execution order, with status:
 4. **Experiment C (P3) — graded unlearning: DONE 2026-11-04, verdict PASS 16/16.** tau sweep {0.5,1,2,4} x 4 reps: extinction by cycle 5 at tau<=2, by cycle 15 at tau=4; synaptic floor fraction matches the analytic decay prediction exactly in 16/16. A graded dial exists and is quantitative. Prereg: `docs/PHASE_7P3_PREREG.md`.
 5. **GNG380 unlearning: CLOSED by WP-L6b + P2** — rank-targeted decay reached the zero-input partners (77/96 at floor, 8/8 confirmatory), cue-alone 0, innate intact. The former "open boundary" is now a confirmed PASS.
 6. **E1 closed-loop learning (embodiment): DONE 2026-11-04, verdict PASS** — see results table; the acquired association closes the sensorimotor loop autonomously.
-7. **P4 multi-memory selective removal: DONE 2026-11-04, verdict MIXED** — zero collateral on disjoint footprints (bit-verified), but combined acquisition of the second memory needs a stronger protocol (registered, not repaired post hoc).
-8. **Prior-art finalization** — still provisional until the papers behind mb-dual-dan and PGCN are read directly.
+7. **P4 multi-memory selective removal: DONE 2026-11-04, verdict MIXED** — zero collateral on disjoint footprints (bit-verified), but combined acquisition of the second memory was weak at 8 trials (registered, not repaired post hoc). **P4b (Amendment B1, 20-trial acquisition dose) registered 2026-11-04 and RUNNING** — if c2 passes, P4 promotes to a clean selective-removal PASS.
+8. **Prior-art finalization: DONE 2026-11-04** — mb-dual-dan read at paper level (bioRxiv preprint, Zenodo 10.5281/zenodo.20326853, larval MB); PGCN is repo-only (no paper DOI located). Neither addresses located removal failures / accessibility prediction / certified forgetting / selective erasure; positioning in §8 stands, paper-grounded. See PRIOR_ART_MEMO.md.
 9. **ALS/SIR integration** — explicitly out of scope for this repo (external plan only); the embodiment MVP grounds one actuator (MN9_L proboscis extension).
+10. **L6a Amendment A3 (wide membership oracle: +changed-edge stats, top-|dw|, trial-quantile weight trajectories, held-out-seed probes — 49 features) registered 2026-11-04** — narrows the "oracle bounded by its feature set" limitation on the existing artifacts; RUNNING.
+11. **P5 footprint-estimation sensitivity registered 2026-11-04** (`docs/PHASE_7P5_PREREG.md`) — tests the "rank-decay assumes known footprint" boundary with a threshold estimator (21/25 edges) and an over-inclusive hop-1 estimator (112 edges) vs the true footprint; queued after P4b.
+12. **DA-count erratum 2026-11-04 (closed):** the "1,444 predictedNt" figure did not reproduce from the frozen snapshot (predictedNt='dopamine' = 2 records; consensusNt = 1,449 re-derived from raw metadata). Corrected in §4/§7, claim DA-1, and the audit (now 50 real checks + 18 claims, 0 failures); the vacuous `lambda: True` check was replaced with a re-derivation.
 
 ## 10. Provenance
 
