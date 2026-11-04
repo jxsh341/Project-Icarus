@@ -3104,3 +3104,20 @@ cycles 5/15/25 x 2 seeds. Criteria c0-c5 (both acquired; A extinct at 25; B
 innate band; guard silent). Seeds Random(20261109), 136 disjoint from 3,295
 prior. Harness sha256 pinned; guards G1-G7; 4 parallel single-rep shards.
 Docs: docs/PHASE_7P4_PREREG.md.
+
+## Phase 7 P4 outcome 2026-11-04 — MIXED, non-aggregating (results/phase7p4/P4_VERDICT.json)
+
+Selective removal GNG521(A) vs GNG491(B), 4 reps, guards green, seeds
+Random(20261109). Footprints measured disjoint pre-freeze (overlap 0).
+Per-rep: c1 PASS 4/4 (aloneA == 0 at cycle 25); c3 PASS (A edges at analytic
+floor f=1.0 in 4/4; B-added edges bit-unchanged in 4/4; overlap 0 enforced);
+c4 PASS (cosA/cosB in [78,86]); c5 PASS. c0 FAILED 2/4 (acqB probe >= 41.5:
+only r2 [65,68], r3 [45,78]; r0 [0,65], r1 [23,70]) - 8 feed trials on top of
+R1CK weakly/variably acquired B. c2 FAILED (aloneB >= 41.5 at c25 in 1/4:
+r0 [45,74] passes; r1 [3,56], r2 [41,52] - 41.0 < 41.5 - , r3 [38,60]).
+Interpretation (reported as-is, no threshold moved): erasure of A is
+structurally exact and causes ZERO interference with B (B edges bit-identical,
+B response 38-74 Hz vs A's 0) - selective removal works when footprints are
+disjoint. The MIXED is driven by weak combined acquisition of B (8 trials),
+not by removal collateral. Registered as the boundary of the current
+acquisition protocol, not repaired post hoc.

@@ -1,0 +1,175 @@
+{
+  "rank_a_n": 25,
+  "f_pred25": 1.0,
+  "reps": [
+    {
+      "rep": 0,
+      "c0_acquired_both": false,
+      "aloneA_acq": [
+        77.0,
+        82.0
+      ],
+      "aloneB_acq": [
+        0.0,
+        65.0
+      ],
+      "aloneA25": [
+        0.0,
+        0.0
+      ],
+      "aloneB25": [
+        45.0,
+        74.0
+      ],
+      "cosA25": [
+        82.0,
+        83.0
+      ],
+      "cosB25": [
+        81.0,
+        81.0
+      ],
+      "f_meas25": 1.0,
+      "b_unchanged": true,
+      "b_added_n": 37,
+      "overlap": 0,
+      "c1": true,
+      "c3": true,
+      "c4": true,
+      "guard_ok": true
+    },
+    {
+      "rep": 1,
+      "c0_acquired_both": false,
+      "aloneA_acq": [
+        82.0,
+        87.0
+      ],
+      "aloneB_acq": [
+        23.0,
+        70.0
+      ],
+      "aloneA25": [
+        0.0,
+        0.0
+      ],
+      "aloneB25": [
+        3.0,
+        56.0
+      ],
+      "cosA25": [
+        83.0,
+        86.0
+      ],
+      "cosB25": [
+        82.0,
+        85.0
+      ],
+      "f_meas25": 1.0,
+      "b_unchanged": true,
+      "b_added_n": 36,
+      "overlap": 0,
+      "c1": true,
+      "c3": true,
+      "c4": true,
+      "guard_ok": true
+    },
+    {
+      "rep": 2,
+      "c0_acquired_both": true,
+      "aloneA_acq": [
+        81.0,
+        83.0
+      ],
+      "aloneB_acq": [
+        65.0,
+        68.0
+      ],
+      "aloneA25": [
+        0.0,
+        0.0
+      ],
+      "aloneB25": [
+        41.0,
+        52.0
+      ],
+      "cosA25": [
+        79.0,
+        80.0
+      ],
+      "cosB25": [
+        80.0,
+        85.0
+      ],
+      "f_meas25": 1.0,
+      "b_unchanged": true,
+      "b_added_n": 36,
+      "overlap": 0,
+      "c1": true,
+      "c3": true,
+      "c4": true,
+      "guard_ok": true
+    },
+    {
+      "rep": 3,
+      "c0_acquired_both": true,
+      "aloneA_acq": [
+        82.0,
+        84.0
+      ],
+      "aloneB_acq": [
+        45.0,
+        78.0
+      ],
+      "aloneA25": [
+        0.0,
+        0.0
+      ],
+      "aloneB25": [
+        38.0,
+        60.0
+      ],
+      "cosA25": [
+        78.0,
+        84.0
+      ],
+      "cosB25": [
+        81.0,
+        83.0
+      ],
+      "f_meas25": 1.0,
+      "b_unchanged": true,
+      "b_added_n": 37,
+      "overlap": 0,
+      "c1": true,
+      "c3": true,
+      "c4": true,
+      "guard_ok": true
+    }
+  ],
+  "aggregate": "MIXED",
+  "criteria": {
+    "c0": {
+      "reps": 2,
+      "of": 4,
+      "pass": false
+    },
+    "c1_erasure_A": {
+      "pass": true
+    },
+    "c2_B_survives": {
+      "reps": 1,
+      "of": 4,
+      "pass": false
+    },
+    "c3_structure": {
+      "pass": true
+    },
+    "c4_innate": {
+      "pass": true
+    },
+    "c5_guard": {
+      "pass": true
+    }
+  }
+}
