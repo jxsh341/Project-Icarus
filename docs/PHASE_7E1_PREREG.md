@@ -53,4 +53,10 @@ Aggregate: PASS iff c0-c3 all hold; otherwise MIXED (non-aggregating; the
 per-rep table is the result). No partial-result interpretation; any
 discrepancy vs this prereg -> stop and amend before running.
 
-Amendments: none at freeze (2026-11-04).
+Amendments:
+- E1-A1 (2026-11-04, registered AFTER the completed runs, BEFORE the amended
+  analysis rerun; no sim rerun needed - artifacts complete and guard-verified):
+  the frozen analysis read `footprint_r{r}.json`, but the launcher invokes the
+  harness with REPS=1 per rep dir, so the harness writes `footprint_r0.json`
+  inside each rep dir. Path-indexing bug in the analysis only; harness and
+  sim path untouched. Analysis corrected to read footprint_r0.json.

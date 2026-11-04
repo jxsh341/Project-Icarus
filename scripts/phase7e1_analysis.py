@@ -152,7 +152,7 @@ def main() -> int:
     learn_hashes = {rr["learn"]["post_weight_hash"] for rr in results["reps"]}
     c3_learn_edges_ok = True
     for r in range(N_REPS):
-        fp = json.loads((OUT_ROOT / "learn" / f"rep_r{r}" / f"footprint_r{r}.json").read_text())
+        fp = json.loads((OUT_ROOT / "learn" / f"rep_r{r}" / "footprint_r0.json").read_text())
         bad = [e for e in fp["edges"] if e[0] not in cue_idx or e[1] not in cue1hop]
         if bad or fp["n_edges"] == 0:
             c3_learn_edges_ok = False
