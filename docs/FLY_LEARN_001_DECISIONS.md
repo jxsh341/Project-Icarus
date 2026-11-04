@@ -3009,3 +3009,24 @@ Frozen predictions: P1a |f_l4b-(1-z)|<=0.15 in >=5/6 reps; P1b f_l6b>=0.9 in
 NEGATIVE-ACQUISITION (non-aggregating). Harness sha256 pinned in prereg;
 run seeds Random(20261106), all spaces disjoint. Docs: docs/PHASE_7B_PREREG.md;
 scripts/phase7b_{harness,launcher,analysis}.py committed pre-run.
+
+## Phase 7b P1 outcome 2026-11-04 — NEGATIVE-ACQUISITION (non-aggregating; per-rep results stand)
+
+18/18 stage-reps complete in 357.0 min, guards G1-G7 green every invocation,
+seeds reproduced from Random(20261106) disjoint from all prior spaces.
+Acquisition (frozen criterion cue-alone >= 41.5 Hz at trial 20): GNG491 2/2
+ACQUIRED (72/77, 72/67 Hz; footprint 37 edges, sha 256 d27905a1..., z_edges
+0.189); GNG557 0/2 (8/9, 3/6 Hz; footprint 8, z 0.125); GNG610 0/2 (33/22,
+14/25 Hz; footprint 37/38, z 0.405/0.395). Only 1/3 pairs acquired ->
+aggregate NEGATIVE-ACQUISITION per frozen branch (needs >=2).
+Per-rep (the result, non-aggregated): P1b L6b universality PASS 6/6 (f_floor
+0.973-1.0 >= 0.9 across z 0.125-0.405, all behavioral c1-c3 pass); P1a L4b
+accessibility 4/6 within tol 0.15 (GNG491 dev 0.027/0.000; GNG610 dev
+0.081/0.105; GNG557 dev 0.25 FAIL on both non-acquired reps, f_l4b 0.625 vs
+predicted 0.875); behavioral c1-c3 10/12 (GNG610 l4b reps reach 0 only by
+cycle 20, not 15: alone@15 = 38/1 and 35/18). Interpretation: held-out
+circuits are markedly harder to acquire than GNG521/GNG380 (the two
+screen-passing training circuits), L6b rank-decay erasure is robust across
+all footprints tested, and the L4b accessibility prediction holds for
+acquired/partial footprints with z>=0.19 but broke on the tiny z=0.125
+footprint. Verdict: results/phase7b/P1_VERDICT.json (tracked). Commit follows.

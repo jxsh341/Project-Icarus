@@ -55,3 +55,6 @@ results/phase7/*
 results/phase7/p2_g380/*
 !results/phase7/p2_g380/P2_VERDICT.json
 .neuprint_token
+
+results/phase7b/*
+!results/phase7b/P1_VERDICT.json
