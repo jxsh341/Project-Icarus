@@ -3056,3 +3056,22 @@ hashes) on a shrunk config. Analytic predictions (f_pred(c), weight hashes)
 preregistered; criteria c1-c5 per rep; aggregate PASS iff 16/16. Seeds
 Random(20261108), 128 seeds disjoint from 3,167 prior. Harness sha256
 pinned; guards G1-G7; 4 parallel shards. Docs: docs/PHASE_7P3_PREREG.md.
+
+## Phase 7 P3 outcome 2026-11-04 — PASS 16/16 (results/phase7p3/P3_VERDICT.json)
+
+Graded rank-decay dose sweep on GNG521 from frozen R1CK, tau in
+(0.5,1,2,4) x 4 reps, 25 cycles. Amended rerun (Amendment P3-A1: c5 metric
+bug - floor fraction must be rank-edge-zero count in the hash-verified final
+matrix, not diff-vs-pristine; original MIXED 8/16 was solely that bug,
+behavioral criteria had passed 16/16; identical seeds, deterministic, prior
+rep dirs quarantined under results/phase7p3/quarantine/amendment_a1/).
+Amended run: 16/16 reps, ~6 min/rep, 4 parallel shards, guards green,
+fast==full bit-identity test green. Results: extinction (cue-alone 0) by
+cycle 5 for tau 0.5/1/2 in 12/12 reps, by cycle 15 for tau 4 (r3: 39 Hz @5;
+r15: 27/51 Hz @5 -> 0 @15); cosugar@25 in [78,88] in 16/16; weight hashes ==
+analytic decay at every probe cycle (c1); floor fraction == analytic f_pred
+in 16/16 (c5: 1.0 at tau<=1, 0.0 at tau>=2 - floor is a step in tau at 25
+cycles since w0*e^(-25/tau) crosses W_EPS=1e-9 between tau 1 and 2; the
+graded dose-response is in extinction timing, not floor fraction at c25).
+Speedup was exact: analytic decay between probe cycles, 8 sims/rep instead
+of 45, validated bit-identical vs per-cycle sims.
