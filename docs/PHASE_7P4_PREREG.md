@@ -53,7 +53,7 @@ on top of R1CK -> aloneB 0-78 Hz at c25, c2 failed while c1/c3/c4/c5 passed:
 erasure of A exact, B-edges bit-unchanged). B1 reruns the identical protocol
 with a Phase-2-matched acquisition dose of 20 cueB+sugar trials.
 New harness copy scripts/phase7p4b_harness.py (P4 harness untouched),
-HARNESS_B1_SHA256 = "cbee0070b5e2fb6cfd0fdee616d11278735389f01d6a1c1b4ea21e33448a6612":
+HARNESS_B1_SHA256 = "8a21740c82b2d5e3ad02464c347ce24cc6cf702486822a7b12687d066fbebba4":
 - acq: load R1CK, 20 trials cueB+sugar (seeds ACQ_BASE+1..20), probes
   aloneA/aloneB at ACQ_BASE+100+s (s in 0,1); same footprint/overlap dumps.
 - unlearn: identical to P4 (fast analytic rank-decay of A's 25 solo edges,
