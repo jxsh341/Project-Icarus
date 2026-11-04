@@ -62,3 +62,6 @@ results/phase7b/*
 !results/phase7e1/
 results/phase7e1/*
 !results/phase7e1/E1_VERDICT.json
+!results/phase7p3/
+results/phase7p3/*
+!results/phase7p3/P3_VERDICT.json

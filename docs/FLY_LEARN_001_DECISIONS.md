@@ -3043,3 +3043,16 @@ c0 taste sanity, c1 alone step-1 mn9 >= 41.5 in >=3/4 learn and <41.5 in
 4/4 control, c2 closed-probe sugar_detected by step <=2 in >=3/4 learn and
 0/4 control, c3 control bit-pristine + learn footprint within cue 1-hop.
 Harness sha256 pinned; guards G1-G7. Docs: docs/PHASE_7E1_PREREG.md.
+
+## Phase 7 P3 preregistered 2026-11-04 (fourth in adopted order; runs after E1 verdict)
+
+Graded unlearning dose sweep on GNG521 from frozen R1CK: tau in
+(0.5,1,2,4) x 4 reps = 16 reps, 25 cycles, probes alone@(5,15,25)+cosugar@25
+x2 seeds (8 sims/rep). Speedup is EXACT, not approximate: rank decay is
+deterministic and sim-independent, so the fast harness applies analytic
+decay between probe cycles and sims only at probe cycles; tests/
+test_phase7p3.py proves fast==full bit-identical (probe mn9 + weight
+hashes) on a shrunk config. Analytic predictions (f_pred(c), weight hashes)
+preregistered; criteria c1-c5 per rep; aggregate PASS iff 16/16. Seeds
+Random(20261108), 128 seeds disjoint from 3,167 prior. Harness sha256
+pinned; guards G1-G7; 4 parallel shards. Docs: docs/PHASE_7P3_PREREG.md.
