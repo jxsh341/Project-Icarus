@@ -181,10 +181,12 @@ def main() -> int:
         rep["cosugar25"] = cos
         if not all(BAND[0] <= v <= BAND[1] for v in cos):
             ok = False
-        # c5: floor fraction exact
+        # c5: floor fraction exact (Amendment P3-A1: rank-edge-zero fraction in
+        # the hash-verified final matrix, read from rank_final_weights)
         f_pred = sum(1 for e in rank if w0[e] * math.exp(-N_CYCLES / tau) < W_EPS) / len(rank)
         fp = json.loads((OUT_ROOT / f"rep_r{r}" / "footprint_final.json").read_text())
-        f_meas = 1 - fp["n_edges"] / len(rank)
+        rw = fp["rank_final_weights"]
+        f_meas = sum(1 for e in rank if rw[f"{e[0]},{e[1]}"] == 0.0) / len(rank)
         rep["f_pred25"] = round(f_pred, 4)
         rep["f_meas25"] = round(f_meas, 4)
         if abs(f_pred - f_meas) > 1e-12:

@@ -19,7 +19,7 @@ Probe cycles: alone at (5, 15, 25) x 2 seeds; cosugar at (25,) x 2 seeds.
 (8 sims/rep instead of 45; probes registered at 3 cycle points because the
 floor fraction is monotone in cycles.)
 
-Harness `scripts/phase7p3_harness.py`, HARNESS_SHA256 = "bfa08c633b6252dafc2556e3c864b3b59a4e3be5332c9aab8a4ef986d7aadd51"
+Harness `scripts/phase7p3_harness.py`, HARNESS_SHA256 = "1dde1cfa8f4f26866792836afe364c4639e369c91116efd3649eeabc4805f971"
 (launcher guard G1 before/after every invocation; injection keys
 OUT/REPS/PROBE_BASE/TAU/MODE only). Modes: fast (analytic decay between
 probe cycles) and full (per-cycle sim + decay, validation only).
@@ -46,4 +46,18 @@ Probe space per base b: {b + 100*c + s: c in (5,15,25), s in (0,1)} u
 Aggregate PASS iff 16/16 reps pass; otherwise MIXED (non-aggregating;
 per-rep table is the result). Discrepancy vs prereg -> stop and amend.
 
-Amendments: none at freeze (2026-11-04).
+Amendments:
+- P3-A1 (2026-11-04, registered BEFORE the amended rerun): the first analysis
+  run (16/16 reps complete, guards green, c1-c4 all pass) computed c5 as the
+  fraction of rank edges differing from PRISTINE in footprint_final.json.
+  That is the wrong metric: a rank edge decayed to exact 0.0 still differs
+  from the pristine STRUCTURAL weight, so f_meas read 0.0 where the
+  hash-verified matrix (c1) has all rank edges at floor 1.0 for tau<=1.
+  Correction: harness now dumps rank_final_weights (per-rank-edge final
+  weight) and c5 measures the fraction of rank edges at exact 0.0 in the
+  hash-verified final matrix. HARNESS_SHA256 updated to the amended harness
+  (only the footprint dump changed; sim path untouched). Rerun uses the
+  IDENTICAL preregistered seeds, so every sim is deterministic-identical;
+  prior rep dirs moved to quarantine/amendment_a1/. Original MIXED 8/16
+  verdict was caused solely by this metric bug (behavioral c2/c3 passed
+  16/16).

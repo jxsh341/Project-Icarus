@@ -155,8 +155,9 @@ def main() -> int:
                    **({"guard_fired": fired} if fired else {})})
     d = (m25 - pristine).tocoo()
     fp = sorted([int(i), int(j)] for i, j, v in zip(d.row, d.col, d.data) if v != 0.0)
+    rw = {f"{i},{j}": float(m25[i, j]) for i, j in rank}  # rank-edge final weights (c5 metric)
     (OUT / "footprint_final.json").write_text(json.dumps(
-        {"tau": TAU, "n_edges": len(fp), "edges": fp,
+        {"tau": TAU, "n_edges": len(fp), "edges": fp, "rank_final_weights": rw,
          "sha256": hashlib.sha256(json.dumps(fp).encode()).hexdigest()}), encoding="utf-8")
     print(f"p3 done mode={mode} tau={TAU} probe_base={PROBE_BASE}", flush=True)
     return 0
