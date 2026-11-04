@@ -3090,3 +3090,17 @@ cue-alone 0 Hz, no closed-probe detection. Interpretation: the embodied loop
 acquires the predictive cue->extension association with the SAME footprint
 size as open-loop acquisition (25 cue-incident edges), and the acquired
 association closes the sensorimotor loop without external contact bootstrap.
+
+## Phase 7 P4 preregistered 2026-11-04 (final experiment in the adopted order)
+
+Multi-memory interference / selective removal: cue A = GNG521 (frozen
+R1CK, 25-edge footprint) vs cue B = GNG491 (held-out, acquired in P1,
+37-edge footprint). Pre-freeze measurement: solo footprints DISJOINT
+(overlap 0) -> frozen prediction = perfect selectivity. Per rep x4: acquire
+B on top of R1CK (8 feed trials), then fast analytic rank-decay of A's 25
+edges (tau=1, 25 cycles; P3-validated), probes aloneA/aloneB/cosA/cosB at
+cycles 5/15/25 x 2 seeds. Criteria c0-c5 (both acquired; A extinct at 25; B
+>= 41.5 at 25 in >=3/4; A edges at analytic floor + B edges bit-unchanged;
+innate band; guard silent). Seeds Random(20261109), 136 disjoint from 3,295
+prior. Harness sha256 pinned; guards G1-G7; 4 parallel single-rep shards.
+Docs: docs/PHASE_7P4_PREREG.md.
