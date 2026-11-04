@@ -2993,3 +2993,19 @@ sugar and bitter pathways are preserved. The Phase-4 reachability boundary
 (45/73 zero-input partners) is crossed by weight-targeted decay, not by
 coincidence-gated erosion. Artifact: results/phase7/p2_g380/P2_VERDICT.json
 (now tracked in git).
+
+## Phase 7b P1 preregistered 2026-11-03 (second in adopted order, after WP-P2 PASS)
+
+Predictive structural accessibility on held-out circuits. Screening
+(Random(20261105), 45 seeds, disjoint from all 1,999 prior): 15 batch types,
+G1 innate silence + G2 2-hop expressibility; 9 passed, 6 failed (ANXXX255,
+ANXXX462a, GNG318, PRW043, pIP1, dorsal_tpGRN). Held-out pairs = top 3 by
+leg-2 convergence excluding GNG521/GNG380: GNG557 [12595] C=276, GNG610
+[128102] C=100, GNG491 [14094] C=76. Stages per pair x 2 reps: acquire (feed,
+20 trials cue+sugar) -> census (footprint/zero-input-edge fraction z) ->
+l6b rank-decay and l4b eligibility-then-sign, 25 cycles each, frozen probes.
+Frozen predictions: P1a |f_l4b-(1-z)|<=0.15 in >=5/6 reps; P1b f_l6b>=0.9 in
+>=5/6; behavioral c1-c3 all reps. Aggregate PREDICTIVE-PASS / MIXED /
+NEGATIVE-ACQUISITION (non-aggregating). Harness sha256 pinned in prereg;
+run seeds Random(20261106), all spaces disjoint. Docs: docs/PHASE_7B_PREREG.md;
+scripts/phase7b_{harness,launcher,analysis}.py committed pre-run.
