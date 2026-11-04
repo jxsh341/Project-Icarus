@@ -3075,3 +3075,18 @@ cycles since w0*e^(-25/tau) crosses W_EPS=1e-9 between tau 1 and 2; the
 graded dose-response is in extinction timing, not floor fraction at c25).
 Speedup was exact: analytic decay between probe cycles, 8 sims/rep instead
 of 45, validated bit-identical vs per-cycle sims.
+
+## Phase 7 E1 outcome 2026-11-04 — PASS (results/phase7e1/E1_VERDICT.json)
+
+Closed-loop conditioning on the embodiment scaffold: 8/8 rep-runs (learn x4,
+control x4, identical seeds) in 220.4 min, guards G1-G7 green. Amendment
+E1-A1 (analysis path fix footprint_r0.json; no sim rerun, artifacts
+complete). Results: learn arm cue-alone step-1 mn9 83-87 Hz in 4/4 reps
+(>= 41.5), proboscis extension 0.875, closed probe sugar_detected from step
+0 in 4/4 (loop closes autonomously: cue -> MN9_L -> extension -> contact ->
+sugar transduced); footprint exactly 25 edges, all within cue 1-hop, in 4/4.
+Control arm: post-taste weight hash == pristine 384406e9278ae0c0 in 4/4,
+cue-alone 0 Hz, no closed-probe detection. Interpretation: the embodied loop
+acquires the predictive cue->extension association with the SAME footprint
+size as open-loop acquisition (25 cue-incident edges), and the acquired
+association closes the sensorimotor loop without external contact bootstrap.

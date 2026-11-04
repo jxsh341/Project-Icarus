@@ -1,0 +1,171 @@
+{
+  "reps": [
+    {
+      "rep": 0,
+      "learn": {
+        "guard_ok": true,
+        "post_weight_hash": "62afa3d8f5cb12b2",
+        "all_sugar_detected": true,
+        "footprint_note": "changed edges checked via hash != pristine",
+        "alone_step1_mn9": [
+          85.0,
+          87.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": true,
+          "1": true,
+          "2": true
+        },
+        "closed_max_ext": 0.875,
+        "footprint_n": 25,
+        "footprint_sha256": "43313db60de5c3faad5ed932a5c0fe31649a21628fbfbf7444a230acdf9f2589",
+        "footprint_off_cue1hop": 0
+      },
+      "control": {
+        "guard_ok": true,
+        "post_weight_hash": "384406e9278ae0c0",
+        "alone_step1_mn9": [
+          0.0,
+          0.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": false,
+          "1": false,
+          "2": false
+        },
+        "closed_max_ext": 0.0
+      }
+    },
+    {
+      "rep": 1,
+      "learn": {
+        "guard_ok": true,
+        "post_weight_hash": "aabc031e084adaf4",
+        "all_sugar_detected": true,
+        "footprint_note": "changed edges checked via hash != pristine",
+        "alone_step1_mn9": [
+          84.0,
+          87.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": true,
+          "1": true,
+          "2": true
+        },
+        "closed_max_ext": 0.875,
+        "footprint_n": 25,
+        "footprint_sha256": "43313db60de5c3faad5ed932a5c0fe31649a21628fbfbf7444a230acdf9f2589",
+        "footprint_off_cue1hop": 0
+      },
+      "control": {
+        "guard_ok": true,
+        "post_weight_hash": "384406e9278ae0c0",
+        "alone_step1_mn9": [
+          0.0,
+          0.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": false,
+          "1": false,
+          "2": false
+        },
+        "closed_max_ext": 0.0
+      }
+    },
+    {
+      "rep": 2,
+      "learn": {
+        "guard_ok": true,
+        "post_weight_hash": "01befd441ee1a6c8",
+        "all_sugar_detected": true,
+        "footprint_note": "changed edges checked via hash != pristine",
+        "alone_step1_mn9": [
+          86.0,
+          87.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": true,
+          "1": true,
+          "2": true
+        },
+        "closed_max_ext": 0.875,
+        "footprint_n": 25,
+        "footprint_sha256": "43313db60de5c3faad5ed932a5c0fe31649a21628fbfbf7444a230acdf9f2589",
+        "footprint_off_cue1hop": 0
+      },
+      "control": {
+        "guard_ok": true,
+        "post_weight_hash": "384406e9278ae0c0",
+        "alone_step1_mn9": [
+          0.0,
+          0.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": false,
+          "1": false,
+          "2": false
+        },
+        "closed_max_ext": 0.0
+      }
+    },
+    {
+      "rep": 3,
+      "learn": {
+        "guard_ok": true,
+        "post_weight_hash": "87dc4f54e19a3e63",
+        "all_sugar_detected": true,
+        "footprint_note": "changed edges checked via hash != pristine",
+        "alone_step1_mn9": [
+          83.0,
+          83.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": true,
+          "1": true,
+          "2": true
+        },
+        "closed_max_ext": 0.875,
+        "footprint_n": 25,
+        "footprint_sha256": "43313db60de5c3faad5ed932a5c0fe31649a21628fbfbf7444a230acdf9f2589",
+        "footprint_off_cue1hop": 0
+      },
+      "control": {
+        "guard_ok": true,
+        "post_weight_hash": "384406e9278ae0c0",
+        "alone_step1_mn9": [
+          0.0,
+          0.0
+        ],
+        "closed_sugar_detected_by_step": {
+          "0": false,
+          "1": false,
+          "2": false
+        },
+        "closed_max_ext": 0.0
+      }
+    }
+  ],
+  "criteria": {
+    "c0_taste_sanity": true,
+    "c1_primary": {
+      "learn_ok_reps": 4,
+      "of": 4,
+      "control_ok_reps": 4,
+      "pass": true
+    },
+    "c2_loop_closure": {
+      "learn_ok_reps": 4,
+      "of": 4,
+      "control_ok_reps": 4,
+      "control_any": 0,
+      "pass": true
+    },
+    "c3_structure": {
+      "control_pristine": true,
+      "learn_changed": true,
+      "learn_edges_within_cue_1hop": true,
+      "pass": true
+    }
+  },
+  "aggregate": "PASS"
+}
