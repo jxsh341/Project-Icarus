@@ -34,6 +34,6 @@ firing invalidates the rep, reported not hidden).
   residual memory); else INSENSITIVE-TO-WEAK-EDGES. cosA25 reported vs band.
 - Arm C_HOP1: COLLATERAL iff any cosA25 outside [75, 95] (over-inclusive decay
   damages innate response); else CLEAN. aloneA25 reported.
-Verdict -> results/phase7p5/P5_VERDICT.json. Harness sha pinned: HARNESS_SHA256 = "6d34d43549c458956b9be7237c9adb572b8b75654a90d85383532fc3d6b5641d" Discrepancy -> stop and document.
+Verdict -> results/phase7p5/P5_VERDICT.json. Harness sha pinned: HARNESS_SHA256 = "a6efd43d77f7a6336deb6396aae4b33f95a0849f903d995383aa90d4534ef428" Discrepancy -> stop and document.
 
 Amendments: none at freeze (2026-11-04).
