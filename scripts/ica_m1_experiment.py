@@ -101,10 +101,21 @@ def main() -> int:
         raise RuntimeError("pristine hash mismatch")
     sub.initialize(); sub.resume()
     si = iter(seeds)
+    j_exists = jout.exists() and sum(1 for _ in open(jout, encoding="utf-8")) >= len(CUES) * N_SEEDS
     b_rows = {}
-    for loc, (name, ids) in CUES.items():
-        rows = [probe(sub, ids, next(si), jout) for _ in range(N_SEEDS)]
-        b_rows[loc] = {"name": name, "ids": list(ids), "probes": rows}
+    if j_exists:  # resume: reuse saved probes
+        saved = [json.loads(l) for l in open(jout, encoding="utf-8")]
+        k = 0
+        for loc, (name, ids) in CUES.items():
+            rows = saved[k:k + N_SEEDS]; k += N_SEEDS
+            b_rows[loc] = {"name": name, "ids": list(ids), "probes": rows}
+        next(si)  # burn nothing; seeds list already drawn
+        for _ in range(len(CUES) * N_SEEDS):
+            next(si)
+    else:
+        for loc, (name, ids) in CUES.items():
+            rows = [probe(sub, ids, next(si), jout) for _ in range(N_SEEDS)]
+            b_rows[loc] = {"name": name, "ids": list(ids), "probes": rows}
     # metrics
     def counts(r):
         return {int(k): v for k, v in r["spike_counts"].items()}
@@ -126,7 +137,7 @@ def main() -> int:
             rb = [counts(r) for r in b_rows[b]["probes"]]
             cs = [cos(x, y) for x in ra for y in rb]
             js = [jac(x, y) for x in ra for y in rb]
-            dm = [abs(ra[0][MN9_L] - rb[0][MN9_L])]  # mn9 counts
+            dm = abs(ra[0].get(MN9_L, 0) - rb[0].get(MN9_L, 0))  # mn9 counts
             pairs[f"{a}|{b}"] = {"mean_cos": round(float(np.mean(cs)), 4),
                                  "max_cos": round(float(np.max(cs)), 4),
                                  "mean_jac": round(float(np.mean(js)), 4),
