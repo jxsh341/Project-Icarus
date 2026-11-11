@@ -73,7 +73,7 @@ def simulate_lif(
     stim2_start_ms: float | None = None,
     stimulated3: list[int] | None = None,
     r_poisson3_Hz: float | None = None,
-    init_v_mV: float | None = None,
+    init_v_mV: float | np.ndarray | None = None,
     seed: int = 0,
 ) -> LIFRun:
     """Run one LIF trial on a weighted connectivity matrix.
@@ -138,7 +138,14 @@ def simulate_lif(
     else:
         c_gain = params.tau_syn_ms / denom             # coupling coefficient
 
-    v = np.full(n, params.v0_mV if init_v_mV is None else float(init_v_mV))
+    if isinstance(init_v_mV, np.ndarray):
+        # REQ-ICA-1 (additive): per-neuron carried membrane state for stateful
+        # stepping. Scalar/None path below is bit-identical to before.
+        if init_v_mV.shape != (n,):
+            raise ValueError(f"init_v_mV array shape {init_v_mV.shape} != ({n},)")
+        v = np.asarray(init_v_mV, dtype=float).copy()
+    else:
+        v = np.full(n, params.v0_mV if init_v_mV is None else float(init_v_mV))
     g = np.zeros(n)
     last_spike = np.full(n, -np.inf)
     refractory_steps = int(round(params.t_refractory_ms / dt))

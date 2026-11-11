@@ -36,8 +36,10 @@ from fly.plasticity import (  # noqa: E402
 FROZEN_PLASTICITY = PlasticityConfig(eta=1e-4, semantics=Semantics.V_CLIP, w_max=766.0)
 from fly.training import weight_matrix_hash
 
-API_VERSION = "1.0.0"
+API_VERSION = "1.1.0"  # 1.1.0: additive M1 additions (StatefulStepper, acquire/present_cue/erase); schema unchanged
 SCHEMA_VERSION = 1
+ACCEPTED_API_VERSIONS = {"1.0.0", "1.1.0"}
+RETRIEVAL_HZ = 41.5  # frozen MN9 fire threshold used across all Phase 4-7 verdicts
 BASE = Path(__file__).resolve().parents[1] / "data/processed/neuprint_snapshots/run-007"
 
 
@@ -248,6 +250,7 @@ class FlySubstrate:
         self.learning = LearningController()
         self.body_state: Optional[BodyState] = None
         self.phase = Phase.CREATED
+        self.associations: dict[str, dict] = {}  # REQ-ICA-9 registry
         self.trial_index = 0
         self._pristine: Optional[sparse.csr_matrix] = None
 
@@ -313,7 +316,7 @@ class FlySubstrate:
                 ports.append(StimulusPort(modality, tuple(ids), rates[modality], slot, role))
         return ports
 
-    def _run(self, event: InputEvent) -> LIFRun:
+    def _run(self, event: InputEvent, init_v_mV=None) -> LIFRun:
         ports = list(event.ports)
         if event.body is not None:
             if self.body_graph is None:
@@ -332,6 +335,7 @@ class FlySubstrate:
             stimulated=by_slot[1] or None,
             stimulated2=by_slot[2] or None, r_poisson2_Hz=rate.get(2),
             stimulated3=by_slot[3] or None, r_poisson3_Hz=rate.get(3),
+            init_v_mV=init_v_mV,
             seed=event.seed,
         )
 
@@ -396,6 +400,73 @@ class FlySubstrate:
         self.trial_index += 1
         return obs
 
+    # -- REQ-ICA-9: stable association contracts (behaviour already DEMONSTRATED:
+    # P2 8/8, P3 16/16, P4b 4/4, L6a/A3 oracle-clean; this exposes it, versioned) --
+
+    def acquire(self, cue_body_ids: tuple[int, ...], drive_body_ids: tuple[int, ...] = (),
+                n_trials: int = 20, seed_base: int = 3_300_000, duration_ms: float = 1000.0) -> dict:
+        """Learn one association: n_trials of cue(+drive) under armed plasticity.
+        Requires RUNNING + learning armed. Registers the footprint; returns a
+        versioned contract dict."""
+        self._require(Phase.RUNNING)
+        if not self.learning.enabled:
+            raise LifecycleError("acquire() requires learning armed (learning.arm())")
+        ports = [StimulusPort("cue", tuple(cue_body_ids), 200.0, slot=1, role="cue")]
+        if drive_body_ids:
+            ports.append(StimulusPort("drive", tuple(drive_body_ids), 200.0, slot=2, role="drive"))
+        for t in range(n_trials):
+            self.run_trial(InputEvent(duration_ms=duration_ms, seed=seed_base + t, ports=tuple(ports)))
+        pristine = self._pristine if self._pristine is not None else self.matrix
+        d = (self.matrix - pristine).tocoo()
+        edges = sorted((int(i), int(j)) for i, j, v in zip(d.row, d.col, d.data) if v != 0.0)
+        fsha = hashlib.sha256(json.dumps(edges).encode()).hexdigest()
+        aid = "assoc_" + fsha[:12]
+        self.associations[aid] = {"cue": tuple(cue_body_ids), "edges": edges,
+                                  "footprint_sha256": fsha, "n_trials": n_trials}
+        return {"schema_version": SCHEMA_VERSION, "id": aid, "cue": list(cue_body_ids),
+                "footprint_sha256": fsha, "n_edges": len(edges),
+                "weight_hash": weight_matrix_hash(self.matrix), "trial_index": self.trial_index}
+
+    def present_cue(self, cue_body_ids: tuple[int, ...], seed: int = 0,
+                    duration_ms: float = 1000.0) -> dict:
+        """Probe retrieval: cue alone (no drive), no plasticity. Returns the
+        versioned contract {associations, confidence, retrieved, readout_hz}."""
+        self._require(Phase.RUNNING)
+        ev = InputEvent(duration_ms=duration_ms, seed=seed,
+                        ports=(StimulusPort("cue", tuple(cue_body_ids), 200.0, slot=1, role="cue"),))
+        obs = self.step(ev)
+        hz = obs.rates_hz.get(self.readout_body_id, 0.0)
+        ids = [a for a, rec in self.associations.items() if rec["cue"] == tuple(cue_body_ids)]
+        return {"schema_version": SCHEMA_VERSION, "cue": list(cue_body_ids),
+                "associations": ids, "readout_hz": hz,
+                "retrieved": bool(hz >= RETRIEVAL_HZ),
+                "confidence": min(1.0, hz / RETRIEVAL_HZ),
+                "weight_hash": obs.weight_hash, "trial_index": obs.trial_index}
+
+    def erase(self, assoc_id: str, amount: float, seed: int = 0) -> dict:
+        """Rank-targeted decay of a registered association's footprint.
+        amount in [0,1] -> cycles = round(25*amount), tau=1.0, W_EPS snap — the
+        P3/P5-validated protocol (bit-identity to per-cycle sims pinned in tests).
+        Returns the versioned contract with measured floor fraction + post-erasure
+        cue-alone probe."""
+        self._require(Phase.RUNNING)
+        if not 0.0 <= amount <= 1.0:
+            raise SchemaError(f"amount {amount!r} outside [0,1]")
+        if assoc_id not in self.associations:
+            raise SchemaError(f"unknown association {assoc_id!r}")
+        rec = self.associations[assoc_id]
+        cycles = int(round(25 * amount))
+        if cycles > 0:
+            self.matrix = _decay_to(self.matrix, rec["edges"], cycles, 1.0).tocsr()
+        w = {e: float(self.matrix[e]) for e in rec["edges"]}
+        f_meas = sum(1 for v in w.values() if v == 0.0) / max(len(rec["edges"]), 1)
+        probe = self.present_cue(rec["cue"], seed=seed)
+        out = {"schema_version": SCHEMA_VERSION, "id": assoc_id, "amount": amount,
+               "cycles": cycles, "f_meas": f_meas, "post_alone_hz": probe["readout_hz"],
+               "weight_hash": weight_matrix_hash(self.matrix)}
+        rec["erased_fraction"] = f_meas
+        return out
+
     # -- persistence: documented runtime save/restore -------------------------
     # Format (dir): manifest.json + weights.npz + nodes.npy + state.json
     # manifest pins api_version, schema_version, weight_hash; load verifies.
@@ -428,7 +499,7 @@ class FlySubstrate:
         man = json.loads((path / "manifest.json").read_text(encoding="utf-8"))
         if man.get("schema_version") != SCHEMA_VERSION:
             raise SchemaError(f"checkpoint schema_version {man.get('schema_version')!r}")
-        if man.get("api_version") != API_VERSION:
+        if man.get("api_version") not in ACCEPTED_API_VERSIONS:
             raise SchemaError(f"checkpoint api_version {man.get('api_version')!r}")
         st = json.loads((path / "state.json").read_text(encoding="utf-8"))
         if st.get("schema_version") != SCHEMA_VERSION:
@@ -466,6 +537,12 @@ class FlySubstrate:
             "readout_body_id": self.readout_body_id,
             "trial_index": self.trial_index, "phase": self.phase.value,
             "weight_hash": weight_matrix_hash(self.matrix),
+            "associations": {a: {"cue": list(r["cue"]),
+                                 "edges": [list(e) for e in r["edges"]],
+                                 "footprint_sha256": r["footprint_sha256"],
+                                 "n_trials": r["n_trials"],
+                                 "erased_fraction": r.get("erased_fraction")}
+                             for a, r in self.associations.items()},
         }
 
     @classmethod
@@ -484,15 +561,79 @@ class FlySubstrate:
         sub.learning = LearningController.from_dict(d["learning"])
         sub.trial_index = int(d["trial_index"])
         sub.phase = Phase(d["phase"]) if Phase(d["phase"]) != Phase.SHUTDOWN else Phase.INITIALIZED
+        for a, r in (d.get("associations") or {}).items():
+            sub.associations[a] = {"cue": tuple(r["cue"]),
+                                   "edges": [tuple(e) for e in r["edges"]],
+                                   "footprint_sha256": r["footprint_sha256"],
+                                   "n_trials": r["n_trials"],
+                                   "erased_fraction": r.get("erased_fraction")}
         if d.get("body"):
             sub.body_state = BodyState(**d["body"])
             sub.body_graph = default_body_graph()
         return sub
 
 
+def _decay_to(matrix: sparse.csr_matrix, rank, cycles: int, tau: float = 1.0,
+              w_eps: float = 1e-9) -> sparse.csr_matrix:
+    """One-shot analytic rank-decay — identical semantics to the P3/P4 harness
+    decay_to (bit-identity pinned in tests/test_phase7p3.py)."""
+    import math
+    coo = matrix.tocoo()
+    idx = {(int(i), int(j)): k for k, (i, j) in enumerate(zip(coo.row, coo.col))}
+    f = math.exp(-cycles / tau)
+    data = coo.data.copy()
+    for e in rank:
+        k = idx.get(e)
+        if k is None:
+            continue
+        v = float(data[k]) * f
+        data[k] = 0.0 if v < w_eps else v
+    out = sparse.coo_matrix((data, (coo.row, coo.col)), shape=coo.shape).tocsr()
+    out.sum_duplicates()
+    return out
+
+
+class StatefulStepper:
+    """REQ-ICA-1: stateful stepping — carries per-neuron membrane state (v)
+    across step() calls via simulate_lif's init_v_mV array path (additive,
+    scalar path bit-identical). Deterministic given base_seed: segment i uses
+    seed base_seed+i. NOTE (REQ-ICA-4, measured): segmented stepping is NOT
+    spike-equivalent to one continuous call (per-call RNG restarts) — the
+    supported equivalence boundary is the trial/episode boundary, pinned by
+    tests/test_api_m1.py."""
+
+    def __init__(self, substrate: "FlySubstrate", base_seed: int = 0):
+        if substrate.phase != Phase.RUNNING:
+            raise LifecycleError(f"StatefulStepper requires RUNNING, in {substrate.phase.value}")
+        self.substrate = substrate
+        self.base_seed = int(base_seed)
+        self.step_index = 0
+        self.v: Optional[np.ndarray] = None
+
+    def step(self, event: InputEvent) -> Observation:
+        ev = dataclasses.replace(event, seed=self.base_seed + self.step_index)
+        result = self.substrate._run(ev, init_v_mV=self.v)
+        self.v = result.v_final_mV.copy()
+        self.step_index += 1
+        obs = self.substrate._observe(ev, result)
+        return dataclasses.replace(obs, trial_index=self.substrate.trial_index)
+
+    def state_dict(self) -> dict:
+        return {"schema_version": SCHEMA_VERSION, "base_seed": self.base_seed,
+                "step_index": self.step_index,
+                "v": self.v.tolist() if self.v is not None else None}
+
+    def load_state(self, d: dict) -> None:
+        if d.get("schema_version") != SCHEMA_VERSION:
+            raise SchemaError(f"stepper state schema_version {d.get('schema_version')!r}")
+        self.base_seed = int(d["base_seed"])
+        self.step_index = int(d["step_index"])
+        self.v = np.array(d["v"], dtype=float) if d.get("v") is not None else None
+
+
 __all__ = [
     "API_VERSION", "SCHEMA_VERSION", "SchemaError", "LifecycleError",
     "StimulusPort", "BodyInput", "InputEvent",
     "BodyObservation", "Observation",
-    "LearningController", "Phase", "FlySubstrate",
+    "LearningController", "Phase", "FlySubstrate", "StatefulStepper",
 ]

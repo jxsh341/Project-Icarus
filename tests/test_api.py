@@ -43,7 +43,7 @@ def cue_event(seed=7):
 
 
 def test_schema_versions_pinned():
-    assert SCHEMA_VERSION == 1 and API_VERSION == "1.0.0"
+    assert SCHEMA_VERSION == 1 and API_VERSION == "1.1.0"
 
 
 def test_event_roundtrip_and_version_rejection():

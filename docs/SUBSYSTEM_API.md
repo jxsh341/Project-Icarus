@@ -78,3 +78,27 @@ reset-to-pristine, checkpoint save/load incl. tamper detection, state
 export/import losslessness, body wiring. Sanity-checked on the real
 snapshot: pristine weight hash `384406e9278ae0c0` reproduced, 336,245
 stored synapses exported.
+
+## API v1.1.0 — M1 additions (WP3 REQ-ICA-1/4/9; additive, schema stays v1)
+
+- **REQ-ICA-1 stateful stepping:** `StatefulStepper(substrate, base_seed)` —
+  carries per-neuron membrane state `v` across `step()` calls via a new
+  additive array path for `simulate_lif(init_v_mV=...)` (scalar/None path
+  bit-identical, pinned by test). Segment `i` uses seed `base_seed+i`
+  (deterministic). `state_dict()`/`load_state()` for the carried state.
+- **REQ-ICA-4 segmented-vs-continuous (MEASURED, test-pinned in
+  `tests/test_api_m1.py`):** segmented stepping is **NOT** spike-equivalent to
+  one continuous call (per-call RNG restarts each segment; measured on a
+  driven test net, bases 42/7/1234: continuous 30/34/40 vs carried 51/28/46
+  spikes). The supported equivalence boundary is the **trial/episode
+  boundary** — mid-episode resume is not claimed.
+- **REQ-ICA-9 association contracts:** `acquire(cue, drive, n_trials,
+  seed_base) -> {id, footprint_sha256, weight_hash}` (requires learning
+  armed), `present_cue(cue) -> {associations, confidence, retrieved,
+  readout_hz}` (cue-alone probe, no plasticity; `retrieved` uses the frozen
+  41.5 Hz readout threshold), `erase(id, amount∈[0,1]) -> {cycles,
+  f_meas, post_alone_hz}` (rank-decay, amount→cycles=round(25·amount), the
+  P3/P5-validated protocol). Association registry round-trips through
+  `export_state`/`import_state`. The underlying behaviour is the
+  DEMONSTRATED P2/P3/P4b/L6a result set; these methods only expose it.
+- Checkpoints written by v1.0.0 still load (accepted versions {1.0.0, 1.1.0}).
